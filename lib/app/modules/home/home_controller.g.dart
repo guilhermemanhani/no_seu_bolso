@@ -17,6 +17,13 @@ mixin _$HomeController on _HomeControllerBase, Store {
     return _$loadTotalTasksAsyncAction.run(() => super.loadTotalTasks());
   }
 
+  final _$saveAccontAsyncAction = AsyncAction('_HomeControllerBase.saveAccont');
+
+  @override
+  Future<void> saveAccont() {
+    return _$saveAccontAsyncAction.run(() => super.saveAccont());
+  }
+
   @override
   String toString() {
     return '''

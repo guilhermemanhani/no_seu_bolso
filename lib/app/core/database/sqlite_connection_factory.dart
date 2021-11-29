@@ -6,7 +6,7 @@ import 'package:synchronized/synchronized.dart';
 
 class SqliteConnectionFactory {
   static const _version = 1;
-  static const _databaseName = 'TODO_LIST_PROVIDER';
+  static const _databaseName = 'NO_SEU_BOLSO';
   static SqliteConnectionFactory? _instance;
 
   Database? _db;

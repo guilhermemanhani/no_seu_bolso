@@ -1,3 +1,5 @@
+import 'package:dentro_do_bolso/app/models/conta_model.dart';
+import 'package:dentro_do_bolso/app/services/entry/entry_service.dart';
 import 'package:mobx/mobx.dart';
 part 'home_controller.g.dart';
 
@@ -5,32 +7,23 @@ class HomeController = _HomeControllerBase with _$HomeController;
 
 abstract class _HomeControllerBase with Store {
   // final TasksService _tasksService;
+  final EntryService _entryService;
+
+  _HomeControllerBase({
+    required EntryService entryService,
+  }) : _entryService = entryService;
 
   @action
   Future<void> loadTotalTasks() async {
-    final allTasks = await Future.wait([
-      // _tasksService.getToday(),
-      // _tasksService.getTomorrow(),
-      // _tasksService.getWeek(),
-    ]);
-    // final todayTasks = allTasks[0] as List<TaskModel>;
-    // final tomorrowTasks = allTasks[1] as List<TaskModel>;
-    // final weekTasks = allTasks[2] as WeekTaskModel;
+    var result = await _entryService.loadBanks();
+    print(result);
+    // await _entryService.save('itau');
+  }
 
-    // todayTotalTasks = TotalTasksModel(
-    //   totalTasks: todayTasks.length,
-    //   totalTasksFinish: todayTasks.where((task) => task.finished).length,
-    // );
-
-    // tomorrowTotalTasks = TotalTasksModel(
-    //   totalTasks: tomorrowTasks.length,
-    //   totalTasksFinish: tomorrowTasks.where((task) => task.finished).length,
-    // );
-
-    // weekTotalTasks = TotalTasksModel(
-    //   totalTasks: weekTasks.tasks.length,
-    //   totalTasksFinish: weekTasks.tasks.where((task) => task.finished).length,
-    // );
-    // notifyListeners();
+  @action
+  Future<void> saveAccont() async {
+    ContaModel contaModel =
+        ContaModel(conta: 123456, idbanco: 10, saldo: 1000, id: 0);
+    await _entryService.saveAccont(contaModel);
   }
 }
