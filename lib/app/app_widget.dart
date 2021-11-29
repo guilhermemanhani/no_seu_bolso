@@ -45,7 +45,7 @@ class _AppWidgetState extends State<AppWidget> {
         supportedLocales: const [
           Locale('pt', 'BR'),
         ],
-        initialRoute: '/home',
+        initialRoute: '/home/',
         title: UiConfig.title,
         theme: UiConfig.theme,
       ).modular(),
