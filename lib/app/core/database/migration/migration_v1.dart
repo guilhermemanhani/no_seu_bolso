@@ -14,7 +14,7 @@ class MigrationV1 implements Migration {
     batch.execute('''
           CREATE TABLE conta (
             id Integer primary key autoincrement,
-            conta VARCHAR(45) not null,
+            conta Interger(45) not null,
             saldo REAL NOT NULL,
             idbanco Interger NOT NULL,          
             FOREIGN KEY (idbanco) REFERENCES banco (id) ON DELETE NO ACTION ON UPDATE NO ACTION    
@@ -23,24 +23,25 @@ class MigrationV1 implements Migration {
     batch.execute('''
           CREATE TABLE local (
             id Integer primary key autoincrement,
-            descricao VARCHAR(45) not null    
+            local VARCHAR(45) not null    
           )
         ''');
     batch.execute('''
           CREATE TABLE motivo (
             id Integer primary key autoincrement,
-            descricao VARCHAR(45)   
+            motivo VARCHAR(45)   
           )
         ''');
     batch.execute('''
           CREATE TABLE lancamento (
             idlancamento Integer primary key autoincrement,
+            datahora datetime NOT NULL,
             valor REAL NOT NULL,
             descricao VARCHAR(45) NULL,
-            idbanco Interger NOT NULL,
+            idconta Interger NOT NULL,
             localid  Interger NOT NULL,
             motivoid Interger,
-            FOREIGN KEY (idbanco) REFERENCES conta (id) ON DELETE NO ACTION ON UPDATE NO ACTION
+            FOREIGN KEY (idconta) REFERENCES conta (id) ON DELETE NO ACTION ON UPDATE NO ACTION
             FOREIGN KEY (localid) REFERENCES local (id) ON DELETE NO ACTION ON UPDATE NO ACTION
             FOREIGN KEY (motivoid) REFERENCES motivo (id) ON DELETE NO ACTION ON UPDATE NO ACTION
           )
@@ -91,35 +92,35 @@ class MigrationV1 implements Migration {
       'local',
       {
         'id': null,
-        'descricao': 'posto',
+        'local': 'posto',
       },
     );
     batch.insert(
       'local',
       {
         'id': null,
-        'descricao': 'mercado',
+        'local': 'mercado',
       },
     );
     batch.insert(
       'motivo',
       {
         'id': null,
-        'descricao': 'ferias',
+        'motivo': 'ferias',
       },
     );
     batch.insert(
       'motivo',
       {
         'id': null,
-        'descricao': 'posto',
+        'motivo': 'posto',
       },
     );
     batch.insert(
       'motivo',
       {
         'id': null,
-        'descricao': 'salario',
+        'motivo': 'salario',
       },
     );
   }

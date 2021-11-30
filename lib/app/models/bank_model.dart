@@ -3,6 +3,7 @@ import 'dart:convert';
 class BankModel {
   final int id;
   final String instituicao;
+
   BankModel({
     required this.id,
     required this.instituicao,

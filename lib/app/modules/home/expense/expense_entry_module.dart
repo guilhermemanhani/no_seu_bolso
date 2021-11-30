@@ -1,7 +1,7 @@
-import 'package:dentro_do_bolso/app/modules/home/cadastrar/cadastrar_gasto_page.dart';
+import 'package:dentro_do_bolso/app/modules/home/expense/expense_entry_page.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-class CadastrarGastoModule extends Module {
+class ExpenseEntryModule extends Module {
   @override
   final List<Bind> binds = [];
 
@@ -9,7 +9,7 @@ class CadastrarGastoModule extends Module {
   final List<ModularRoute> routes = [
     ChildRoute(
       Modular.initialRoute,
-      child: (_, args) => const CadastrarGastoPage(),
+      child: (_, args) => const ExpenseEntryPage(),
     ),
   ];
 }

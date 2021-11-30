@@ -1,4 +1,4 @@
-import 'package:dentro_do_bolso/app/modules/home/cadastrar/cadastrar_gasto_module.dart';
+import 'package:dentro_do_bolso/app/modules/home/expense/expense_entry_module.dart';
 import 'package:dentro_do_bolso/app/modules/home/home_controller.dart';
 import 'package:dentro_do_bolso/app/modules/home/home_page.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -15,6 +15,6 @@ class HomeModule extends Module {
       Modular.initialRoute,
       child: (_, args) => const HomePage(),
     ),
-    ModuleRoute('/cadastar', module: CadastrarGastoModule())
+    ModuleRoute('/cadastar', module: ExpenseEntryModule())
   ];
 }
