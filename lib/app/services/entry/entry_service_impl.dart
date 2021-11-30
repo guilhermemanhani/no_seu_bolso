@@ -35,5 +35,6 @@ class EntryServiceImpl implements EntryService {
   @override
   Future<List<AccountModel>> loadAccount() => _entryRepository.loadAccount();
 
+  @override
   Future<List<ExpenseModel>> loadExpense() => _entryRepository.loadExpense();
 }

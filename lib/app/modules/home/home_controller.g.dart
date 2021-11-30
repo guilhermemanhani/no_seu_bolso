@@ -9,6 +9,21 @@ part of 'home_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$HomeController on _HomeControllerBase, Store {
+  final _$accountAtom = Atom(name: '_HomeControllerBase.account');
+
+  @override
+  ObservableList<AccountModel> get account {
+    _$accountAtom.reportRead();
+    return super.account;
+  }
+
+  @override
+  set account(ObservableList<AccountModel> value) {
+    _$accountAtom.reportWrite(value, super.account, () {
+      super.account = value;
+    });
+  }
+
   final _$loadBanksAsyncAction = AsyncAction('_HomeControllerBase.loadBanks');
 
   @override
@@ -50,7 +65,7 @@ mixin _$HomeController on _HomeControllerBase, Store {
   @override
   String toString() {
     return '''
-
+account: ${account}
     ''';
   }
 }

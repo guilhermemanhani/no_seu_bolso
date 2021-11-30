@@ -13,6 +13,9 @@ abstract class _HomeControllerBase with Store {
     required EntryService entryService,
   }) : _entryService = entryService;
 
+  @observable
+  ObservableList<AccountModel> account = <AccountModel>[].asObservable();
+
   @action
   Future<void> loadBanks() async {
     var result = await _entryService.loadBanks();
@@ -22,18 +25,14 @@ abstract class _HomeControllerBase with Store {
 
   @action
   Future<void> loadAccount() async {
-    // var result = await _entryService.loadAccount();
-    // print(result);
-    var result2 = await _entryService.loadExpense();
-    print(result2);
-    // await _entrySservice.save('itau');
+    account.addAll(await _entryService.loadAccount().asObservable());
+    print(account);
   }
 
   @action
   Future<void> loadExpense() async {
-    // var result = await _entryService.loadAccount();
-    // print(result);
-    // await _entrySservice.save('itau');
+    var result2 = await _entryService.loadExpense();
+    // print(result2);
   }
 
   @action

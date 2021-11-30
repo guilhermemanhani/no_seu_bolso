@@ -47,7 +47,7 @@ class AccountModel {
       conta: map['conta'],
       saldo: map['saldo'],
       idbanco: map['idbanco'],
-      instituicao: map['instituicao'] != null ? map['instituicao'] : null,
+      instituicao: map['instituicao'],
     );
   }
 

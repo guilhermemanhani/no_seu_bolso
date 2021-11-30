@@ -75,9 +75,9 @@ class ExpenseModel {
       idconta: map['idconta'],
       localid: map['localid'],
       motivoid: map['motivoid'],
-      local: map['local'] != null ? map['local'] : null,
-      motivo: map['motivo'] != null ? map['motivo'] : null,
-      instituicao: map['instituicao'] != null ? map['instituicao'] : null,
+      local: map['local'],
+      motivo: map['motivo'],
+      instituicao: map['instituicao'],
     );
   }
 
