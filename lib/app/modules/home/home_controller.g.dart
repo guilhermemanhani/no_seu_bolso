@@ -9,18 +9,19 @@ part of 'home_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$HomeController on _HomeControllerBase, Store {
-  final _$accountAtom = Atom(name: '_HomeControllerBase.account');
+  final _$accountInfoModelAtom =
+      Atom(name: '_HomeControllerBase.accountInfoModel');
 
   @override
-  ObservableList<AccountModel> get account {
-    _$accountAtom.reportRead();
-    return super.account;
+  AccountInfoModel? get accountInfoModel {
+    _$accountInfoModelAtom.reportRead();
+    return super.accountInfoModel;
   }
 
   @override
-  set account(ObservableList<AccountModel> value) {
-    _$accountAtom.reportWrite(value, super.account, () {
-      super.account = value;
+  set accountInfoModel(AccountInfoModel? value) {
+    _$accountInfoModelAtom.reportWrite(value, super.accountInfoModel, () {
+      super.accountInfoModel = value;
     });
   }
 
@@ -31,12 +32,12 @@ mixin _$HomeController on _HomeControllerBase, Store {
     return _$loadBanksAsyncAction.run(() => super.loadBanks());
   }
 
-  final _$loadAccountAsyncAction =
-      AsyncAction('_HomeControllerBase.loadAccount');
+  final _$loadAccountsAsyncAction =
+      AsyncAction('_HomeControllerBase.loadAccounts');
 
   @override
-  Future<void> loadAccount() {
-    return _$loadAccountAsyncAction.run(() => super.loadAccount());
+  Future<void> loadAccounts() {
+    return _$loadAccountsAsyncAction.run(() => super.loadAccounts());
   }
 
   final _$loadExpenseAsyncAction =
@@ -65,7 +66,7 @@ mixin _$HomeController on _HomeControllerBase, Store {
   @override
   String toString() {
     return '''
-account: ${account}
+accountInfoModel: ${accountInfoModel}
     ''';
   }
 }

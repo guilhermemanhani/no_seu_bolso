@@ -2,6 +2,7 @@ import 'package:dentro_do_bolso/app/models/account_model.dart';
 import 'package:dentro_do_bolso/app/models/expense_model.dart';
 import 'package:dentro_do_bolso/app/services/entry/entry_service.dart';
 import 'package:mobx/mobx.dart';
+import 'package:dentro_do_bolso/app/models/account_info_model.dart';
 part 'home_controller.g.dart';
 
 class HomeController = _HomeControllerBase with _$HomeController;
@@ -14,7 +15,7 @@ abstract class _HomeControllerBase with Store {
   }) : _entryService = entryService;
 
   @observable
-  ObservableList<AccountModel> account = <AccountModel>[].asObservable();
+  AccountInfoModel? accountInfoModel;
 
   @action
   Future<void> loadBanks() async {
@@ -24,9 +25,9 @@ abstract class _HomeControllerBase with Store {
   }
 
   @action
-  Future<void> loadAccount() async {
-    account.addAll(await _entryService.loadAccount().asObservable());
-    print(account);
+  Future<void> loadAccounts() async {
+    accountInfoModel = await _entryService.loadAccounts().asObservable();
+    print(accountInfoModel);
   }
 
   @action
@@ -38,7 +39,7 @@ abstract class _HomeControllerBase with Store {
   @action
   Future<void> saveAccont() async {
     AccountModel accountModel =
-        AccountModel(conta: 123456, idbanco: 1, saldo: 1000, id: 0);
+        AccountModel(conta: 16521, idbanco: 3, saldo: 2500.45, id: 0);
     await _entryService.saveAccont(accountModel);
   }
 
@@ -46,11 +47,11 @@ abstract class _HomeControllerBase with Store {
   Future<void> saveExpense() async {
     ExpenseModel expenseModel = ExpenseModel(
       idlancamento: 0,
-      valor: 100,
+      valor: -100.43,
       datahora: DateTime.now(),
       descricao: 'descricao',
-      idconta: 1,
-      localid: 1,
+      idconta: 2,
+      localid: 2,
       motivoid: 1,
     );
     await _entryService.saveExpense(expenseModel);

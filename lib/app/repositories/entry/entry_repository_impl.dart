@@ -33,13 +33,27 @@ class EntryRepositoryImpl implements EntryRepository {
   }
 
   @override
-  Future<List<AccountModel>> loadAccount() async {
+  Future<List<AccountModel>> loadAccounts() async {
     final conn = await _sqliteConnectionFactory.openConnection();
     final result = await conn.rawQuery('''
       select C.*, B.instituicao from conta C
       inner join BANCO B on B.id = C.idbanco
     ''');
     return result.map((e) => AccountModel.fromMap(e)).toList();
+  }
+
+  @override
+  Future<AccountModel> loadAccount(int idconta) async {
+    final conn = await _sqliteConnectionFactory.openConnection();
+    final result = await conn.rawQuery(
+      '''
+      select * from conta
+      where id = ?
+    ''',
+      [idconta],
+    );
+    // final AccountModel accountModel = AccountModel.fromJson(result);
+    return result.map((e) => AccountModel.fromMap(e)).toList().first;
   }
 
   @override
@@ -94,7 +108,7 @@ class EntryRepositoryImpl implements EntryRepository {
   }
 
   @override
-  Future<void> saveExpense(ExpenseModel expenseModel) async {
+  Future<void> saveExpense(ExpenseModel expenseModel, double balanceAtt) async {
     final conn = await _sqliteConnectionFactory.openConnection();
     await conn.insert(
       'lancamento',
@@ -107,6 +121,11 @@ class EntryRepositoryImpl implements EntryRepository {
         'localid': expenseModel.localid,
         'motivoid': expenseModel.motivoid,
       },
+    );
+
+    await conn.rawUpdate(
+      'update conta set saldo = ? where id = ?',
+      [balanceAtt, expenseModel.idconta],
     );
   }
 

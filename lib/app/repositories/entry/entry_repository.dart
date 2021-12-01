@@ -8,7 +8,8 @@ abstract class EntryRepository {
   Future<void> saveAccont(AccountModel accountModel);
   Future<void> saveLocal(String local);
   Future<void> saveReason(String reason);
-  Future<void> saveExpense(ExpenseModel expenseModel);
-  Future<List<AccountModel>> loadAccount();
+  Future<void> saveExpense(ExpenseModel expenseModel, double balanceAtt);
+  Future<List<AccountModel>> loadAccounts();
   Future<List<ExpenseModel>> loadExpense();
+  Future<AccountModel> loadAccount(int idconta);
 }

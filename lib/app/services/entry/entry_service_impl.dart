@@ -1,3 +1,5 @@
+import 'package:decimal/decimal.dart';
+import 'package:dentro_do_bolso/app/models/account_info_model.dart';
 import 'package:dentro_do_bolso/app/models/bank_model.dart';
 import 'package:dentro_do_bolso/app/models/account_model.dart';
 import 'package:dentro_do_bolso/app/models/expense_model.dart';
@@ -29,11 +31,31 @@ class EntryServiceImpl implements EntryService {
   Future<void> saveReason(String reason) => _entryRepository.saveReason(reason);
 
   @override
-  Future<void> saveExpense(ExpenseModel expenseModel) =>
-      _entryRepository.saveExpense(expenseModel);
+  Future<void> saveExpense(ExpenseModel expenseModel) async {
+    AccountModel account =
+        await _entryRepository.loadAccount(expenseModel.idconta);
+    // print(account);
+    Decimal balanceAtt = Decimal.parse(account.saldo.toString()) +
+        Decimal.parse(expenseModel.valor.toString());
+
+    await _entryRepository.saveExpense(
+      expenseModel,
+      double.parse(balanceAtt.toString()),
+    );
+  }
 
   @override
-  Future<List<AccountModel>> loadAccount() => _entryRepository.loadAccount();
+  Future<AccountInfoModel> loadAccounts() async {
+    List<AccountModel> listAccount = await _entryRepository.loadAccounts();
+    Decimal balance = Decimal.parse('0.0');
+    listAccount.forEach((element) {
+      balance += Decimal.parse(element.saldo.toString());
+    });
+    AccountInfoModel accountInfoModel =
+        AccountInfoModel(listAccount: [], balance: balance);
+    accountInfoModel.listAccount.addAll(listAccount);
+    return accountInfoModel;
+  }
 
   @override
   Future<List<ExpenseModel>> loadExpense() => _entryRepository.loadExpense();
