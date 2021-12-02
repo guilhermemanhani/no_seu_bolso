@@ -17,6 +17,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends ModularState<HomePage, HomeController> {
   final reactionDisposer = <ReactionDisposer>[];
+  String dropdownValue = 'One';
   // var controllerMoney = MoneyMaskedTextController(
   //     decimalSeparator: ',', thousandSeparator: '.');
   //     controller
@@ -45,31 +46,63 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
       body: SingleChildScrollView(
         child: SizedBox(
           width: 1.sw,
-          height: 1.sh,
+          height: 1.sh - 1.statusBarHeight - kToolbarHeight,
           child: Column(
             children: [
               Observer(
                 builder: (_) {
                   return Container(
                     color: context.primaryColor,
-                    height: 200.h,
+                    height: 280.h,
                     width: double.infinity,
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Center(
-                          child: SizedBox(
-                            height: 120.h,
-                            child: Observer(
-                              builder: (_) {
-                                return Text(
-                                  controller.accountInfoModel?.balance == null
-                                      ? 'Não Informado'
-                                      : controller.accountInfoModel!.balance
-                                          .toString(),
-                                );
-                              },
+                        Container(
+                          padding: EdgeInsets.only(
+                            top: 1.statusBarHeight + 30,
+                          ),
+                          height: 120.h,
+                          child: DropdownButton<String>(
+                            value: dropdownValue,
+                            icon: const Icon(
+                              Icons.arrow_drop_down,
+                              color: Colors.white,
                             ),
+                            iconSize: 24,
+                            elevation: 16,
+                            style: const TextStyle(color: Colors.white),
+                            underline: Container(
+                              height: 2,
+                              color: Colors.white,
+                            ),
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                dropdownValue = newValue!;
+                              });
+                            },
+                            items: <String>['One', 'Two', 'Free', 'Four']
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.only(
+                            top: 16,
+                          ),
+                          height: 80.h,
+                          child: Observer(
+                            builder: (_) {
+                              return Text(
+                                controller.accountInfoModel?.balance == null
+                                    ? 'Não Informado'
+                                    : controller.accountInfoModel!.balance
+                                        .toString(),
+                              );
+                            },
                           ),
                         ),
                         SizedBox(
