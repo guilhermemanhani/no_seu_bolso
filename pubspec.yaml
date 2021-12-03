@@ -37,7 +37,6 @@ dependencies:
   flutter_screenutil: ^5.0.0+2
   path: ^1.8.0
   sqflite: ^2.0.0+4
-  date_picker_timeline: ^1.2.3
   intl: ^0.17.0
   validatorless: ^1.2.1
   asuka: ^2.0.0
