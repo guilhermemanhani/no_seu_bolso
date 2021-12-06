@@ -52,41 +52,67 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
               Observer(
                 builder: (_) {
                   return Container(
-                    color: context.primaryColor,
-                    height: 280.h,
                     width: double.infinity,
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topRight,
+                        end: Alignment.bottomLeft,
+                        colors: [
+                          Colors.blue,
+                          Colors.blueGrey,
+                        ],
+                      ),
+                    ),
                     child: Column(
                       children: [
-                        Container(
+                        Padding(
                           padding: EdgeInsets.only(
                             top: 1.statusBarHeight + 30,
                           ),
-                          height: 120.h,
-                          child: DropdownButton<String>(
-                            value: dropdownValue,
-                            icon: const Icon(
-                              Icons.arrow_drop_down,
-                              color: Colors.white,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color: Colors.grey, width: 2),
                             ),
-                            iconSize: 24,
-                            elevation: 16,
-                            style: const TextStyle(color: Colors.white),
-                            underline: Container(
-                              height: 2,
-                              color: Colors.white,
+                            width: 160.w,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 8.0, right: 4),
+                              child: DropdownButton<String>(
+                                isExpanded: true,
+                                value: dropdownValue,
+                                icon: Icon(
+                                  Icons.keyboard_arrow_down,
+                                  color: Colors.grey[400],
+                                ),
+                                iconSize: 24,
+                                elevation: 16,
+                                style: TextStyle(
+                                    color: Colors.grey[400],
+                                    fontWeight: FontWeight.w600),
+                                underline: Container(
+                                  width: double.infinity,
+                                ),
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    dropdownValue = newValue!;
+                                  });
+                                },
+                                items: <String>[
+                                  'One',
+                                  'Two',
+                                  'Tree',
+                                  'Four'
+                                ].map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(
+                                      value,
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
                             ),
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                dropdownValue = newValue!;
-                              });
-                            },
-                            items: <String>['One', 'Two', 'Free', 'Four']
-                                .map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
                           ),
                         ),
                         Container(
@@ -105,56 +131,52 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                             },
                           ),
                         ),
-                        SizedBox(
-                          height: 80.h,
-                          child: Observer(
-                            builder: (_) {
-                              return ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: controller
-                                    .accountInfoModel?.listAccount.length,
-                                itemBuilder: (context, index) {
-                                  final account = controller
-                                      .accountInfoModel?.listAccount[index];
-                                  if (controller
-                                          .accountInfoModel?.listAccount ==
-                                      null) {
-                                    return Padding(
-                                      padding: const EdgeInsets.all(0.0),
-                                      child: Container(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: const [
-                                            Text('nao informado'),
-                                          ],
-                                        ),
-                                      ),
-                                    );
-                                  } else {
-                                    return Container(
-                                      color: Colors.white,
-                                      width: 160.w,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          Text(account!.instituicao!),
-                                          Text(account.saldo.toString()),
-                                        ],
-                                      ),
-                                    );
-                                  }
-                                },
-                              );
-                            },
-                          ),
-                        ),
                       ],
                     ),
                   );
                 },
-              )
+              ),
+              SizedBox(
+                height: 80.h,
+                child: Observer(
+                  builder: (_) {
+                    return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount:
+                          controller.accountInfoModel?.listAccount.length,
+                      itemBuilder: (context, index) {
+                        final account =
+                            controller.accountInfoModel?.listAccount[index];
+                        if (controller.accountInfoModel?.listAccount == null) {
+                          return Padding(
+                            padding: const EdgeInsets.all(0.0),
+                            child: Container(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: const [
+                                  Text('nao informado'),
+                                ],
+                              ),
+                            ),
+                          );
+                        } else {
+                          return Container(
+                            color: Colors.white,
+                            width: 160.w,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(account!.instituicao!),
+                                Text(account.saldo.toString()),
+                              ],
+                            ),
+                          );
+                        }
+                      },
+                    );
+                  },
+                ),
+              ),
             ],
           ),
         ),
