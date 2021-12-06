@@ -12,4 +12,5 @@ abstract class EntryService {
   Future<void> saveExpense(ExpenseModel expenseModel);
   Future<AccountInfoModel> loadAccounts();
   Future<List<ExpenseModel>> loadExpense();
+  Future<List<AccountModel>> loadAccountsList();
 }

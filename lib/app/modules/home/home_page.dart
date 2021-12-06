@@ -1,9 +1,7 @@
 import 'package:dentro_do_bolso/app/core/ui/extensions/size_screen_extension.dart';
-import 'package:dentro_do_bolso/app/core/ui/extensions/theme_extension.dart';
-import 'package:dentro_do_bolso/app/core/ui/uiconfig.dart';
+import 'package:dentro_do_bolso/app/core/ui/widgets/dentrodobolso_drop_down_button.dart';
 import 'package:dentro_do_bolso/app/modules/home/home_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
@@ -17,11 +15,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends ModularState<HomePage, HomeController> {
   final reactionDisposer = <ReactionDisposer>[];
-  String dropdownValue = 'One';
-  // var controllerMoney = MoneyMaskedTextController(
-  //     decimalSeparator: ',', thousandSeparator: '.');
-  //     controller
-  //             .setValor(Decimal.parse(controllerMoney.numberValue.toString())),
   @override
   void initState() {
     super.initState();
@@ -69,50 +62,14 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                           padding: EdgeInsets.only(
                             top: 1.statusBarHeight + 30,
                           ),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(color: Colors.grey, width: 2),
-                            ),
-                            width: 160.w,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 8.0, right: 4),
-                              child: DropdownButton<String>(
-                                isExpanded: true,
-                                value: dropdownValue,
-                                icon: Icon(
-                                  Icons.keyboard_arrow_down,
-                                  color: Colors.grey[400],
-                                ),
-                                iconSize: 24,
-                                elevation: 16,
-                                style: TextStyle(
-                                    color: Colors.grey[400],
-                                    fontWeight: FontWeight.w600),
-                                underline: Container(
-                                  width: double.infinity,
-                                ),
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    dropdownValue = newValue!;
-                                  });
-                                },
-                                items: <String>[
-                                  'One',
-                                  'Two',
-                                  'Tree',
-                                  'Four'
-                                ].map<DropdownMenuItem<String>>((String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(
-                                      value,
-                                    ),
-                                  );
-                                }).toList(),
-                              ),
-                            ),
+                          child: DentrodobolsoDropDownButton(
+                            onChange: () {},
+                            selectValue: 'Jan',
+                            valueList: const [
+                              'Jan',
+                              'Fev',
+                              'Mar',
+                            ],
                           ),
                         ),
                         Container(
@@ -148,27 +105,46 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                         final account =
                             controller.accountInfoModel?.listAccount[index];
                         if (controller.accountInfoModel?.listAccount == null) {
-                          return Padding(
-                            padding: const EdgeInsets.all(0.0),
-                            child: Container(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: const [
-                                  Text('nao informado'),
-                                ],
-                              ),
-                            ),
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Text('nao informado'),
+                            ],
                           );
                         } else {
-                          return Container(
-                            color: Colors.white,
-                            width: 160.w,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(account!.instituicao!),
-                                Text(account.saldo.toString()),
-                              ],
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 12),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 1,
+                                    blurRadius: 3,
+                                    offset: const Offset(
+                                        0, 3), // changes position of shadow
+                                  ),
+                                ],
+                              ),
+                              width: 160.w,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    account!.instituicao!,
+                                  ),
+                                  Text(
+                                    account.saldo.toString(),
+                                    style: TextStyle(
+                                      color:
+                                          account.saldo.toString().contains('-')
+                                              ? Colors.red
+                                              : Colors.green,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           );
                         }
@@ -182,8 +158,9 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => controller.saveExpense(),
-        // Navigator.pushNamed(context, '/home/cadastar'),
+        onPressed: () =>
+            // controller.saveExpense(),
+            Navigator.pushNamed(context, '/home/cadastar'),
         child: const Icon(Icons.payment),
       ),
     );
