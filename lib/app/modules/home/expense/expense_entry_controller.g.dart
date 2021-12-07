@@ -33,19 +33,19 @@ mixin _$ExpenseEntryController on _ExpenseEntryControllerBase, Store {
     });
   }
 
-  final _$accountInfoModelAtom =
-      Atom(name: '_ExpenseEntryControllerBase.accountInfoModel');
+  final _$listAccountAtom =
+      Atom(name: '_ExpenseEntryControllerBase.listAccount');
 
   @override
-  AccountInfoModel? get accountInfoModel {
-    _$accountInfoModelAtom.reportRead();
-    return super.accountInfoModel;
+  List<String> get listAccount {
+    _$listAccountAtom.reportRead();
+    return super.listAccount;
   }
 
   @override
-  set accountInfoModel(AccountInfoModel? value) {
-    _$accountInfoModelAtom.reportWrite(value, super.accountInfoModel, () {
-      super.accountInfoModel = value;
+  set listAccount(List<String> value) {
+    _$listAccountAtom.reportWrite(value, super.listAccount, () {
+      super.listAccount = value;
     });
   }
 
@@ -90,7 +90,7 @@ mixin _$ExpenseEntryController on _ExpenseEntryControllerBase, Store {
   @override
   String toString() {
     return '''
-accountInfoModel: ${accountInfoModel},
+listAccount: ${listAccount},
 selectedDate: ${selectedDate}
     ''';
   }

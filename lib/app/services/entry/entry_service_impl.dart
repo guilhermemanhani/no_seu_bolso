@@ -61,6 +61,20 @@ class EntryServiceImpl implements EntryService {
   Future<List<ExpenseModel>> loadExpense() => _entryRepository.loadExpense();
 
   @override
-  Future<List<AccountModel>> loadAccountsList() =>
-      _entryRepository.loadAccounts();
+  Future<List<String>> loadAccountsList() async {
+    String valueAdd;
+    List<AccountModel> listAccount = await _entryRepository.loadAccounts();
+    List<String> listString = [];
+    listAccount.forEach(
+      (account) {
+        if (account.instituicao != null && account.conta != null) {
+          valueAdd = account.instituicao! + ' ' + account.conta.toString();
+          listString.add(valueAdd);
+        } else {
+          listString.add('Cadastre um banco');
+        }
+      },
+    );
+    return listString;
+  }
 }

@@ -1,15 +1,18 @@
 import 'package:dentro_do_bolso/app/core/ui/extensions/size_screen_extension.dart';
+import 'package:dentro_do_bolso/app/modules/home/expense/expense_entry_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
 
 class CalendarButton extends StatelessWidget {
-  final Function func;
-  final DateTime selectdDate;
+  final ExpenseEntryController onPressed;
+  final DateTime? selectdDate;
+  final dateFormat = DateFormat('dd/MM/y');
+
   CalendarButton({
     Key? key,
-    required this.func,
-    required this.selectdDate,
+    required this.onPressed,
+    this.selectdDate,
   }) : super(key: key);
 
   @override
@@ -26,7 +29,7 @@ class CalendarButton extends StatelessWidget {
           firstDate: DateTime(2000),
           lastDate: DateTime(2025),
         );
-        func(selectedDate);
+        onPressed.setSelectedDate(selectedDate);
       },
       borderRadius: BorderRadius.circular(15),
       child: Container(
@@ -49,8 +52,8 @@ class CalendarButton extends StatelessWidget {
             ),
             Observer(builder: (_) {
               return Text(
-                selectedDate != null
-                    ? DateFormat.format(selectedDate)
+                selectdDate != null
+                    ? dateFormat.format(selectdDate!)
                     : 'SELECIONE UMA DATA',
               );
             }),

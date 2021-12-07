@@ -1,4 +1,3 @@
-import 'package:dentro_do_bolso/app/models/account_info_model.dart';
 import 'package:dentro_do_bolso/app/models/expense_model.dart';
 import 'package:dentro_do_bolso/app/services/entry/entry_service.dart';
 import 'package:mobx/mobx.dart';
@@ -24,7 +23,7 @@ abstract class _ExpenseEntryControllerBase with Store {
   setSelectedDate(DateTime? selectedDate) => _selectedDate = selectedDate;
 
   @observable
-  AccountInfoModel? accountInfoModel;
+  List<String> listAccount = [];
 
   @action
   Future<void> loadBanks() async {
@@ -35,8 +34,8 @@ abstract class _ExpenseEntryControllerBase with Store {
 
   @action
   Future<void> loadAccounts() async {
-    accountInfoModel = await _entryService.loadAccounts().asObservable();
-    print(accountInfoModel);
+    listAccount = await _entryService.loadAccountsList().asObservable();
+    print(listAccount);
   }
 
   @action
