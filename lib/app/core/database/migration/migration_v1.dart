@@ -78,7 +78,7 @@ class MigrationV1 implements Migration {
       'banco',
       {
         'id': null,
-        'instituicao': 'Alelo refeicao',
+        'instituicao': 'Alelo refeição',
       },
     );
     batch.insert(
@@ -100,6 +100,27 @@ class MigrationV1 implements Migration {
       {
         'id': null,
         'local': 'Mercado',
+      },
+    );
+    batch.insert(
+      'local',
+      {
+        'id': null,
+        'local': 'Luz',
+      },
+    );
+    batch.insert(
+      'local',
+      {
+        'id': null,
+        'local': 'Água',
+      },
+    );
+    batch.insert(
+      'local',
+      {
+        'id': null,
+        'local': 'Condomínio',
       },
     );
     batch.insert(

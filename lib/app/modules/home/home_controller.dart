@@ -20,14 +20,14 @@ abstract class _HomeControllerBase with Store {
   @action
   Future<void> loadBanks() async {
     var result = await _entryService.loadBanks();
-    print(result);
+    // print(result);
     // await _entrySservice.save('itau');
   }
 
   @action
   Future<void> loadAccounts() async {
     accountInfoModel = await _entryService.loadAccounts().asObservable();
-    print(accountInfoModel);
+    // print(accountInfoModel);
   }
 
   @action

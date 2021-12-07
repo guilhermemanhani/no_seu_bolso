@@ -66,13 +66,13 @@ abstract class _ExpenseEntryControllerBase with Store {
   @action
   Future<void> loadAccounts() async {
     listAccount = await _entryService.loadAccountsList().asObservable();
-    print(listAccount);
+    // print(listAccount);
   }
 
   @action
   Future<void> loadReasons() async {
     listReasons = await _entryService.loadReasons().asObservable();
-    print(listReasons);
+    // print(listReasons);
   }
 
   @action

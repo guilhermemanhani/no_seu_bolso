@@ -23,8 +23,8 @@ class ExpenseEntryPage extends StatefulWidget {
 
 class _ExpenseEntryPageState
     extends ModularState<ExpenseEntryPage, ExpenseEntryController> {
-  var controllerMoney = new MoneyMaskedTextController(
-      decimalSeparator: ',', thousandSeparator: '.');
+  var controllerMoney =
+      MoneyMaskedTextController(decimalSeparator: ',', thousandSeparator: '.');
   final dateFormat = DateFormat('dd/MM/y');
   bool switchButton = false;
 
@@ -64,7 +64,7 @@ class _ExpenseEntryPageState
             children: [
               Row(
                 children: [
-                  Icon(Icons.add),
+                  const Icon(Icons.add),
                   CupertinoSwitch(
                     activeColor: Colors.red,
                     trackColor: Colors.green,
@@ -75,7 +75,7 @@ class _ExpenseEntryPageState
                       });
                     },
                   ),
-                  Icon(Icons.remove),
+                  const Icon(Icons.remove),
                   Expanded(
                     child: DentrodobolsoTextFormField(
                       controller: controllerMoney,
