@@ -50,77 +50,77 @@ class MigrationV1 implements Migration {
       'banco',
       {
         'id': null,
-        'instituicao': 'itau',
+        'instituicao': 'Itau',
       },
     );
     batch.insert(
       'banco',
       {
         'id': null,
-        'instituicao': 'nubank',
+        'instituicao': 'Nubank',
       },
     );
     batch.insert(
       'banco',
       {
         'id': null,
-        'instituicao': 'uniprime',
+        'instituicao': 'Uniprime',
       },
     );
     batch.insert(
       'banco',
       {
         'id': null,
-        'instituicao': 'alelo alimentacao',
+        'instituicao': 'Alelo alimentação',
       },
     );
     batch.insert(
       'banco',
       {
         'id': null,
-        'instituicao': 'alelo refeicao',
+        'instituicao': 'Alelo refeicao',
       },
     );
     batch.insert(
       'banco',
       {
         'id': null,
-        'instituicao': 'santander',
+        'instituicao': 'Santander',
       },
     );
     batch.insert(
       'local',
       {
         'id': null,
-        'local': 'posto',
+        'local': 'Posto',
       },
     );
     batch.insert(
       'local',
       {
         'id': null,
-        'local': 'mercado',
+        'local': 'Mercado',
       },
     );
     batch.insert(
       'motivo',
       {
         'id': null,
-        'motivo': 'ferias',
+        'motivo': 'Férias',
       },
     );
     batch.insert(
       'motivo',
       {
         'id': null,
-        'motivo': 'posto',
+        'motivo': 'Viagem',
       },
     );
     batch.insert(
       'motivo',
       {
         'id': null,
-        'motivo': 'salario',
+        'motivo': 'Salário',
       },
     );
   }

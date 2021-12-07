@@ -1,6 +1,8 @@
 import 'package:dentro_do_bolso/app/models/bank_model.dart';
 import 'package:dentro_do_bolso/app/models/account_model.dart';
 import 'package:dentro_do_bolso/app/models/expense_model.dart';
+import 'package:dentro_do_bolso/app/models/local_model.dart';
+import 'package:dentro_do_bolso/app/models/reasons_model.dart';
 
 abstract class EntryRepository {
   Future<void> saveBank(String nomeBanco);
@@ -12,4 +14,6 @@ abstract class EntryRepository {
   Future<List<AccountModel>> loadAccounts();
   Future<List<ExpenseModel>> loadExpense();
   Future<AccountModel> loadAccount(int idconta);
+  Future<List<LocalModel>> loadLocal();
+  Future<List<ReasonsModel>> loadReasons();
 }

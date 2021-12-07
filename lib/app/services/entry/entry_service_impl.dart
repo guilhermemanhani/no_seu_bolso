@@ -3,6 +3,8 @@ import 'package:dentro_do_bolso/app/models/account_info_model.dart';
 import 'package:dentro_do_bolso/app/models/bank_model.dart';
 import 'package:dentro_do_bolso/app/models/account_model.dart';
 import 'package:dentro_do_bolso/app/models/expense_model.dart';
+import 'package:dentro_do_bolso/app/models/reasons_model.dart';
+import 'package:dentro_do_bolso/app/models/local_model.dart';
 import 'package:dentro_do_bolso/app/repositories/entry/entry_repository.dart';
 import 'package:dentro_do_bolso/app/services/entry/entry_service.dart';
 
@@ -61,20 +63,12 @@ class EntryServiceImpl implements EntryService {
   Future<List<ExpenseModel>> loadExpense() => _entryRepository.loadExpense();
 
   @override
-  Future<List<String>> loadAccountsList() async {
-    String valueAdd;
-    List<AccountModel> listAccount = await _entryRepository.loadAccounts();
-    List<String> listString = [];
-    listAccount.forEach(
-      (account) {
-        if (account.instituicao != null && account.conta != null) {
-          valueAdd = account.instituicao! + ' ' + account.conta.toString();
-          listString.add(valueAdd);
-        } else {
-          listString.add('Cadastre um banco');
-        }
-      },
-    );
-    return listString;
-  }
+  Future<List<AccountModel>> loadAccountsList() =>
+      _entryRepository.loadAccounts();
+
+  @override
+  Future<List<LocalModel>> loadLocal() => _entryRepository.loadLocal();
+
+  @override
+  Future<List<ReasonsModel>> loadReasons() => _entryRepository.loadReasons();
 }

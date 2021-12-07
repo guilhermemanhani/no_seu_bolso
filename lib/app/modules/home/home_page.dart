@@ -62,15 +62,15 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                           padding: EdgeInsets.only(
                             top: 1.statusBarHeight + 30,
                           ),
-                          child: DentrodobolsoDropDownButton(
-                            onChange: () {},
-                            selectValue: 'Jan',
-                            valueList: const [
-                              'Jan',
-                              'Fev',
-                              'Mar',
-                            ],
-                          ),
+                          // child: DentrodobolsoDropDownButton(
+                          //   onChange: () {},
+                          //   selectValue: 'Jan',
+                          //   valueList: const [
+                          //     'Jan',
+                          //     'Fev',
+                          //     'Mar',
+                          //   ],
+                          // ),
                         ),
                         Container(
                           padding: const EdgeInsets.only(

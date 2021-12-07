@@ -16,6 +16,27 @@ mixin _$ExpenseEntryController on _ExpenseEntryControllerBase, Store {
       (_$selectedDateComputed ??= Computed<DateTime?>(() => super.selectedDate,
               name: '_ExpenseEntryControllerBase.selectedDate'))
           .value;
+  Computed<String?>? _$selectedReasonsComputed;
+
+  @override
+  String? get selectedReasons => (_$selectedReasonsComputed ??=
+          Computed<String?>(() => super.selectedReasons,
+              name: '_ExpenseEntryControllerBase.selectedReasons'))
+      .value;
+  Computed<String?>? _$selectedAccountComputed;
+
+  @override
+  String? get selectedAccount => (_$selectedAccountComputed ??=
+          Computed<String?>(() => super.selectedAccount,
+              name: '_ExpenseEntryControllerBase.selectedAccount'))
+      .value;
+  Computed<String?>? _$selectedLocalComputed;
+
+  @override
+  String? get selectedLocal =>
+      (_$selectedLocalComputed ??= Computed<String?>(() => super.selectedLocal,
+              name: '_ExpenseEntryControllerBase.selectedLocal'))
+          .value;
 
   final _$_selectedDateAtom =
       Atom(name: '_ExpenseEntryControllerBase._selectedDate');
@@ -33,28 +54,99 @@ mixin _$ExpenseEntryController on _ExpenseEntryControllerBase, Store {
     });
   }
 
+  final _$_selectedReasonsAtom =
+      Atom(name: '_ExpenseEntryControllerBase._selectedReasons');
+
+  @override
+  String? get _selectedReasons {
+    _$_selectedReasonsAtom.reportRead();
+    return super._selectedReasons;
+  }
+
+  @override
+  set _selectedReasons(String? value) {
+    _$_selectedReasonsAtom.reportWrite(value, super._selectedReasons, () {
+      super._selectedReasons = value;
+    });
+  }
+
+  final _$_selectedAccountAtom =
+      Atom(name: '_ExpenseEntryControllerBase._selectedAccount');
+
+  @override
+  String? get _selectedAccount {
+    _$_selectedAccountAtom.reportRead();
+    return super._selectedAccount;
+  }
+
+  @override
+  set _selectedAccount(String? value) {
+    _$_selectedAccountAtom.reportWrite(value, super._selectedAccount, () {
+      super._selectedAccount = value;
+    });
+  }
+
+  final _$_selectedLocalAtom =
+      Atom(name: '_ExpenseEntryControllerBase._selectedLocal');
+
+  @override
+  String? get _selectedLocal {
+    _$_selectedLocalAtom.reportRead();
+    return super._selectedLocal;
+  }
+
+  @override
+  set _selectedLocal(String? value) {
+    _$_selectedLocalAtom.reportWrite(value, super._selectedLocal, () {
+      super._selectedLocal = value;
+    });
+  }
+
   final _$listAccountAtom =
       Atom(name: '_ExpenseEntryControllerBase.listAccount');
 
   @override
-  List<String> get listAccount {
+  List<AccountModel> get listAccount {
     _$listAccountAtom.reportRead();
     return super.listAccount;
   }
 
   @override
-  set listAccount(List<String> value) {
+  set listAccount(List<AccountModel> value) {
     _$listAccountAtom.reportWrite(value, super.listAccount, () {
       super.listAccount = value;
     });
   }
 
-  final _$loadBanksAsyncAction =
-      AsyncAction('_ExpenseEntryControllerBase.loadBanks');
+  final _$listLocalAtom = Atom(name: '_ExpenseEntryControllerBase.listLocal');
 
   @override
-  Future<void> loadBanks() {
-    return _$loadBanksAsyncAction.run(() => super.loadBanks());
+  List<LocalModel> get listLocal {
+    _$listLocalAtom.reportRead();
+    return super.listLocal;
+  }
+
+  @override
+  set listLocal(List<LocalModel> value) {
+    _$listLocalAtom.reportWrite(value, super.listLocal, () {
+      super.listLocal = value;
+    });
+  }
+
+  final _$listReasonsAtom =
+      Atom(name: '_ExpenseEntryControllerBase.listReasons');
+
+  @override
+  List<ReasonsModel> get listReasons {
+    _$listReasonsAtom.reportRead();
+    return super.listReasons;
+  }
+
+  @override
+  set listReasons(List<ReasonsModel> value) {
+    _$listReasonsAtom.reportWrite(value, super.listReasons, () {
+      super.listReasons = value;
+    });
   }
 
   final _$loadAccountsAsyncAction =
@@ -63,6 +155,22 @@ mixin _$ExpenseEntryController on _ExpenseEntryControllerBase, Store {
   @override
   Future<void> loadAccounts() {
     return _$loadAccountsAsyncAction.run(() => super.loadAccounts());
+  }
+
+  final _$loadReasonsAsyncAction =
+      AsyncAction('_ExpenseEntryControllerBase.loadReasons');
+
+  @override
+  Future<void> loadReasons() {
+    return _$loadReasonsAsyncAction.run(() => super.loadReasons());
+  }
+
+  final _$loadLocalAsyncAction =
+      AsyncAction('_ExpenseEntryControllerBase.loadLocal');
+
+  @override
+  Future<void> loadLocal() {
+    return _$loadLocalAsyncAction.run(() => super.loadLocal());
   }
 
   final _$saveExpenseAsyncAction =
@@ -88,10 +196,48 @@ mixin _$ExpenseEntryController on _ExpenseEntryControllerBase, Store {
   }
 
   @override
+  dynamic setSelectedReasons(String? selectedReasons) {
+    final _$actionInfo = _$_ExpenseEntryControllerBaseActionController
+        .startAction(name: '_ExpenseEntryControllerBase.setSelectedReasons');
+    try {
+      return super.setSelectedReasons(selectedReasons);
+    } finally {
+      _$_ExpenseEntryControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setSelectedAccount(String? selectedAccount) {
+    final _$actionInfo = _$_ExpenseEntryControllerBaseActionController
+        .startAction(name: '_ExpenseEntryControllerBase.setSelectedAccount');
+    try {
+      return super.setSelectedAccount(selectedAccount);
+    } finally {
+      _$_ExpenseEntryControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setSelectedLocal(String? selectedLocal) {
+    final _$actionInfo = _$_ExpenseEntryControllerBaseActionController
+        .startAction(name: '_ExpenseEntryControllerBase.setSelectedLocal');
+    try {
+      return super.setSelectedLocal(selectedLocal);
+    } finally {
+      _$_ExpenseEntryControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 listAccount: ${listAccount},
-selectedDate: ${selectedDate}
+listLocal: ${listLocal},
+listReasons: ${listReasons},
+selectedDate: ${selectedDate},
+selectedReasons: ${selectedReasons},
+selectedAccount: ${selectedAccount},
+selectedLocal: ${selectedLocal}
     ''';
   }
 }

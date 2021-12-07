@@ -5,14 +5,14 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
 
 class CalendarButton extends StatelessWidget {
-  final ExpenseEntryController onPressed;
   final DateTime? selectdDate;
   final dateFormat = DateFormat('dd/MM/y');
+  final void Function(DateTime) onChanged;
 
   CalendarButton({
     Key? key,
-    required this.onPressed,
     this.selectdDate,
+    required this.onChanged,
   }) : super(key: key);
 
   @override
@@ -28,8 +28,11 @@ class CalendarButton extends StatelessWidget {
           initialDate: DateTime.now(),
           firstDate: DateTime(2000),
           lastDate: DateTime(2025),
-        );
-        onPressed.setSelectedDate(selectedDate);
+        ).then((value) {
+          if (value != null) {
+            onChanged(value);
+          }
+        });
       },
       borderRadius: BorderRadius.circular(15),
       child: Container(

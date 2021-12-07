@@ -1,4 +1,7 @@
+import 'package:dentro_do_bolso/app/models/account_model.dart';
 import 'package:dentro_do_bolso/app/models/expense_model.dart';
+import 'package:dentro_do_bolso/app/models/local_model.dart';
+import 'package:dentro_do_bolso/app/models/reasons_model.dart';
 import 'package:dentro_do_bolso/app/services/entry/entry_service.dart';
 import 'package:mobx/mobx.dart';
 part 'expense_entry_controller.g.dart';
@@ -23,19 +26,58 @@ abstract class _ExpenseEntryControllerBase with Store {
   setSelectedDate(DateTime? selectedDate) => _selectedDate = selectedDate;
 
   @observable
-  List<String> listAccount = [];
+  String? _selectedReasons;
+
+  @computed
+  String? get selectedReasons => _selectedReasons;
 
   @action
-  Future<void> loadBanks() async {
-    var result = await _entryService.loadBanks();
-    print(result);
-    // await _entrySservice.save('itau');
-  }
+  setSelectedReasons(String? selectedReasons) =>
+      _selectedReasons = selectedReasons;
+
+  @observable
+  String? _selectedAccount;
+
+  @computed
+  String? get selectedAccount => _selectedAccount;
+
+  @action
+  setSelectedAccount(String? selectedAccount) =>
+      _selectedAccount = selectedAccount;
+
+  @observable
+  String? _selectedLocal;
+
+  @computed
+  String? get selectedLocal => _selectedLocal;
+
+  @action
+  setSelectedLocal(String? selectedLocal) => _selectedLocal = selectedLocal;
+
+  @observable
+  List<AccountModel> listAccount = [];
+
+  @observable
+  List<LocalModel> listLocal = [];
+
+  @observable
+  List<ReasonsModel> listReasons = [];
 
   @action
   Future<void> loadAccounts() async {
     listAccount = await _entryService.loadAccountsList().asObservable();
     print(listAccount);
+  }
+
+  @action
+  Future<void> loadReasons() async {
+    listReasons = await _entryService.loadReasons().asObservable();
+    print(listReasons);
+  }
+
+  @action
+  Future<void> loadLocal() async {
+    listLocal = await _entryService.loadLocal().asObservable();
   }
 
   @action

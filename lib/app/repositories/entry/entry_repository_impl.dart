@@ -2,6 +2,8 @@ import 'package:dentro_do_bolso/app/core/database/sqlite_connection_factory.dart
 import 'package:dentro_do_bolso/app/models/bank_model.dart';
 import 'package:dentro_do_bolso/app/models/account_model.dart';
 import 'package:dentro_do_bolso/app/models/expense_model.dart';
+import 'package:dentro_do_bolso/app/models/local_model.dart';
+import 'package:dentro_do_bolso/app/models/reasons_model.dart';
 import 'package:dentro_do_bolso/app/repositories/entry/entry_repository.dart';
 
 class EntryRepositoryImpl implements EntryRepository {
@@ -54,6 +56,28 @@ class EntryRepositoryImpl implements EntryRepository {
     );
     // final AccountModel accountModel = AccountModel.fromJson(result);
     return result.map((e) => AccountModel.fromMap(e)).toList().first;
+  }
+
+  @override
+  Future<List<LocalModel>> loadLocal() async {
+    final conn = await _sqliteConnectionFactory.openConnection();
+    final result = await conn.rawQuery(
+      '''
+      select * from local      
+    ''',
+    );
+    return result.map((e) => LocalModel.fromMap(e)).toList();
+  }
+
+  @override
+  Future<List<ReasonsModel>> loadReasons() async {
+    final conn = await _sqliteConnectionFactory.openConnection();
+    final result = await conn.rawQuery(
+      '''
+      select * from motivo
+    ''',
+    );
+    return result.map((e) => ReasonsModel.fromMap(e)).toList();
   }
 
   @override
