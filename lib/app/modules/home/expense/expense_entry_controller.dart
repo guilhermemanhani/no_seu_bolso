@@ -55,6 +55,33 @@ abstract class _ExpenseEntryControllerBase with Store {
   setSelectedLocal(String? selectedLocal) => _selectedLocal = selectedLocal;
 
   @observable
+  int? _idLocal;
+
+  @computed
+  int? get selectedIdLocal => _idLocal;
+
+  @action
+  setIdLocal(int? idLocal) => _idLocal = idLocal;
+
+  @observable
+  int? _idAcccount;
+
+  @computed
+  int? get selectedIdAcccount => _idAcccount;
+
+  @action
+  setIdAcccount(int? idAcccount) => _idAcccount = idAcccount;
+
+  @observable
+  int? _idReasons;
+
+  @computed
+  int? get selectedIdReasons => _idReasons;
+
+  @action
+  setIdReasonst(int? idReasons) => _idReasons = idReasons;
+
+  @observable
   List<AccountModel> listAccount = [];
 
   @observable
@@ -81,16 +108,28 @@ abstract class _ExpenseEntryControllerBase with Store {
   }
 
   @action
-  Future<void> saveExpense() async {
-    ExpenseModel expenseModel = ExpenseModel(
-      idlancamento: 0,
-      valor: -100.43,
-      datahora: DateTime.now(),
-      descricao: 'descricao',
-      idconta: 2,
-      localid: 2,
-      motivoid: 1,
-    );
-    await _entryService.saveExpense(expenseModel);
+  Future<void> saveExpense(String description, double value) async {
+    if (_selectedDate != null) {
+      if (_idLocal != null) {
+        if (_idAcccount != null) {
+          ExpenseModel expenseModel = ExpenseModel(
+            idlancamento: 0,
+            valor: value,
+            datahora: _selectedDate!,
+            descricao: description,
+            idconta: _idAcccount!,
+            localid: _idLocal!,
+            motivoid: _idReasons,
+          );
+          await _entryService.saveExpense(expenseModel);
+        } else {
+          // conta vazio
+        }
+      } else {
+        // local vazio
+      }
+    } else {
+      // data vazia
+    }
   }
 }

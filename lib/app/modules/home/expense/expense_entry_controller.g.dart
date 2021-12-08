@@ -37,6 +37,27 @@ mixin _$ExpenseEntryController on _ExpenseEntryControllerBase, Store {
       (_$selectedLocalComputed ??= Computed<String?>(() => super.selectedLocal,
               name: '_ExpenseEntryControllerBase.selectedLocal'))
           .value;
+  Computed<int?>? _$selectedIdLocalComputed;
+
+  @override
+  int? get selectedIdLocal =>
+      (_$selectedIdLocalComputed ??= Computed<int?>(() => super.selectedIdLocal,
+              name: '_ExpenseEntryControllerBase.selectedIdLocal'))
+          .value;
+  Computed<int?>? _$selectedIdAcccountComputed;
+
+  @override
+  int? get selectedIdAcccount => (_$selectedIdAcccountComputed ??=
+          Computed<int?>(() => super.selectedIdAcccount,
+              name: '_ExpenseEntryControllerBase.selectedIdAcccount'))
+      .value;
+  Computed<int?>? _$selectedIdReasonsComputed;
+
+  @override
+  int? get selectedIdReasons => (_$selectedIdReasonsComputed ??= Computed<int?>(
+          () => super.selectedIdReasons,
+          name: '_ExpenseEntryControllerBase.selectedIdReasons'))
+      .value;
 
   final _$_selectedDateAtom =
       Atom(name: '_ExpenseEntryControllerBase._selectedDate');
@@ -99,6 +120,52 @@ mixin _$ExpenseEntryController on _ExpenseEntryControllerBase, Store {
   set _selectedLocal(String? value) {
     _$_selectedLocalAtom.reportWrite(value, super._selectedLocal, () {
       super._selectedLocal = value;
+    });
+  }
+
+  final _$_idLocalAtom = Atom(name: '_ExpenseEntryControllerBase._idLocal');
+
+  @override
+  int? get _idLocal {
+    _$_idLocalAtom.reportRead();
+    return super._idLocal;
+  }
+
+  @override
+  set _idLocal(int? value) {
+    _$_idLocalAtom.reportWrite(value, super._idLocal, () {
+      super._idLocal = value;
+    });
+  }
+
+  final _$_idAcccountAtom =
+      Atom(name: '_ExpenseEntryControllerBase._idAcccount');
+
+  @override
+  int? get _idAcccount {
+    _$_idAcccountAtom.reportRead();
+    return super._idAcccount;
+  }
+
+  @override
+  set _idAcccount(int? value) {
+    _$_idAcccountAtom.reportWrite(value, super._idAcccount, () {
+      super._idAcccount = value;
+    });
+  }
+
+  final _$_idReasonsAtom = Atom(name: '_ExpenseEntryControllerBase._idReasons');
+
+  @override
+  int? get _idReasons {
+    _$_idReasonsAtom.reportRead();
+    return super._idReasons;
+  }
+
+  @override
+  set _idReasons(int? value) {
+    _$_idReasonsAtom.reportWrite(value, super._idReasons, () {
+      super._idReasons = value;
     });
   }
 
@@ -177,8 +244,9 @@ mixin _$ExpenseEntryController on _ExpenseEntryControllerBase, Store {
       AsyncAction('_ExpenseEntryControllerBase.saveExpense');
 
   @override
-  Future<void> saveExpense() {
-    return _$saveExpenseAsyncAction.run(() => super.saveExpense());
+  Future<void> saveExpense(String description, double value) {
+    return _$saveExpenseAsyncAction
+        .run(() => super.saveExpense(description, value));
   }
 
   final _$_ExpenseEntryControllerBaseActionController =
@@ -229,6 +297,39 @@ mixin _$ExpenseEntryController on _ExpenseEntryControllerBase, Store {
   }
 
   @override
+  dynamic setIdLocal(int? idLocal) {
+    final _$actionInfo = _$_ExpenseEntryControllerBaseActionController
+        .startAction(name: '_ExpenseEntryControllerBase.setIdLocal');
+    try {
+      return super.setIdLocal(idLocal);
+    } finally {
+      _$_ExpenseEntryControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setIdAcccount(int? idAcccount) {
+    final _$actionInfo = _$_ExpenseEntryControllerBaseActionController
+        .startAction(name: '_ExpenseEntryControllerBase.setIdAcccount');
+    try {
+      return super.setIdAcccount(idAcccount);
+    } finally {
+      _$_ExpenseEntryControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setIdReasonst(int? idReasons) {
+    final _$actionInfo = _$_ExpenseEntryControllerBaseActionController
+        .startAction(name: '_ExpenseEntryControllerBase.setIdReasonst');
+    try {
+      return super.setIdReasonst(idReasons);
+    } finally {
+      _$_ExpenseEntryControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 listAccount: ${listAccount},
@@ -237,7 +338,10 @@ listReasons: ${listReasons},
 selectedDate: ${selectedDate},
 selectedReasons: ${selectedReasons},
 selectedAccount: ${selectedAccount},
-selectedLocal: ${selectedLocal}
+selectedLocal: ${selectedLocal},
+selectedIdLocal: ${selectedIdLocal},
+selectedIdAcccount: ${selectedIdAcccount},
+selectedIdReasons: ${selectedIdReasons}
     ''';
   }
 }

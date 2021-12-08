@@ -4,10 +4,10 @@ class ExpenseModel {
   final int idlancamento;
   final double valor;
   final DateTime datahora;
-  final String descricao;
+  final String? descricao;
   final int idconta;
   final int localid;
-  final int motivoid;
+  final int? motivoid;
   final String? local;
   final String? motivo;
   final String? instituicao;
@@ -16,10 +16,10 @@ class ExpenseModel {
     required this.idlancamento,
     required this.valor,
     required this.datahora,
-    required this.descricao,
+    this.descricao,
     required this.idconta,
     required this.localid,
-    required this.motivoid,
+    this.motivoid,
     this.local,
     this.motivo,
     this.instituicao,
@@ -70,14 +70,14 @@ class ExpenseModel {
     return ExpenseModel(
       idlancamento: map['idlancamento'],
       valor: map['valor'],
-      datahora: DateTime.parse(map['datahora']),
-      descricao: map['descricao'],
+      datahora: DateTime.fromMillisecondsSinceEpoch(map['datahora']),
+      descricao: map['descricao'] != null ? map['descricao'] : null,
       idconta: map['idconta'],
       localid: map['localid'],
-      motivoid: map['motivoid'],
-      local: map['local'],
-      motivo: map['motivo'],
-      instituicao: map['instituicao'],
+      motivoid: map['motivoid'] != null ? map['motivoid'] : null,
+      local: map['local'] != null ? map['local'] : null,
+      motivo: map['motivo'] != null ? map['motivo'] : null,
+      instituicao: map['instituicao'] != null ? map['instituicao'] : null,
     );
   }
 

@@ -13,6 +13,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
+import 'package:validatorless/validatorless.dart';
 
 class ExpenseEntryPage extends StatefulWidget {
   const ExpenseEntryPage({Key? key}) : super(key: key);
@@ -23,10 +24,12 @@ class ExpenseEntryPage extends StatefulWidget {
 
 class _ExpenseEntryPageState
     extends ModularState<ExpenseEntryPage, ExpenseEntryController> {
-  var controllerMoney =
+  final _controllerMoney =
       MoneyMaskedTextController(decimalSeparator: ',', thousandSeparator: '.');
   final dateFormat = DateFormat('dd/MM/y');
   bool switchButton = false;
+  final _descriptionEC = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   final reactionDisposer = <ReactionDisposer>[];
   @override
@@ -46,6 +49,7 @@ class _ExpenseEntryPageState
   void dispose() {
     super.dispose();
     reactionDisposer.forEach((element) => element());
+    _descriptionEC.dispose();
   }
 
   @override
@@ -55,189 +59,210 @@ class _ExpenseEntryPageState
         title: const Text('Entradas / Saídas'),
       ),
       body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.only(top: 1.statusBarHeight, left: 16, right: 16),
-          width: 1.sw,
-          height: 1.sh - 1.statusBarHeight - kToolbarHeight,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  const Icon(Icons.add),
-                  CupertinoSwitch(
-                    activeColor: Colors.red,
-                    trackColor: Colors.green,
-                    value: switchButton,
-                    onChanged: (value) {
-                      setState(() {
-                        switchButton = value;
-                      });
-                    },
-                  ),
-                  const Icon(Icons.remove),
-                  Expanded(
-                    child: DentrodobolsoTextFormField(
-                      controller: controllerMoney,
-                      label: 'valor',
-                      textInputType: TextInputType.number,
-                      textInputAction: TextInputAction.next,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              Observer(
-                builder: (_) {
-                  return CalendarButton(
-                    onChanged: (val) => controller.setSelectedDate(val),
-                    selectdDate: controller.selectedDate,
-                  );
-                },
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              DentrodobolsoTextFormField(label: 'Descrição'),
-              const SizedBox(
-                height: 16,
-              ),
-              Row(
-                children: [
-                  DentrodobolsoDropDownButton(
-                    widget: Observer(
-                      builder: (_) {
-                        return DropdownButton<String>(
-                          isExpanded: true,
-                          underline: Container(
-                            width: double.infinity,
-                          ),
-                          icon: const Icon(
-                            Icons.keyboard_arrow_down_sharp,
-                          ),
-                          hint: const Text('Conta'),
-                          value: controller.selectedAccount,
-                          onChanged: (value) {
-                            controller.setSelectedAccount(value);
-                          },
-                          items: controller.listAccount.map(
-                            (AccountModel map) {
-                              return DropdownMenuItem<String>(
-                                value: map.id.toString(),
-                                child: Text(
-                                  '${map.instituicao} ${map.conta}',
-                                ),
-                              );
-                            },
-                          ).toList(),
-                        );
+        child: Form(
+          key: _formKey,
+          child: Container(
+            padding:
+                EdgeInsets.only(top: 1.statusBarHeight, left: 16, right: 16),
+            width: 1.sw,
+            height: 1.sh - 1.statusBarHeight - kToolbarHeight,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    const Icon(Icons.add),
+                    CupertinoSwitch(
+                      activeColor: Colors.red,
+                      trackColor: Colors.green,
+                      value: switchButton,
+                      onChanged: (value) {
+                        setState(() {
+                          switchButton = value;
+                        });
                       },
                     ),
-                  ),
-                  const SizedBox(
-                    width: 16,
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.add),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              Row(
-                children: [
-                  DentrodobolsoDropDownButton(
-                    widget: Observer(
-                      builder: (_) {
-                        return DropdownButton<String>(
-                          underline: Container(
-                            width: double.infinity,
-                          ),
-                          isExpanded: true,
-                          icon: const Icon(
-                            Icons.keyboard_arrow_down_sharp,
-                          ),
-                          hint: const Text('Local'),
-                          value: controller.selectedLocal,
-                          // isDense: true,
-                          onChanged: (value) {
-                            controller.setSelectedLocal(value);
-                          },
-                          items: controller.listLocal.map(
-                            (LocalModel map) {
-                              return DropdownMenuItem<String>(
-                                value: map.id.toString(),
-                                child: Text(
-                                  map.local,
-                                ),
-                              );
-                            },
-                          ).toList(),
-                        );
-                      },
+                    const Icon(Icons.remove),
+                    Expanded(
+                      child: DentrodobolsoTextFormField(
+                        controller: _controllerMoney,
+                        label: 'valor',
+                        textInputType: TextInputType.number,
+                        textInputAction: TextInputAction.next,
+                        validator:
+                            Validatorless.required('Valor é obrigatório'),
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    width: 16,
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.add),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              Row(
-                children: [
-                  DentrodobolsoDropDownButton(
-                    widget: Observer(
-                      builder: (_) {
-                        return DropdownButton<String>(
-                          underline: Container(
-                            width: double.infinity,
-                          ),
-                          isExpanded: true,
-                          icon: const Icon(
-                            Icons.keyboard_arrow_down_sharp,
-                          ),
-                          hint: const Text('Motivo'),
-                          value: controller.selectedReasons,
-                          // isDense: true,
-                          onChanged: (value) {
-                            controller.setSelectedReasons(value);
-                          },
-                          items: controller.listReasons.map(
-                            (ReasonsModel map) {
-                              return DropdownMenuItem<String>(
-                                value: map.id.toString(),
-                                child: Text(
-                                  map.motivo,
-                                ),
-                              );
-                            },
-                          ).toList(),
-                        );
-                      },
+                  ],
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                Observer(
+                  builder: (_) {
+                    return CalendarButton(
+                      onChanged: (val) => controller.setSelectedDate(val),
+                      selectdDate: controller.selectedDate,
+                    );
+                  },
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                DentrodobolsoTextFormField(
+                  label: 'Descrição',
+                  controller: _descriptionEC,
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                Row(
+                  children: [
+                    DentrodobolsoDropDownButton(
+                      widget: Observer(
+                        builder: (_) {
+                          return DropdownButton<String>(
+                            isExpanded: true,
+                            underline: Container(
+                              width: double.infinity,
+                            ),
+                            icon: const Icon(
+                              Icons.keyboard_arrow_down_sharp,
+                            ),
+                            hint: const Text('Conta'),
+                            value: controller.selectedAccount,
+                            onChanged: (value) =>
+                                controller.setSelectedAccount(value),
+                            items: controller.listAccount.map(
+                              (AccountModel map) {
+                                return DropdownMenuItem<String>(
+                                  value: map.id.toString(),
+                                  onTap: () => controller.setIdAcccount(map.id),
+                                  child: Text(
+                                    '${map.instituicao} ${map.conta}',
+                                  ),
+                                );
+                              },
+                            ).toList(),
+                          );
+                        },
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    width: 16,
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.add),
-                  ),
-                ],
-              ),
-            ],
+                    const SizedBox(
+                      width: 16,
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.add),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                Row(
+                  children: [
+                    DentrodobolsoDropDownButton(
+                      widget: Observer(
+                        builder: (_) {
+                          return DropdownButton<String>(
+                            underline: Container(
+                              width: double.infinity,
+                            ),
+                            isExpanded: true,
+                            icon: const Icon(
+                              Icons.keyboard_arrow_down_sharp,
+                            ),
+                            hint: const Text('Local'),
+                            value: controller.selectedLocal,
+                            // isDense: true,
+                            onChanged: (value) =>
+                                controller.setSelectedLocal(value),
+                            items: controller.listLocal.map(
+                              (LocalModel map) {
+                                return DropdownMenuItem<String>(
+                                  onTap: () => controller.setIdLocal(map.id),
+                                  value: map.id.toString(),
+                                  child: Text(
+                                    map.local,
+                                  ),
+                                );
+                              },
+                            ).toList(),
+                          );
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 16,
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.add),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                Row(
+                  children: [
+                    DentrodobolsoDropDownButton(
+                      widget: Observer(
+                        builder: (_) {
+                          return DropdownButton<String>(
+                            underline: Container(
+                              width: double.infinity,
+                            ),
+                            isExpanded: true,
+                            icon: const Icon(
+                              Icons.keyboard_arrow_down_sharp,
+                            ),
+                            hint: const Text('Motivo'),
+                            value: controller.selectedReasons,
+                            // isDense: true,
+                            onChanged: (value) =>
+                                controller.setSelectedReasons(value),
+                            items: controller.listReasons.map(
+                              (ReasonsModel map) {
+                                return DropdownMenuItem<String>(
+                                  onTap: () => controller.setIdReasonst(map.id),
+                                  value: map.id.toString(),
+                                  child: Text(
+                                    map.motivo,
+                                  ),
+                                );
+                              },
+                            ).toList(),
+                          );
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 16,
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.add),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          final formValid = _formKey.currentState?.validate() ?? false;
+          if (formValid) {
+            controller.saveExpense(
+              _descriptionEC.text,
+              _controllerMoney.numberValue,
+            );
+          }
+        },
+        child: const Icon(Icons.payment),
       ),
     );
   }
