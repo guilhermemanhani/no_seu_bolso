@@ -92,44 +92,60 @@ abstract class _ExpenseEntryControllerBase with Store {
 
   @action
   Future<void> loadAccounts() async {
-    listAccount = await _entryService.loadAccountsList().asObservable();
+    try {
+      listAccount = await _entryService.loadAccountsList().asObservable();
+    } on Exception catch (e) {
+      // setError('Erro ao cadastrar task');
+    }
     // print(listAccount);
   }
 
   @action
   Future<void> loadReasons() async {
-    listReasons = await _entryService.loadReasons().asObservable();
-    // print(listReasons);
+    try {
+      listReasons = await _entryService.loadReasons().asObservable();
+      // print(listReasons);
+    } on Exception catch (e) {
+      // setError('Erro ao cadastrar task');
+    }
   }
 
   @action
   Future<void> loadLocal() async {
-    listLocal = await _entryService.loadLocal().asObservable();
+    try {
+      listLocal = await _entryService.loadLocal().asObservable();
+    } on Exception catch (e) {
+      // setError('Erro ao cadastrar task');
+    }
   }
 
   @action
   Future<void> saveExpense(String description, double value) async {
-    if (_selectedDate != null) {
-      if (_idLocal != null) {
-        if (_idAcccount != null) {
-          ExpenseModel expenseModel = ExpenseModel(
-            idlancamento: 0,
-            valor: value,
-            datahora: _selectedDate!,
-            descricao: description,
-            idconta: _idAcccount!,
-            localid: _idLocal!,
-            motivoid: _idReasons,
-          );
-          await _entryService.saveExpense(expenseModel);
+    try {
+      if (_selectedDate != null) {
+        if (_idLocal != null) {
+          if (_idAcccount != null) {
+            ExpenseModel expenseModel = ExpenseModel(
+              idlancamento: 0,
+              valor: value,
+              datahora: _selectedDate!,
+              descricao: description,
+              idconta: _idAcccount!,
+              localid: _idLocal!,
+              motivoid: _idReasons,
+            );
+            await _entryService.saveExpense(expenseModel);
+          } else {
+            // conta vazio
+          }
         } else {
-          // conta vazio
+          // local vazio
         }
       } else {
-        // local vazio
+        // data vazia
       }
-    } else {
-      // data vazia
+    } on Exception catch (e) {
+      // setError('Erro ao cadastrar task');
     }
   }
 }

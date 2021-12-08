@@ -1,3 +1,4 @@
+import 'package:dentro_do_bolso/app/core/ui/widgets/loader.dart';
 import 'package:dentro_do_bolso/app/models/account_model.dart';
 import 'package:dentro_do_bolso/app/models/expense_model.dart';
 import 'package:dentro_do_bolso/app/services/entry/entry_service.dart';
@@ -19,20 +20,41 @@ abstract class _HomeControllerBase with Store {
 
   @action
   Future<void> loadBanks() async {
-    var result = await _entryService.loadBanks();
+    try {
+      // Loader.show();
+      var result = await _entryService.loadBanks();
+    } on Exception catch (e) {
+      // TODO
+    } finally {
+      // Loader.hide();
+    }
     // print(result);
     // await _entrySservice.save('itau');
   }
 
   @action
   Future<void> loadAccounts() async {
-    accountInfoModel = await _entryService.loadAccounts().asObservable();
+    try {
+      // Loader.show();
+      accountInfoModel = await _entryService.loadAccounts().asObservable();
+    } on Exception catch (e) {
+      // TODO
+    } finally {
+      // Loader.hide();
+    }
     // print(accountInfoModel);
   }
 
   @action
   Future<void> loadExpense() async {
-    var result2 = await _entryService.loadExpense();
+    try {
+      // Loader.show();
+      var result2 = await _entryService.loadExpense();
+    } on Exception catch (e) {
+      // TODO
+    } finally {
+      // Loader.hide();
+    }
     // print(result2);
   }
 

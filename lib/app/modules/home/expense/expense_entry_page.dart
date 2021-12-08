@@ -50,6 +50,7 @@ class _ExpenseEntryPageState
     super.dispose();
     reactionDisposer.forEach((element) => element());
     _descriptionEC.dispose();
+    _controllerMoney.dispose();
   }
 
   @override
@@ -266,4 +267,112 @@ class _ExpenseEntryPageState
       ),
     );
   }
+
+  // _showDialogQrcode() {
+  //   return showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         shape: RoundedRectangleBorder(
+  //           borderRadius: BorderRadius.circular(
+  //             16,
+  //           ),
+  //         ),
+  //         content: SingleChildScrollView(
+  //           child: Observer(
+  //             builder: (BuildContext context) {
+  //               if (controller.isLoadingQrCode) {
+  //                 return Center(
+  //                   child: CircularProgressIndicator(),
+  //                 );
+  //               } else if (controller.qrFuture.error != null) {
+  //                 return Center(
+  //                   child: Text(
+  //                     "Ops... \n ${controller.qrFuture.error}",
+  //                     textAlign: TextAlign.center,
+  //                     style: TextStyle(
+  //                       fontWeight: FontWeight.w900,
+  //                       fontSize: 25,
+  //                     ),
+  //                   ),
+  //                 );
+  //               } else {
+  //                 List<int> img = controller
+  //                     .gerarImg(controller.qrFuture.value.imagemBase64);
+  //                 return Column(
+  //                   crossAxisAlignment: CrossAxisAlignment.start,
+  //                   children: [
+  //                     Center(
+  //                       child: Container(
+  //                         decoration: ConstsApp.caixaAredondadaBranca,
+  //                         height: 250,
+  //                         width: 250,
+  //                         child: Padding(
+  //                           padding: const EdgeInsets.all(6.0),
+  //                           child: Image.memory(
+  //                             Uint8List.fromList(
+  //                               img,
+  //                             ),
+  //                           ),
+  //                         ),
+  //                       ),
+  //                     ),
+  //                     Padding(
+  //                       padding: const EdgeInsets.symmetric(vertical: 16.0),
+  //                       child: Center(
+  //                         child: Text(
+  //                           "Valor (R\$): ${controllerMoney.text}",
+  //                           style: ConstsApp.estiloTituloAzulUm,
+  //                         ),
+  //                       ),
+  //                     ),
+  //                     Text.rich(
+  //                       TextSpan(
+  //                         text: "Identificador: ",
+  //                         style: ConstsApp.estiloNegritoBlack87,
+  //                         children: [
+  //                           TextSpan(
+  //                             text: controller.qrFuture.value.identificador,
+  //                             style: ConstsApp.estiloNeutro,
+  //                           ),
+  //                         ],
+  //                       ),
+  //                     ),
+  //                     SizedBox(
+  //                       height: 4,
+  //                     ),
+  //                     Text.rich(
+  //                       TextSpan(
+  //                         text: "Descrição: ",
+  //                         style: ConstsApp.estiloNegritoBlack87,
+  //                         children: [
+  //                           TextSpan(
+  //                             text: controller.qrFuture.value.descricao,
+  //                             style: ConstsApp.estiloNeutro,
+  //                           ),
+  //                         ],
+  //                       ),
+  //                     ),
+  //                     SizedBox(
+  //                       height: 4,
+  //                     ),
+  //                     ElevatedButton(
+  //                       style: ElevatedButton.styleFrom(
+  //                         primary: ConstsApp.azulPadraoUniprime,
+  //                       ),
+  //                       onPressed: () => Modular.to.pop(),
+  //                       child: Center(
+  //                         child: Text("Sair"),
+  //                       ),
+  //                     ),
+  //                   ],
+  //                 );
+  //               }
+  //             },
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 }
