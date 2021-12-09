@@ -1,3 +1,4 @@
+import 'package:decimal/decimal.dart';
 import 'package:dentro_do_bolso/app/core/ui/widgets/loader.dart';
 import 'package:dentro_do_bolso/app/models/account_model.dart';
 import 'package:dentro_do_bolso/app/models/expense_model.dart';

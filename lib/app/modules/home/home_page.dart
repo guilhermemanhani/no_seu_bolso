@@ -61,15 +61,6 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                           padding: EdgeInsets.only(
                             top: 1.statusBarHeight + 30,
                           ),
-                          // child: DentrodobolsoDropDownButton(
-                          //   onChange: () {},
-                          //   selectValue: 'Jan',
-                          //   valueList: const [
-                          //     'Jan',
-                          //     'Fev',
-                          //     'Mar',
-                          //   ],
-                          // ),
                         ),
                         Container(
                           padding: const EdgeInsets.only(
@@ -99,11 +90,11 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                     return ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount:
-                          controller.accountInfoModel?.listAccount.length,
+                          controller.accountInfoModel!.listAccount.length,
                       itemBuilder: (context, index) {
                         final account =
-                            controller.accountInfoModel?.listAccount[index];
-                        if (controller.accountInfoModel?.listAccount == null) {
+                            controller.accountInfoModel!.listAccount[index];
+                        if (controller.accountInfoModel!.listAccount == null) {
                           return Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const [
@@ -131,7 +122,7 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    account!.instituicao!,
+                                    account.instituicao!,
                                   ),
                                   Text(
                                     account.saldo.toString(),
