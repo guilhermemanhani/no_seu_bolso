@@ -71,13 +71,13 @@ class ExpenseModel {
       idlancamento: map['idlancamento'],
       valor: map['valor'],
       datahora: DateTime.fromMillisecondsSinceEpoch(map['datahora']),
-      descricao: map['descricao'] != null ? map['descricao'] : null,
+      descricao: map['descricao'],
       idconta: map['idconta'],
       localid: map['localid'],
-      motivoid: map['motivoid'] != null ? map['motivoid'] : null,
-      local: map['local'] != null ? map['local'] : null,
-      motivo: map['motivo'] != null ? map['motivo'] : null,
-      instituicao: map['instituicao'] != null ? map['instituicao'] : null,
+      motivoid: map['motivoid'],
+      local: map['local'],
+      motivo: map['motivo'],
+      instituicao: map['instituicao'],
     );
   }
 
