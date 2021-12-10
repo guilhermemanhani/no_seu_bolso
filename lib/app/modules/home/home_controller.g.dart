@@ -9,6 +9,14 @@ part of 'home_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$HomeController on _HomeControllerBase, Store {
+  Computed<bool>? _$isLoadingSearchComputed;
+
+  @override
+  bool get isLoadingSearch =>
+      (_$isLoadingSearchComputed ??= Computed<bool>(() => super.isLoadingSearch,
+              name: '_HomeControllerBase.isLoadingSearch'))
+          .value;
+
   final _$accountInfoModelAtom =
       Atom(name: '_HomeControllerBase.accountInfoModel');
 
@@ -22,6 +30,51 @@ mixin _$HomeController on _HomeControllerBase, Store {
   set accountInfoModel(AccountInfoModel? value) {
     _$accountInfoModelAtom.reportWrite(value, super.accountInfoModel, () {
       super.accountInfoModel = value;
+    });
+  }
+
+  final _$modelAtom = Atom(name: '_HomeControllerBase.model');
+
+  @override
+  List<AccountModel>? get model {
+    _$modelAtom.reportRead();
+    return super.model;
+  }
+
+  @override
+  set model(List<AccountModel>? value) {
+    _$modelAtom.reportWrite(value, super.model, () {
+      super.model = value;
+    });
+  }
+
+  final _$heroAtom = Atom(name: '_HomeControllerBase.hero');
+
+  @override
+  ObservableList<AccountModel> get hero {
+    _$heroAtom.reportRead();
+    return super.hero;
+  }
+
+  @override
+  set hero(ObservableList<AccountModel> value) {
+    _$heroAtom.reportWrite(value, super.hero, () {
+      super.hero = value;
+    });
+  }
+
+  final _$heroFutureAtom = Atom(name: '_HomeControllerBase.heroFuture');
+
+  @override
+  ObservableFuture<List<AccountModel>>? get heroFuture {
+    _$heroFutureAtom.reportRead();
+    return super.heroFuture;
+  }
+
+  @override
+  set heroFuture(ObservableFuture<List<AccountModel>>? value) {
+    _$heroFutureAtom.reportWrite(value, super.heroFuture, () {
+      super.heroFuture = value;
     });
   }
 
@@ -66,7 +119,11 @@ mixin _$HomeController on _HomeControllerBase, Store {
   @override
   String toString() {
     return '''
-accountInfoModel: ${accountInfoModel}
+accountInfoModel: ${accountInfoModel},
+model: ${model},
+hero: ${hero},
+heroFuture: ${heroFuture},
+isLoadingSearch: ${isLoadingSearch}
     ''';
   }
 }
