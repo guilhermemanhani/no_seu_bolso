@@ -66,6 +66,15 @@ abstract class _ExpenseEntryControllerBase with Store {
   @observable
   int? _idAcccount;
 
+  @observable
+  bool _operationType = false;
+
+  @computed
+  bool get operationType => _operationType;
+
+  @action
+  setOperation(bool operationType) => _operationType = operationType;
+
   @computed
   int? get selectedIdAcccount => _idAcccount;
 

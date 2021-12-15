@@ -44,6 +44,13 @@ mixin _$ExpenseEntryController on _ExpenseEntryControllerBase, Store {
       (_$selectedIdLocalComputed ??= Computed<int?>(() => super.selectedIdLocal,
               name: '_ExpenseEntryControllerBase.selectedIdLocal'))
           .value;
+  Computed<bool>? _$operationTypeComputed;
+
+  @override
+  bool get operationType =>
+      (_$operationTypeComputed ??= Computed<bool>(() => super.operationType,
+              name: '_ExpenseEntryControllerBase.operationType'))
+          .value;
   Computed<int?>? _$selectedIdAcccountComputed;
 
   @override
@@ -151,6 +158,22 @@ mixin _$ExpenseEntryController on _ExpenseEntryControllerBase, Store {
   set _idAcccount(int? value) {
     _$_idAcccountAtom.reportWrite(value, super._idAcccount, () {
       super._idAcccount = value;
+    });
+  }
+
+  final _$_operationTypeAtom =
+      Atom(name: '_ExpenseEntryControllerBase._operationType');
+
+  @override
+  bool get _operationType {
+    _$_operationTypeAtom.reportRead();
+    return super._operationType;
+  }
+
+  @override
+  set _operationType(bool value) {
+    _$_operationTypeAtom.reportWrite(value, super._operationType, () {
+      super._operationType = value;
     });
   }
 
@@ -308,6 +331,17 @@ mixin _$ExpenseEntryController on _ExpenseEntryControllerBase, Store {
   }
 
   @override
+  dynamic setOperation(bool operationType) {
+    final _$actionInfo = _$_ExpenseEntryControllerBaseActionController
+        .startAction(name: '_ExpenseEntryControllerBase.setOperation');
+    try {
+      return super.setOperation(operationType);
+    } finally {
+      _$_ExpenseEntryControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic setIdAcccount(int? idAcccount) {
     final _$actionInfo = _$_ExpenseEntryControllerBaseActionController
         .startAction(name: '_ExpenseEntryControllerBase.setIdAcccount');
@@ -340,6 +374,7 @@ selectedReasons: ${selectedReasons},
 selectedAccount: ${selectedAccount},
 selectedLocal: ${selectedLocal},
 selectedIdLocal: ${selectedIdLocal},
+operationType: ${operationType},
 selectedIdAcccount: ${selectedIdAcccount},
 selectedIdReasons: ${selectedIdReasons}
     ''';

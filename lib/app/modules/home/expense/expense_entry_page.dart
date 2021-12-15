@@ -6,6 +6,7 @@ import 'package:dentro_do_bolso/app/models/account_model.dart';
 import 'package:dentro_do_bolso/app/models/local_model.dart';
 import 'package:dentro_do_bolso/app/models/reasons_model.dart';
 import 'package:dentro_do_bolso/app/modules/home/expense/expense_entry_controller.dart';
+import 'package:dentro_do_bolso/app/modules/home/expense/widget/text_icon_button.dart';
 import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,6 @@ class _ExpenseEntryPageState
   final _controllerMoney =
       MoneyMaskedTextController(decimalSeparator: ',', thousandSeparator: '.');
   final dateFormat = DateFormat('dd/MM/y');
-  bool switchButton = false;
   final _descriptionEC = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
@@ -73,14 +73,14 @@ class _ExpenseEntryPageState
                 Row(
                   children: [
                     const Icon(Icons.add),
-                    CupertinoSwitch(
-                      activeColor: Colors.red,
-                      trackColor: Colors.green,
-                      value: switchButton,
-                      onChanged: (value) {
-                        setState(() {
-                          switchButton = value;
-                        });
+                    Observer(
+                      builder: (_) {
+                        return CupertinoSwitch(
+                          activeColor: Colors.red,
+                          trackColor: Colors.green,
+                          value: controller.operationType,
+                          onChanged: (value) => controller.setOperation(value),
+                        );
                       },
                     ),
                     const Icon(Icons.remove),
@@ -153,7 +153,7 @@ class _ExpenseEntryPageState
                       width: 16,
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () => _showDialog(),
                       icon: const Icon(Icons.add),
                     ),
                   ],
@@ -206,48 +206,7 @@ class _ExpenseEntryPageState
                 const SizedBox(
                   height: 16,
                 ),
-                Row(
-                  children: [
-                    DentrodobolsoDropDownButton(
-                      widget: Observer(
-                        builder: (_) {
-                          return DropdownButton<String>(
-                            underline: Container(
-                              width: double.infinity,
-                            ),
-                            isExpanded: true,
-                            icon: const Icon(
-                              Icons.keyboard_arrow_down_sharp,
-                            ),
-                            hint: const Text('Motivo'),
-                            value: controller.selectedReasons,
-                            // isDense: true,
-                            onChanged: (value) =>
-                                controller.setSelectedReasons(value),
-                            items: controller.listReasons.map(
-                              (ReasonsModel map) {
-                                return DropdownMenuItem<String>(
-                                  onTap: () => controller.setIdReasonst(map.id),
-                                  value: map.id.toString(),
-                                  child: Text(
-                                    map.motivo,
-                                  ),
-                                );
-                              },
-                            ).toList(),
-                          );
-                        },
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.add),
-                    ),
-                  ],
-                ),
+                _construirDropDown()
               ],
             ),
           ),
@@ -268,111 +227,84 @@ class _ExpenseEntryPageState
     );
   }
 
-  // _showDialogQrcode() {
-  //   return showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         shape: RoundedRectangleBorder(
-  //           borderRadius: BorderRadius.circular(
-  //             16,
-  //           ),
-  //         ),
-  //         content: SingleChildScrollView(
-  //           child: Observer(
-  //             builder: (BuildContext context) {
-  //               if (controller.isLoadingQrCode) {
-  //                 return Center(
-  //                   child: CircularProgressIndicator(),
-  //                 );
-  //               } else if (controller.qrFuture.error != null) {
-  //                 return Center(
-  //                   child: Text(
-  //                     "Ops... \n ${controller.qrFuture.error}",
-  //                     textAlign: TextAlign.center,
-  //                     style: TextStyle(
-  //                       fontWeight: FontWeight.w900,
-  //                       fontSize: 25,
-  //                     ),
-  //                   ),
-  //                 );
-  //               } else {
-  //                 List<int> img = controller
-  //                     .gerarImg(controller.qrFuture.value.imagemBase64);
-  //                 return Column(
-  //                   crossAxisAlignment: CrossAxisAlignment.start,
-  //                   children: [
-  //                     Center(
-  //                       child: Container(
-  //                         decoration: ConstsApp.caixaAredondadaBranca,
-  //                         height: 250,
-  //                         width: 250,
-  //                         child: Padding(
-  //                           padding: const EdgeInsets.all(6.0),
-  //                           child: Image.memory(
-  //                             Uint8List.fromList(
-  //                               img,
-  //                             ),
-  //                           ),
-  //                         ),
-  //                       ),
-  //                     ),
-  //                     Padding(
-  //                       padding: const EdgeInsets.symmetric(vertical: 16.0),
-  //                       child: Center(
-  //                         child: Text(
-  //                           "Valor (R\$): ${controllerMoney.text}",
-  //                           style: ConstsApp.estiloTituloAzulUm,
-  //                         ),
-  //                       ),
-  //                     ),
-  //                     Text.rich(
-  //                       TextSpan(
-  //                         text: "Identificador: ",
-  //                         style: ConstsApp.estiloNegritoBlack87,
-  //                         children: [
-  //                           TextSpan(
-  //                             text: controller.qrFuture.value.identificador,
-  //                             style: ConstsApp.estiloNeutro,
-  //                           ),
-  //                         ],
-  //                       ),
-  //                     ),
-  //                     SizedBox(
-  //                       height: 4,
-  //                     ),
-  //                     Text.rich(
-  //                       TextSpan(
-  //                         text: "Descrição: ",
-  //                         style: ConstsApp.estiloNegritoBlack87,
-  //                         children: [
-  //                           TextSpan(
-  //                             text: controller.qrFuture.value.descricao,
-  //                             style: ConstsApp.estiloNeutro,
-  //                           ),
-  //                         ],
-  //                       ),
-  //                     ),
-  //                     SizedBox(
-  //                       height: 4,
-  //                     ),
-  //                     ElevatedButton(
-  //                       style: ElevatedButton.styleFrom(
-  //                         primary: ConstsApp.azulPadraoUniprime,
-  //                       ),
-  //                       onPressed: () => Modular.to.pop(),
-  //                       child: Center(
-  //                         child: Text("Sair"),
-  //                       ),
-  //                     ),
-  //                   ],
-  //                 );
-  //               }
-  //             },
-  //           ),
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
+  _construirDropDown() {
+    return Row(
+      children: [
+        DentrodobolsoDropDownButton(
+          widget: Observer(
+            builder: (_) {
+              return DropdownButton<String>(
+                underline: Container(
+                  width: double.infinity,
+                ),
+                isExpanded: true,
+                icon: const Icon(
+                  Icons.keyboard_arrow_down_sharp,
+                ),
+                hint: const Text('Motivo'),
+                value: controller.selectedReasons,
+                // isDense: true,
+                onChanged: (value) => controller.setSelectedReasons(value),
+                items: controller.listReasons.map(
+                  (ReasonsModel map) {
+                    return DropdownMenuItem<String>(
+                      onTap: () => controller.setIdReasonst(map.id),
+                      value: map.id.toString(),
+                      child: Text(
+                        map.motivo,
+                      ),
+                    );
+                  },
+                ).toList(),
+              );
+            },
+          ),
+        ),
+        const SizedBox(
+          width: 16,
+        ),
+        IconButton(
+          onPressed: () => _showDialog,
+          icon: const Icon(Icons.add),
+        ),
+      ],
+    );
+  }
+
+  _showDialog() {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(
+              16,
+            ),
+          ),
+          content: SingleChildScrollView(
+            child: Column(
+              children: [],
+            ),
+          ),
+          actions: [
+            TextIconButton(
+              icon: Icons.account_balance_outlined,
+              title: 'Banco',
+              color: Colors.blue,
+              width: 100,
+              onTap: () {},
+            ),
+            TextIconButton(
+              icon: Icons.payment,
+              title: 'Conta',
+              color: Colors.blue,
+              width: 100,
+              onTap: () {},
+            ),
+          ],
+          actionsAlignment: MainAxisAlignment.center,
+        );
+      },
+    );
+  }
 }

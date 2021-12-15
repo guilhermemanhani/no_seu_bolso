@@ -9,14 +9,6 @@ part of 'home_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$HomeController on _HomeControllerBase, Store {
-  Computed<bool>? _$isLoadingSearchComputed;
-
-  @override
-  bool get isLoadingSearch =>
-      (_$isLoadingSearchComputed ??= Computed<bool>(() => super.isLoadingSearch,
-              name: '_HomeControllerBase.isLoadingSearch'))
-          .value;
-
   final _$accountInfoModelAtom =
       Atom(name: '_HomeControllerBase.accountInfoModel');
 
@@ -63,21 +55,6 @@ mixin _$HomeController on _HomeControllerBase, Store {
     });
   }
 
-  final _$heroFutureAtom = Atom(name: '_HomeControllerBase.heroFuture');
-
-  @override
-  ObservableFuture<List<AccountModel>>? get heroFuture {
-    _$heroFutureAtom.reportRead();
-    return super.heroFuture;
-  }
-
-  @override
-  set heroFuture(ObservableFuture<List<AccountModel>>? value) {
-    _$heroFutureAtom.reportWrite(value, super.heroFuture, () {
-      super.heroFuture = value;
-    });
-  }
-
   final _$loadBanksAsyncAction = AsyncAction('_HomeControllerBase.loadBanks');
 
   @override
@@ -121,9 +98,7 @@ mixin _$HomeController on _HomeControllerBase, Store {
     return '''
 accountInfoModel: ${accountInfoModel},
 model: ${model},
-hero: ${hero},
-heroFuture: ${heroFuture},
-isLoadingSearch: ${isLoadingSearch}
+hero: ${hero}
     ''';
   }
 }

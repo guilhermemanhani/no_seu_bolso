@@ -25,18 +25,18 @@ abstract class _HomeControllerBase with Store {
   ObservableList<AccountModel> hero = <AccountModel>[].asObservable();
   // ObservableList<AccountModel> statusCheckbox = ObservableList();
 
-  @observable
-  ObservableFuture<List<AccountModel>>? heroFuture;
+  // @observable
+  // ObservableFuture<List<AccountModel>>? heroFuture;
 
-  @computed
-  bool get isLoadingSearch => heroFuture!.status == FutureStatus.pending;
+  // @computed
+  // bool get isLoadingSearch => heroFuture!.status == FutureStatus.pending;
 
   @action
   Future<void> loadBanks() async {
     try {
       // Loader.show();
       model = await _entryService.loadAccountsList().asObservable();
-      heroFuture = _entryService.loadAccountsList().asObservable();
+      // heroFuture = _entryService.loadAccountsList().asObservable();
       var result = await _entryService.loadBanks();
     } on Exception catch (e) {
       // TODO

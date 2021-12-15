@@ -70,7 +70,7 @@ class ExpenseModel {
     return ExpenseModel(
       idlancamento: map['idlancamento'],
       valor: map['valor'],
-      datahora: DateTime.fromMillisecondsSinceEpoch(map['datahora']),
+      datahora: DateTime.parse(map['datahora']),
       descricao: map['descricao'],
       idconta: map['idconta'],
       localid: map['localid'],
