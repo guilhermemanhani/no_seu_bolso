@@ -23,7 +23,7 @@ class TextIconButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: width.w,
-        height: 32.h,
+        height: 40.h,
         padding: const EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
           color: color,
@@ -40,6 +40,13 @@ class TextIconButton extends StatelessWidget {
                 icon,
                 color: Colors.white,
                 size: 16.sp,
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 8.0),
+              child: VerticalDivider(
+                color: Colors.white,
+                thickness: 2,
               ),
             ),
             Text(

@@ -239,6 +239,21 @@ mixin _$ExpenseEntryController on _ExpenseEntryControllerBase, Store {
     });
   }
 
+  final _$listBankAtom = Atom(name: '_ExpenseEntryControllerBase.listBank');
+
+  @override
+  List<BankModel> get listBank {
+    _$listBankAtom.reportRead();
+    return super.listBank;
+  }
+
+  @override
+  set listBank(List<BankModel> value) {
+    _$listBankAtom.reportWrite(value, super.listBank, () {
+      super.listBank = value;
+    });
+  }
+
   final _$loadAccountsAsyncAction =
       AsyncAction('_ExpenseEntryControllerBase.loadAccounts');
 
@@ -263,6 +278,14 @@ mixin _$ExpenseEntryController on _ExpenseEntryControllerBase, Store {
     return _$loadLocalAsyncAction.run(() => super.loadLocal());
   }
 
+  final _$loadBankAsyncAction =
+      AsyncAction('_ExpenseEntryControllerBase.loadBank');
+
+  @override
+  Future<void> loadBank() {
+    return _$loadBankAsyncAction.run(() => super.loadBank());
+  }
+
   final _$saveExpenseAsyncAction =
       AsyncAction('_ExpenseEntryControllerBase.saveExpense');
 
@@ -270,6 +293,38 @@ mixin _$ExpenseEntryController on _ExpenseEntryControllerBase, Store {
   Future<void> saveExpense(String description, double value) {
     return _$saveExpenseAsyncAction
         .run(() => super.saveExpense(description, value));
+  }
+
+  final _$saveAccontAsyncAction =
+      AsyncAction('_ExpenseEntryControllerBase.saveAccont');
+
+  @override
+  Future<void> saveAccont() {
+    return _$saveAccontAsyncAction.run(() => super.saveAccont());
+  }
+
+  final _$saveBankAsyncAction =
+      AsyncAction('_ExpenseEntryControllerBase.saveBank');
+
+  @override
+  Future<void> saveBank(String bank) {
+    return _$saveBankAsyncAction.run(() => super.saveBank(bank));
+  }
+
+  final _$saveLocalAsyncAction =
+      AsyncAction('_ExpenseEntryControllerBase.saveLocal');
+
+  @override
+  Future<void> saveLocal(String local) {
+    return _$saveLocalAsyncAction.run(() => super.saveLocal(local));
+  }
+
+  final _$saveReasonsAsyncAction =
+      AsyncAction('_ExpenseEntryControllerBase.saveReasons');
+
+  @override
+  Future<void> saveReasons(String reasons) {
+    return _$saveReasonsAsyncAction.run(() => super.saveReasons(reasons));
   }
 
   final _$_ExpenseEntryControllerBaseActionController =
@@ -369,6 +424,7 @@ mixin _$ExpenseEntryController on _ExpenseEntryControllerBase, Store {
 listAccount: ${listAccount},
 listLocal: ${listLocal},
 listReasons: ${listReasons},
+listBank: ${listBank},
 selectedDate: ${selectedDate},
 selectedReasons: ${selectedReasons},
 selectedAccount: ${selectedAccount},

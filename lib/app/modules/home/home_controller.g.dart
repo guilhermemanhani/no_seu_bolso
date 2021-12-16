@@ -40,21 +40,6 @@ mixin _$HomeController on _HomeControllerBase, Store {
     });
   }
 
-  final _$heroAtom = Atom(name: '_HomeControllerBase.hero');
-
-  @override
-  ObservableList<AccountModel> get hero {
-    _$heroAtom.reportRead();
-    return super.hero;
-  }
-
-  @override
-  set hero(ObservableList<AccountModel> value) {
-    _$heroAtom.reportWrite(value, super.hero, () {
-      super.hero = value;
-    });
-  }
-
   final _$loadBanksAsyncAction = AsyncAction('_HomeControllerBase.loadBanks');
 
   @override
@@ -97,8 +82,7 @@ mixin _$HomeController on _HomeControllerBase, Store {
   String toString() {
     return '''
 accountInfoModel: ${accountInfoModel},
-model: ${model},
-hero: ${hero}
+model: ${model}
     ''';
   }
 }

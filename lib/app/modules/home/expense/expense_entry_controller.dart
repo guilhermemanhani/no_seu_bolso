@@ -1,4 +1,5 @@
 import 'package:dentro_do_bolso/app/models/account_model.dart';
+import 'package:dentro_do_bolso/app/models/bank_model.dart';
 import 'package:dentro_do_bolso/app/models/expense_model.dart';
 import 'package:dentro_do_bolso/app/models/local_model.dart';
 import 'package:dentro_do_bolso/app/models/reasons_model.dart';
@@ -99,11 +100,15 @@ abstract class _ExpenseEntryControllerBase with Store {
   @observable
   List<ReasonsModel> listReasons = [];
 
+  @observable
+  List<BankModel> listBank = [];
+
   @action
   Future<void> loadAccounts() async {
     try {
       listAccount = await _entryService.loadAccountsList().asObservable();
     } on Exception catch (e) {
+      print(e);
       // setError('Erro ao cadastrar task');
     }
     // print(listAccount);
@@ -115,6 +120,7 @@ abstract class _ExpenseEntryControllerBase with Store {
       listReasons = await _entryService.loadReasons().asObservable();
       // print(listReasons);
     } on Exception catch (e) {
+      print(e);
       // setError('Erro ao cadastrar task');
     }
   }
@@ -124,6 +130,17 @@ abstract class _ExpenseEntryControllerBase with Store {
     try {
       listLocal = await _entryService.loadLocal().asObservable();
     } on Exception catch (e) {
+      print(e);
+      // setError('Erro ao cadastrar task');
+    }
+  }
+
+  @action
+  Future<void> loadBank() async {
+    try {
+      listBank = await _entryService.loadBanks().asObservable();
+    } on Exception catch (e) {
+      print(e);
       // setError('Erro ao cadastrar task');
     }
   }
@@ -154,7 +171,30 @@ abstract class _ExpenseEntryControllerBase with Store {
         // data vazia
       }
     } on Exception catch (e) {
+      print(e);
       // setError('Erro ao cadastrar task');
     }
+  }
+
+  @action
+  Future<void> saveAccont() async {
+    AccountModel accountModel =
+        AccountModel(conta: 16521, idbanco: 1, saldo: 2500.45, id: 0);
+    await _entryService.saveAccont(accountModel);
+  }
+
+  @action
+  Future<void> saveBank(String bank) async {
+    await _entryService.saveBank(bank);
+  }
+
+  @action
+  Future<void> saveLocal(String local) async {
+    await _entryService.saveLocal(local);
+  }
+
+  @action
+  Future<void> saveReasons(String reasons) async {
+    await _entryService.saveReason(reasons);
   }
 }

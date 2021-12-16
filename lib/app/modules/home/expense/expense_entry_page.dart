@@ -1,4 +1,5 @@
 import 'package:dentro_do_bolso/app/core/ui/extensions/size_screen_extension.dart';
+import 'package:dentro_do_bolso/app/core/ui/extensions/theme_extension.dart';
 import 'package:dentro_do_bolso/app/core/ui/widgets/calendar_button.dart';
 import 'package:dentro_do_bolso/app/core/ui/widgets/dentrodobolso_drop_down_button.dart';
 import 'package:dentro_do_bolso/app/core/ui/widgets/dentrodobolso_text_form_field.dart';
@@ -6,7 +7,8 @@ import 'package:dentro_do_bolso/app/models/account_model.dart';
 import 'package:dentro_do_bolso/app/models/local_model.dart';
 import 'package:dentro_do_bolso/app/models/reasons_model.dart';
 import 'package:dentro_do_bolso/app/modules/home/expense/expense_entry_controller.dart';
-import 'package:dentro_do_bolso/app/modules/home/expense/widget/text_icon_button.dart';
+import 'package:dentro_do_bolso/app/modules/home/expense/widget/dialog_account.dart';
+import 'package:dentro_do_bolso/app/modules/home/expense/widget/dialog_simple_register.dart';
 import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +42,7 @@ class _ExpenseEntryPageState
         controller.loadAccounts();
         controller.loadReasons();
         controller.loadLocal();
+        controller.loadBank();
       },
     );
     reactionDisposer.add(autoRunDisposer);
@@ -76,8 +79,8 @@ class _ExpenseEntryPageState
                     Observer(
                       builder: (_) {
                         return CupertinoSwitch(
-                          activeColor: Colors.red,
-                          trackColor: Colors.green,
+                          activeColor: context.red,
+                          trackColor: context.green,
                           value: controller.operationType,
                           onChanged: (value) => controller.setOperation(value),
                         );
@@ -117,96 +120,15 @@ class _ExpenseEntryPageState
                 const SizedBox(
                   height: 16,
                 ),
-                Row(
-                  children: [
-                    DentrodobolsoDropDownButton(
-                      widget: Observer(
-                        builder: (_) {
-                          return DropdownButton<String>(
-                            isExpanded: true,
-                            underline: Container(
-                              width: double.infinity,
-                            ),
-                            icon: const Icon(
-                              Icons.keyboard_arrow_down_sharp,
-                            ),
-                            hint: const Text('Conta'),
-                            value: controller.selectedAccount,
-                            onChanged: (value) =>
-                                controller.setSelectedAccount(value),
-                            items: controller.listAccount.map(
-                              (AccountModel map) {
-                                return DropdownMenuItem<String>(
-                                  value: map.id.toString(),
-                                  onTap: () => controller.setIdAcccount(map.id),
-                                  child: Text(
-                                    '${map.instituicao} ${map.conta}',
-                                  ),
-                                );
-                              },
-                            ).toList(),
-                          );
-                        },
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    IconButton(
-                      onPressed: () => _showDialog(),
-                      icon: const Icon(Icons.add),
-                    ),
-                  ],
-                ),
+                _dropDownAccount(),
                 const SizedBox(
                   height: 16,
                 ),
-                Row(
-                  children: [
-                    DentrodobolsoDropDownButton(
-                      widget: Observer(
-                        builder: (_) {
-                          return DropdownButton<String>(
-                            underline: Container(
-                              width: double.infinity,
-                            ),
-                            isExpanded: true,
-                            icon: const Icon(
-                              Icons.keyboard_arrow_down_sharp,
-                            ),
-                            hint: const Text('Local'),
-                            value: controller.selectedLocal,
-                            // isDense: true,
-                            onChanged: (value) =>
-                                controller.setSelectedLocal(value),
-                            items: controller.listLocal.map(
-                              (LocalModel map) {
-                                return DropdownMenuItem<String>(
-                                  onTap: () => controller.setIdLocal(map.id),
-                                  value: map.id.toString(),
-                                  child: Text(
-                                    map.local,
-                                  ),
-                                );
-                              },
-                            ).toList(),
-                          );
-                        },
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.add),
-                    ),
-                  ],
-                ),
+                _dropDownLocal(),
                 const SizedBox(
                   height: 16,
                 ),
-                _construirDropDown()
+                _dropDownReasons()
               ],
             ),
           ),
@@ -227,7 +149,94 @@ class _ExpenseEntryPageState
     );
   }
 
-  _construirDropDown() {
+  _dropDownAccount() {
+    return Row(
+      children: [
+        DentrodobolsoDropDownButton(
+          widget: Observer(
+            builder: (_) {
+              return DropdownButton<String>(
+                isExpanded: true,
+                underline: Container(
+                  width: double.infinity,
+                ),
+                icon: const Icon(
+                  Icons.keyboard_arrow_down_sharp,
+                ),
+                hint: const Text('Conta'),
+                value: controller.selectedAccount,
+                onChanged: (value) => controller.setSelectedAccount(value),
+                items: controller.listAccount.map(
+                  (AccountModel map) {
+                    return DropdownMenuItem<String>(
+                      value: map.id.toString(),
+                      onTap: () => controller.setIdAcccount(map.id),
+                      child: Text(
+                        '${map.instituicao} ${map.conta}',
+                      ),
+                    );
+                  },
+                ).toList(),
+              );
+            },
+          ),
+        ),
+        const SizedBox(
+          width: 16,
+        ),
+        IconButton(
+          onPressed: () => _showDialogAccount(),
+          icon: const Icon(Icons.add),
+        ),
+      ],
+    );
+  }
+
+  _dropDownLocal() {
+    return Row(
+      children: [
+        DentrodobolsoDropDownButton(
+          widget: Observer(
+            builder: (_) {
+              return DropdownButton<String>(
+                underline: Container(
+                  width: double.infinity,
+                ),
+                isExpanded: true,
+                icon: const Icon(
+                  Icons.keyboard_arrow_down_sharp,
+                ),
+                hint: const Text('Local'),
+                value: controller.selectedLocal,
+                // isDense: true,
+                onChanged: (value) => controller.setSelectedLocal(value),
+                items: controller.listLocal.map(
+                  (LocalModel map) {
+                    return DropdownMenuItem<String>(
+                      onTap: () => controller.setIdLocal(map.id),
+                      value: map.id.toString(),
+                      child: Text(
+                        map.local,
+                      ),
+                    );
+                  },
+                ).toList(),
+              );
+            },
+          ),
+        ),
+        const SizedBox(
+          width: 16,
+        ),
+        IconButton(
+          onPressed: () {},
+          icon: const Icon(Icons.add),
+        ),
+      ],
+    );
+  }
+
+  _dropDownReasons() {
     return Row(
       children: [
         DentrodobolsoDropDownButton(
@@ -264,45 +273,38 @@ class _ExpenseEntryPageState
           width: 16,
         ),
         IconButton(
-          onPressed: () => _showDialog,
+          onPressed: () => _showDialogAccount(),
           icon: const Icon(Icons.add),
         ),
       ],
     );
   }
 
-  _showDialog() {
+  _showDialogAccount() {
     return showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(
-              16,
-            ),
-          ),
-          content: SingleChildScrollView(
-            child: Column(
-              children: [],
-            ),
-          ),
-          actions: [
-            TextIconButton(
-              icon: Icons.account_balance_outlined,
-              title: 'Banco',
-              color: Colors.blue,
-              width: 100,
-              onTap: () {},
-            ),
-            TextIconButton(
-              icon: Icons.payment,
-              title: 'Conta',
-              color: Colors.blue,
-              width: 100,
-              onTap: () {},
-            ),
-          ],
-          actionsAlignment: MainAxisAlignment.center,
+        return DialogAccount(
+          message:
+              'Bancos já cadastrados: ${controller.listBank.map((bank) => bank.instituicao).join(', ')}.',
+          title: 'Deseja adicionar uma conta ou um banco?',
+          onTapBanco: () => _dialogSimpleRegister(),
+          onTapConta: () => _dialogSimpleRegister(),
+        );
+      },
+    );
+  }
+
+  _dialogSimpleRegister() {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return DialogSimpleRegister(
+          ontap: (val) {
+            controller.saveBank(val);
+          },
+          nameForm: 'Instituição',
+          title: 'Adicione um novo banco',
         );
       },
     );
