@@ -1,4 +1,5 @@
 import 'package:dentro_do_bolso/app/core/ui/extensions/size_screen_extension.dart';
+import 'package:dentro_do_bolso/app/core/ui/extensions/theme_extension.dart';
 import 'package:flutter/material.dart';
 
 class DentrodobolsoDropDownButton extends StatelessWidget {
@@ -12,10 +13,10 @@ class DentrodobolsoDropDownButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.black, width: 1),
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(color: context.lightGrey, width: 1),
       ),
-      width: 200.w,
+      width: 250.w,
       child: Padding(
         padding: const EdgeInsets.only(left: 8.0, right: 4),
         child: widget,

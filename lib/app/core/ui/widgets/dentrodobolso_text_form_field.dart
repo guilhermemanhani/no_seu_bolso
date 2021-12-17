@@ -37,10 +37,11 @@ class DentrodobolsoTextFormField extends StatelessWidget {
           textInputAction: textInputAction,
           obscureText: obscureTextValue,
           decoration: InputDecoration(
+            isDense: true,
             labelText: label,
-            labelStyle: const TextStyle(
+            labelStyle: TextStyle(
               fontSize: 15,
-              color: Colors.black,
+              color: context.grey,
             ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),

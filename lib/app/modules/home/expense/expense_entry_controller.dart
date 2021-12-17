@@ -65,6 +65,24 @@ abstract class _ExpenseEntryControllerBase with Store {
   setIdLocal(int? idLocal) => _idLocal = idLocal;
 
   @observable
+  String? _selectedBank;
+
+  @computed
+  String? get selectedBank => _selectedBank;
+
+  @action
+  setSelectedBank(String? selectedBank) => _selectedBank = selectedBank;
+
+  @observable
+  int? _idBank;
+
+  @computed
+  int? get selectedIdBank => _idBank;
+
+  @action
+  setIdBank(int? idBank) => _idBank = idBank;
+
+  @observable
   int? _idAcccount;
 
   @observable
@@ -177,10 +195,12 @@ abstract class _ExpenseEntryControllerBase with Store {
   }
 
   @action
-  Future<void> saveAccont() async {
-    AccountModel accountModel =
-        AccountModel(conta: 16521, idbanco: 1, saldo: 2500.45, id: 0);
-    await _entryService.saveAccont(accountModel);
+  Future<void> saveAccont(int account, double value) async {
+    if (_idBank != null) {
+      AccountModel accountModel =
+          AccountModel(conta: account, idbanco: _idBank!, saldo: value, id: 0);
+      await _entryService.saveAccont(accountModel);
+    }
   }
 
   @action

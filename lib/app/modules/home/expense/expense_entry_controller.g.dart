@@ -44,6 +44,20 @@ mixin _$ExpenseEntryController on _ExpenseEntryControllerBase, Store {
       (_$selectedIdLocalComputed ??= Computed<int?>(() => super.selectedIdLocal,
               name: '_ExpenseEntryControllerBase.selectedIdLocal'))
           .value;
+  Computed<String?>? _$selectedBankComputed;
+
+  @override
+  String? get selectedBank =>
+      (_$selectedBankComputed ??= Computed<String?>(() => super.selectedBank,
+              name: '_ExpenseEntryControllerBase.selectedBank'))
+          .value;
+  Computed<int?>? _$selectedIdBankComputed;
+
+  @override
+  int? get selectedIdBank =>
+      (_$selectedIdBankComputed ??= Computed<int?>(() => super.selectedIdBank,
+              name: '_ExpenseEntryControllerBase.selectedIdBank'))
+          .value;
   Computed<bool>? _$operationTypeComputed;
 
   @override
@@ -142,6 +156,37 @@ mixin _$ExpenseEntryController on _ExpenseEntryControllerBase, Store {
   set _idLocal(int? value) {
     _$_idLocalAtom.reportWrite(value, super._idLocal, () {
       super._idLocal = value;
+    });
+  }
+
+  final _$_selectedBankAtom =
+      Atom(name: '_ExpenseEntryControllerBase._selectedBank');
+
+  @override
+  String? get _selectedBank {
+    _$_selectedBankAtom.reportRead();
+    return super._selectedBank;
+  }
+
+  @override
+  set _selectedBank(String? value) {
+    _$_selectedBankAtom.reportWrite(value, super._selectedBank, () {
+      super._selectedBank = value;
+    });
+  }
+
+  final _$_idBankAtom = Atom(name: '_ExpenseEntryControllerBase._idBank');
+
+  @override
+  int? get _idBank {
+    _$_idBankAtom.reportRead();
+    return super._idBank;
+  }
+
+  @override
+  set _idBank(int? value) {
+    _$_idBankAtom.reportWrite(value, super._idBank, () {
+      super._idBank = value;
     });
   }
 
@@ -299,8 +344,8 @@ mixin _$ExpenseEntryController on _ExpenseEntryControllerBase, Store {
       AsyncAction('_ExpenseEntryControllerBase.saveAccont');
 
   @override
-  Future<void> saveAccont() {
-    return _$saveAccontAsyncAction.run(() => super.saveAccont());
+  Future<void> saveAccont(int account, double value) {
+    return _$saveAccontAsyncAction.run(() => super.saveAccont(account, value));
   }
 
   final _$saveBankAsyncAction =
@@ -386,6 +431,28 @@ mixin _$ExpenseEntryController on _ExpenseEntryControllerBase, Store {
   }
 
   @override
+  dynamic setSelectedBank(String? selectedBank) {
+    final _$actionInfo = _$_ExpenseEntryControllerBaseActionController
+        .startAction(name: '_ExpenseEntryControllerBase.setSelectedBank');
+    try {
+      return super.setSelectedBank(selectedBank);
+    } finally {
+      _$_ExpenseEntryControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setIdBank(int? idBank) {
+    final _$actionInfo = _$_ExpenseEntryControllerBaseActionController
+        .startAction(name: '_ExpenseEntryControllerBase.setIdBank');
+    try {
+      return super.setIdBank(idBank);
+    } finally {
+      _$_ExpenseEntryControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic setOperation(bool operationType) {
     final _$actionInfo = _$_ExpenseEntryControllerBaseActionController
         .startAction(name: '_ExpenseEntryControllerBase.setOperation');
@@ -430,6 +497,8 @@ selectedReasons: ${selectedReasons},
 selectedAccount: ${selectedAccount},
 selectedLocal: ${selectedLocal},
 selectedIdLocal: ${selectedIdLocal},
+selectedBank: ${selectedBank},
+selectedIdBank: ${selectedIdBank},
 operationType: ${operationType},
 selectedIdAcccount: ${selectedIdAcccount},
 selectedIdReasons: ${selectedIdReasons}

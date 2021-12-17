@@ -65,8 +65,12 @@ abstract class _HomeControllerBase with Store {
 
   @action
   Future<void> saveAccont() async {
-    AccountModel accountModel =
-        AccountModel(conta: 16521, idbanco: 1, saldo: 2500.45, id: 0);
+    AccountModel accountModel = AccountModel(
+      conta: 16521,
+      idbanco: 1,
+      saldo: 2500.45,
+      id: 0,
+    );
     await _entryService.saveAccont(accountModel);
   }
 

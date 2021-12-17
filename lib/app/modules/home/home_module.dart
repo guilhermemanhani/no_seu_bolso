@@ -15,6 +15,6 @@ class HomeModule extends Module {
       Modular.initialRoute,
       child: (_, args) => const HomePage(),
     ),
-    ModuleRoute('/cadastar', module: ExpenseEntryModule())
+    ModuleRoute('/cadastar/', module: ExpenseEntryModule())
   ];
 }

@@ -155,7 +155,7 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
       floatingActionButton: FloatingActionButton(
         onPressed: () =>
             // controller.saveExpense(),
-            Navigator.pushNamed(context, '/home/cadastar'),
+            Navigator.pushNamed(context, '/home/cadastar/'),
         child: const Icon(Icons.payment),
       ),
     );
