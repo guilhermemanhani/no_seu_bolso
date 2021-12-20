@@ -40,7 +40,8 @@ class MigrationV1 implements Migration {
             descricao VARCHAR(45) NULL,
             idconta Interger NOT NULL,
             localid  Interger NOT NULL,
-            motivoid Interger,
+            tpagamento BOOLEAN NOT NULL,
+            motivoid Interger,            
             FOREIGN KEY (idconta) REFERENCES conta (id) ON DELETE NO ACTION ON UPDATE NO ACTION
             FOREIGN KEY (localid) REFERENCES local (id) ON DELETE NO ACTION ON UPDATE NO ACTION
             FOREIGN KEY (motivoid) REFERENCES motivo (id) ON DELETE NO ACTION ON UPDATE NO ACTION

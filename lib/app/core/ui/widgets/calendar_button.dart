@@ -1,5 +1,4 @@
 import 'package:dentro_do_bolso/app/core/ui/extensions/size_screen_extension.dart';
-import 'package:dentro_do_bolso/app/modules/home/expense/expense_entry_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';

@@ -26,6 +26,13 @@ class _DialogSimpleRegisterState
     extends ModularState<DialogSimpleRegister, ExpenseEntryController> {
   final _formKey = GlobalKey<FormState>();
   final _simplesTextEC = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    _simplesTextEC.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(

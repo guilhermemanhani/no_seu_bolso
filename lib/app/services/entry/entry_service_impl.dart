@@ -37,8 +37,14 @@ class EntryServiceImpl implements EntryService {
     AccountModel account =
         await _entryRepository.loadAccount(expenseModel.idconta);
     // print(account);
-    Decimal balanceAtt = Decimal.parse(account.saldo.toString()) +
-        Decimal.parse(expenseModel.valor.toString());
+    Decimal balanceAtt;
+    if (expenseModel.tpagamento == 0) {
+      balanceAtt = Decimal.parse(account.saldo.toString()) -
+          Decimal.parse(expenseModel.valor.toString());
+    } else {
+      balanceAtt = Decimal.parse(account.saldo.toString()) +
+          Decimal.parse(expenseModel.valor.toString());
+    }
 
     await _entryRepository.saveExpense(
       expenseModel,
@@ -50,9 +56,9 @@ class EntryServiceImpl implements EntryService {
   Future<AccountInfoModel> loadAccounts() async {
     List<AccountModel> listAccount = await _entryRepository.loadAccounts();
     Decimal balance = Decimal.parse('0.0');
-    listAccount.forEach((element) {
+    for (var element in listAccount) {
       balance += Decimal.parse(element.saldo.toString());
-    });
+    }
     AccountInfoModel accountInfoModel =
         AccountInfoModel(listAccount: [], balance: balance);
     accountInfoModel.listAccount.addAll(listAccount);

@@ -64,7 +64,6 @@ class _ExpenseEntryPageState
     _descriptionEC.dispose();
     _controllerMoneyExpense.dispose();
     _controllerMoneyAccount.dispose();
-    _descriptionEC.dispose();
     _numAccountEC.dispose();
   }
 
@@ -132,15 +131,143 @@ class _ExpenseEntryPageState
                 const SizedBox(
                   height: 16,
                 ),
-                _dropDownAccount(),
+                Row(
+                  children: [
+                    DentrodobolsoDropDownButton(
+                      widget: Observer(
+                        builder: (_) {
+                          return DropdownButton<String>(
+                            isExpanded: true,
+                            underline: Container(
+                              width: double.infinity,
+                            ),
+                            icon: const Icon(
+                              Icons.keyboard_arrow_down_sharp,
+                            ),
+                            hint: const Text('Conta'),
+                            value: controller.selectedAccount,
+                            onChanged: (value) =>
+                                controller.setSelectedAccount(value),
+                            items: controller.listAccount.map(
+                              (AccountModel map) {
+                                return DropdownMenuItem<String>(
+                                  value: map.id.toString(),
+                                  onTap: () => controller.setIdAcccount(map.id),
+                                  child: Text(
+                                    '${map.instituicao} ${map.conta}',
+                                  ),
+                                );
+                              },
+                            ).toList(),
+                          );
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 16,
+                    ),
+                    IconButton(
+                      onPressed: () => _showDialogAccount(),
+                      icon: const Icon(Icons.add),
+                    ),
+                  ],
+                ),
                 const SizedBox(
                   height: 16,
                 ),
-                _dropDownLocal(),
+                Row(
+                  children: [
+                    DentrodobolsoDropDownButton(
+                      widget: Observer(
+                        builder: (_) {
+                          return DropdownButton<String>(
+                            underline: Container(
+                              width: double.infinity,
+                            ),
+                            isExpanded: true,
+                            icon: const Icon(
+                              Icons.keyboard_arrow_down_sharp,
+                            ),
+                            hint: const Text('Local'),
+                            value: controller.selectedLocal,
+                            // isDense: true,
+                            onChanged: (value) =>
+                                controller.setSelectedLocal(value),
+                            items: controller.listLocal.map(
+                              (LocalModel map) {
+                                return DropdownMenuItem<String>(
+                                  onTap: () => controller.setIdLocal(map.id),
+                                  value: map.id.toString(),
+                                  child: Text(
+                                    map.local,
+                                  ),
+                                );
+                              },
+                            ).toList(),
+                          );
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 16,
+                    ),
+                    DialogReasonsAdd(
+                      nameForm: 'Local',
+                      title: 'Adicione um novo local',
+                      saveController: (val) {
+                        controller.saveLocal(val);
+                      },
+                    ),
+                  ],
+                ),
                 const SizedBox(
                   height: 16,
                 ),
-                _dropDownReasons()
+                Row(
+                  children: [
+                    DentrodobolsoDropDownButton(
+                      widget: Observer(
+                        builder: (_) {
+                          return DropdownButton<String>(
+                            underline: Container(
+                              width: double.infinity,
+                            ),
+                            isExpanded: true,
+                            icon: const Icon(
+                              Icons.keyboard_arrow_down_sharp,
+                            ),
+                            hint: const Text('Motivo'),
+                            value: controller.selectedReasons,
+                            // isDense: true,
+                            onChanged: (value) =>
+                                controller.setSelectedReasons(value),
+                            items: controller.listReasons.map(
+                              (ReasonsModel map) {
+                                return DropdownMenuItem<String>(
+                                  onTap: () => controller.setIdReasonst(map.id),
+                                  value: map.id.toString(),
+                                  child: Text(
+                                    map.motivo,
+                                  ),
+                                );
+                              },
+                            ).toList(),
+                          );
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 16,
+                    ),
+                    DialogReasonsAdd(
+                      nameForm: 'Motivo',
+                      title: 'Adicione um novo motivo',
+                      saveController: (val) {
+                        controller.saveReasons(val);
+                      },
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -158,138 +285,6 @@ class _ExpenseEntryPageState
         },
         child: const Icon(Icons.payment),
       ),
-    );
-  }
-
-  _dropDownAccount() {
-    return Row(
-      children: [
-        DentrodobolsoDropDownButton(
-          widget: Observer(
-            builder: (_) {
-              return DropdownButton<String>(
-                isExpanded: true,
-                underline: Container(
-                  width: double.infinity,
-                ),
-                icon: const Icon(
-                  Icons.keyboard_arrow_down_sharp,
-                ),
-                hint: const Text('Conta'),
-                value: controller.selectedAccount,
-                onChanged: (value) => controller.setSelectedAccount(value),
-                items: controller.listAccount.map(
-                  (AccountModel map) {
-                    return DropdownMenuItem<String>(
-                      value: map.id.toString(),
-                      onTap: () => controller.setIdAcccount(map.id),
-                      child: Text(
-                        '${map.instituicao} ${map.conta}',
-                      ),
-                    );
-                  },
-                ).toList(),
-              );
-            },
-          ),
-        ),
-        const SizedBox(
-          width: 16,
-        ),
-        IconButton(
-          onPressed: () => _showDialogAccount(),
-          icon: const Icon(Icons.add),
-        ),
-      ],
-    );
-  }
-
-  _dropDownLocal() {
-    return Row(
-      children: [
-        DentrodobolsoDropDownButton(
-          widget: Observer(
-            builder: (_) {
-              return DropdownButton<String>(
-                underline: Container(
-                  width: double.infinity,
-                ),
-                isExpanded: true,
-                icon: const Icon(
-                  Icons.keyboard_arrow_down_sharp,
-                ),
-                hint: const Text('Local'),
-                value: controller.selectedLocal,
-                // isDense: true,
-                onChanged: (value) => controller.setSelectedLocal(value),
-                items: controller.listLocal.map(
-                  (LocalModel map) {
-                    return DropdownMenuItem<String>(
-                      onTap: () => controller.setIdLocal(map.id),
-                      value: map.id.toString(),
-                      child: Text(
-                        map.local,
-                      ),
-                    );
-                  },
-                ).toList(),
-              );
-            },
-          ),
-        ),
-        const SizedBox(
-          width: 16,
-        ),
-        IconButton(
-          onPressed: () => _dialogSimpleRegisterLocal(),
-          icon: const Icon(Icons.add),
-        ),
-      ],
-    );
-  }
-
-  _dropDownReasons() {
-    return Row(
-      children: [
-        DentrodobolsoDropDownButton(
-          widget: Observer(
-            builder: (_) {
-              return DropdownButton<String>(
-                underline: Container(
-                  width: double.infinity,
-                ),
-                isExpanded: true,
-                icon: const Icon(
-                  Icons.keyboard_arrow_down_sharp,
-                ),
-                hint: const Text('Motivo'),
-                value: controller.selectedReasons,
-                // isDense: true,
-                onChanged: (value) => controller.setSelectedReasons(value),
-                items: controller.listReasons.map(
-                  (ReasonsModel map) {
-                    return DropdownMenuItem<String>(
-                      onTap: () => controller.setIdReasonst(map.id),
-                      value: map.id.toString(),
-                      child: Text(
-                        map.motivo,
-                      ),
-                    );
-                  },
-                ).toList(),
-              );
-            },
-          ),
-        ),
-        const SizedBox(
-          width: 16,
-        ),
-        const DialogReasonsAdd(),
-        // IconButton(
-        //   onPressed: () => _dialogSimpleRegisterReasons(),
-        //   icon: const Icon(Icons.add),
-        // ),
-      ],
     );
   }
 
@@ -436,36 +431,6 @@ class _ExpenseEntryPageState
           },
           nameForm: 'Instituição',
           title: 'Adicione um novo banco',
-        );
-      },
-    );
-  }
-
-  _dialogSimpleRegisterLocal() {
-    return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return DialogSimpleRegister(
-          ontap: (val) {
-            controller.saveLocal(val);
-          },
-          nameForm: 'Local',
-          title: 'Adicione um novo local',
-        );
-      },
-    );
-  }
-
-  _dialogSimpleRegisterReasons() {
-    return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return DialogSimpleRegister(
-          ontap: (val) {
-            controller.saveReasons(val);
-          },
-          nameForm: 'Motivo',
-          title: 'Adicione um novo motivo',
         );
       },
     );

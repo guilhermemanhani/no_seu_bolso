@@ -1,17 +1,18 @@
-import 'package:dentro_do_bolso/app/modules/home/expense/expense_entry_controller.dart';
 import 'package:dentro_do_bolso/app/modules/home/expense/widget/dialog_simple_register.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 
-class DialogReasonsAdd extends StatefulWidget {
-  const DialogReasonsAdd({Key? key}) : super(key: key);
+class DialogReasonsAdd extends StatelessWidget {
+  final Function saveController;
+  final String nameForm;
+  final String title;
 
-  @override
-  _DialogReasonsAddState createState() => _DialogReasonsAddState();
-}
+  const DialogReasonsAdd({
+    Key? key,
+    required this.saveController,
+    required this.nameForm,
+    required this.title,
+  }) : super(key: key);
 
-class _DialogReasonsAddState
-    extends ModularState<DialogReasonsAdd, ExpenseEntryController> {
   @override
   Widget build(BuildContext context) {
     return IconButton(
@@ -21,10 +22,10 @@ class _DialogReasonsAddState
           builder: (BuildContext context) {
             return DialogSimpleRegister(
               ontap: (val) {
-                controller.saveReasons(val);
+                saveController(val);
               },
-              nameForm: 'Motivo',
-              title: 'Adicione um novo motivo',
+              nameForm: nameForm,
+              title: title,
             );
           },
         );

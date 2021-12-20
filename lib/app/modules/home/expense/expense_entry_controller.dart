@@ -86,7 +86,7 @@ abstract class _ExpenseEntryControllerBase with Store {
   int? _idAcccount;
 
   @observable
-  bool _operationType = false;
+  bool _operationType = true;
 
   @computed
   bool get operationType => _operationType;
@@ -176,6 +176,7 @@ abstract class _ExpenseEntryControllerBase with Store {
               descricao: description,
               idconta: _idAcccount!,
               localid: _idLocal!,
+              tpagamento: _operationType == true ? 0 : 1,
               motivoid: _idReasons,
             );
             await _entryService.saveExpense(expenseModel);
@@ -200,21 +201,25 @@ abstract class _ExpenseEntryControllerBase with Store {
       AccountModel accountModel =
           AccountModel(conta: account, idbanco: _idBank!, saldo: value, id: 0);
       await _entryService.saveAccont(accountModel);
+      loadAccounts();
     }
   }
 
   @action
   Future<void> saveBank(String bank) async {
     await _entryService.saveBank(bank);
+    loadBank();
   }
 
   @action
   Future<void> saveLocal(String local) async {
     await _entryService.saveLocal(local);
+    loadLocal();
   }
 
   @action
   Future<void> saveReasons(String reasons) async {
     await _entryService.saveReason(reasons);
+    loadReasons();
   }
 }

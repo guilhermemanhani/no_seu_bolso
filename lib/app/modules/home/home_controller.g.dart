@@ -70,14 +70,6 @@ mixin _$HomeController on _HomeControllerBase, Store {
     return _$saveAccontAsyncAction.run(() => super.saveAccont());
   }
 
-  final _$saveExpenseAsyncAction =
-      AsyncAction('_HomeControllerBase.saveExpense');
-
-  @override
-  Future<void> saveExpense() {
-    return _$saveExpenseAsyncAction.run(() => super.saveExpense());
-  }
-
   @override
   String toString() {
     return '''

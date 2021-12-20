@@ -144,6 +144,7 @@ class EntryRepositoryImpl implements EntryRepository {
         'idconta': expenseModel.idconta,
         'localid': expenseModel.localid,
         'motivoid': expenseModel.motivoid,
+        'tpagamento': expenseModel.tpagamento,
       },
     );
 
@@ -153,6 +154,24 @@ class EntryRepositoryImpl implements EntryRepository {
     );
   }
 
+  @override
+  Future<void> loadExpenseMonth(DateTime start, DateTime end) async {
+    final startFilter = DateTime(start.year, start.month, start.day, 0, 0, 0);
+    final endFilter = DateTime(end.year, end.month, end.day, 23, 59, 59);
+
+    final conn = await _sqliteConnectionFactory.openConnection();
+    await conn.rawQuery(
+      ''' 
+      select * from lancamento
+      where tpagamento = 0
+      and where datahora between ? and ?
+      ''',
+      [
+        startFilter.toIso8601String(),
+        endFilter.toIso8601String(),
+      ],
+    );
+  }
   // final result = await conn.rawQuery('''
   //   select *
   //   from todo

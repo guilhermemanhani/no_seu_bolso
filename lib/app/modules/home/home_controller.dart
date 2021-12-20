@@ -1,7 +1,4 @@
-import 'package:decimal/decimal.dart';
-import 'package:dentro_do_bolso/app/core/ui/widgets/loader.dart';
 import 'package:dentro_do_bolso/app/models/account_model.dart';
-import 'package:dentro_do_bolso/app/models/expense_model.dart';
 import 'package:dentro_do_bolso/app/services/entry/entry_service.dart';
 import 'package:mobx/mobx.dart';
 import 'package:dentro_do_bolso/app/models/account_info_model.dart';
@@ -72,19 +69,5 @@ abstract class _HomeControllerBase with Store {
       id: 0,
     );
     await _entryService.saveAccont(accountModel);
-  }
-
-  @action
-  Future<void> saveExpense() async {
-    ExpenseModel expenseModel = ExpenseModel(
-      idlancamento: 0,
-      valor: -100.43,
-      datahora: DateTime.now(),
-      descricao: 'descricao',
-      idconta: 2,
-      localid: 2,
-      motivoid: 1,
-    );
-    await _entryService.saveExpense(expenseModel);
   }
 }

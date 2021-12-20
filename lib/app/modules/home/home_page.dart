@@ -29,7 +29,9 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
   @override
   void dispose() {
     super.dispose();
-    reactionDisposer.forEach((element) => element());
+    for (var element in reactionDisposer) {
+      element();
+    }
   }
 
   @override
@@ -114,11 +116,17 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                                       spreadRadius: 1,
                                       blurRadius: 3,
                                       offset: const Offset(
-                                          0, 3), // changes position of shadow
+                                        0,
+                                        3,
+                                      ), // changes position of shadow
                                     ),
                                   ],
                                 ),
-                                width: 160.w,
+                                constraints: BoxConstraints(
+                                  minWidth: 160.w,
+                                ),
+                                // width: MediaQuery.of(context).size.width,
+                                // TODO transformar em uma linha ou tratar de alguma forma size == 1, 2
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -153,9 +161,13 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () =>
-            // controller.saveExpense(),
-            Navigator.pushNamed(context, '/home/cadastar/'),
+        onPressed: () async {
+          await Navigator.pushNamed(context, '/home/cadastar/');
+          controller.loadAccounts();
+          controller.loadExpense();
+        },
+        // controller.saveExpense(),
+
         child: const Icon(Icons.payment),
       ),
     );

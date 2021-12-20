@@ -7,6 +7,7 @@ class ExpenseModel {
   final String? descricao;
   final int idconta;
   final int localid;
+  final int tpagamento;
   final int? motivoid;
   final String? local;
   final String? motivo;
@@ -19,6 +20,7 @@ class ExpenseModel {
     this.descricao,
     required this.idconta,
     required this.localid,
+    required this.tpagamento,
     this.motivoid,
     this.local,
     this.motivo,
@@ -32,6 +34,7 @@ class ExpenseModel {
     String? descricao,
     int? idconta,
     int? localid,
+    int? tpagamento,
     int? motivoid,
     String? local,
     String? motivo,
@@ -44,6 +47,7 @@ class ExpenseModel {
       descricao: descricao ?? this.descricao,
       idconta: idconta ?? this.idconta,
       localid: localid ?? this.localid,
+      tpagamento: tpagamento ?? this.tpagamento,
       motivoid: motivoid ?? this.motivoid,
       local: local ?? this.local,
       motivo: motivo ?? this.motivo,
@@ -59,6 +63,7 @@ class ExpenseModel {
       'descricao': descricao,
       'idconta': idconta,
       'localid': localid,
+      'tpagamento': tpagamento,
       'motivoid': motivoid,
       'local': local,
       'motivo': motivo,
@@ -68,13 +73,14 @@ class ExpenseModel {
 
   factory ExpenseModel.fromMap(Map<String, dynamic> map) {
     return ExpenseModel(
-      idlancamento: map['idlancamento'],
-      valor: map['valor'],
+      idlancamento: map['idlancamento']?.toInt() ?? 0,
+      valor: map['valor']?.toDouble() ?? 0.0,
       datahora: DateTime.parse(map['datahora']),
       descricao: map['descricao'],
-      idconta: map['idconta'],
-      localid: map['localid'],
-      motivoid: map['motivoid'],
+      idconta: map['idconta']?.toInt() ?? 0,
+      localid: map['localid']?.toInt() ?? 0,
+      tpagamento: map['tpagamento']?.toInt() ?? 0,
+      motivoid: map['motivoid']?.toInt(),
       local: map['local'],
       motivo: map['motivo'],
       instituicao: map['instituicao'],
@@ -88,7 +94,7 @@ class ExpenseModel {
 
   @override
   String toString() {
-    return 'ExpenseModel(idlancamento: $idlancamento, valor: $valor, datahora: $datahora, descricao: $descricao, idconta: $idconta, localid: $localid, motivoid: $motivoid, local: $local, motivo: $motivo, instituicao: $instituicao)';
+    return 'ExpenseModel(idlancamento: $idlancamento, valor: $valor, datahora: $datahora, descricao: $descricao, idconta: $idconta, localid: $localid, tpagamento: $tpagamento, motivoid: $motivoid, local: $local, motivo: $motivo, instituicao: $instituicao)';
   }
 
   @override
@@ -102,6 +108,7 @@ class ExpenseModel {
         other.descricao == descricao &&
         other.idconta == idconta &&
         other.localid == localid &&
+        other.tpagamento == tpagamento &&
         other.motivoid == motivoid &&
         other.local == local &&
         other.motivo == motivo &&
@@ -116,6 +123,7 @@ class ExpenseModel {
         descricao.hashCode ^
         idconta.hashCode ^
         localid.hashCode ^
+        tpagamento.hashCode ^
         motivoid.hashCode ^
         local.hashCode ^
         motivo.hashCode ^
