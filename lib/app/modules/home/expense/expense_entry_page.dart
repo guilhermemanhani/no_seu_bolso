@@ -11,7 +11,7 @@ import 'package:dentro_do_bolso/app/modules/home/expense/expense_entry_controlle
 import 'package:dentro_do_bolso/app/modules/home/expense/widget/dialog_account.dart';
 import 'package:dentro_do_bolso/app/modules/home/expense/widget/dialog_reasons_add.dart';
 import 'package:dentro_do_bolso/app/modules/home/expense/widget/dialog_simple_register.dart';
-import 'package:dentro_do_bolso/app/modules/home/expense/widget/text_icon_button.dart';
+import 'package:dentro_do_bolso/app/core/ui/widgets/text_icon_button.dart';
 import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -212,6 +212,8 @@ class _ExpenseEntryPageState
                       width: 16,
                     ),
                     DialogReasonsAdd(
+                      message:
+                          'Local já cadastrados: ${controller.listLocal.map((local) => local.local).join(', ')}.',
                       nameForm: 'Local',
                       title: 'Adicione um novo local',
                       saveController: (val) {
@@ -260,6 +262,8 @@ class _ExpenseEntryPageState
                       width: 16,
                     ),
                     DialogReasonsAdd(
+                      message:
+                          'Motivo já cadastrados: ${controller.listReasons.map((reasons) => reasons.motivo).join(', ')}.',
                       nameForm: 'Motivo',
                       title: 'Adicione um novo motivo',
                       saveController: (val) {
@@ -317,6 +321,7 @@ class _ExpenseEntryPageState
               child: Form(
                 key: _formKeyPopup,
                 child: Container(
+                  width: MediaQuery.of(context).size.width,
                   constraints: const BoxConstraints(minHeight: 200),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -326,7 +331,7 @@ class _ExpenseEntryPageState
                       ),
                       DentrodobolsoTextFormField(
                         label: 'conta',
-                        textInputType: TextInputType.text,
+                        textInputType: TextInputType.number,
                         textInputAction: TextInputAction.next,
                         controller: _numAccountEC,
                         validator:
@@ -426,6 +431,7 @@ class _ExpenseEntryPageState
       context: context,
       builder: (BuildContext context) {
         return DialogSimpleRegister(
+          message: '',
           ontap: (val) {
             controller.saveBank(val);
           },

@@ -5,12 +5,14 @@ class DialogReasonsAdd extends StatelessWidget {
   final Function saveController;
   final String nameForm;
   final String title;
+  final String message;
 
   const DialogReasonsAdd({
     Key? key,
     required this.saveController,
     required this.nameForm,
     required this.title,
+    required this.message,
   }) : super(key: key);
 
   @override
@@ -21,6 +23,7 @@ class DialogReasonsAdd extends StatelessWidget {
           context: context,
           builder: (BuildContext context) {
             return DialogSimpleRegister(
+              message: message,
               ontap: (val) {
                 saveController(val);
               },

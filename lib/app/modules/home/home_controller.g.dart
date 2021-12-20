@@ -40,6 +40,51 @@ mixin _$HomeController on _HomeControllerBase, Store {
     });
   }
 
+  final _$expenseObsAtom = Atom(name: '_HomeControllerBase.expenseObs');
+
+  @override
+  List<ExpenseModel>? get expenseObs {
+    _$expenseObsAtom.reportRead();
+    return super.expenseObs;
+  }
+
+  @override
+  set expenseObs(List<ExpenseModel>? value) {
+    _$expenseObsAtom.reportWrite(value, super.expenseObs, () {
+      super.expenseObs = value;
+    });
+  }
+
+  final _$entryAtom = Atom(name: '_HomeControllerBase.entry');
+
+  @override
+  double get entry {
+    _$entryAtom.reportRead();
+    return super.entry;
+  }
+
+  @override
+  set entry(double value) {
+    _$entryAtom.reportWrite(value, super.entry, () {
+      super.entry = value;
+    });
+  }
+
+  final _$exitAtom = Atom(name: '_HomeControllerBase.exit');
+
+  @override
+  double get exit {
+    _$exitAtom.reportRead();
+    return super.exit;
+  }
+
+  @override
+  set exit(double value) {
+    _$exitAtom.reportWrite(value, super.exit, () {
+      super.exit = value;
+    });
+  }
+
   final _$loadBanksAsyncAction = AsyncAction('_HomeControllerBase.loadBanks');
 
   @override
@@ -63,18 +108,14 @@ mixin _$HomeController on _HomeControllerBase, Store {
     return _$loadExpenseAsyncAction.run(() => super.loadExpense());
   }
 
-  final _$saveAccontAsyncAction = AsyncAction('_HomeControllerBase.saveAccont');
-
-  @override
-  Future<void> saveAccont() {
-    return _$saveAccontAsyncAction.run(() => super.saveAccont());
-  }
-
   @override
   String toString() {
     return '''
 accountInfoModel: ${accountInfoModel},
-model: ${model}
+model: ${model},
+expenseObs: ${expenseObs},
+entry: ${entry},
+exit: ${exit}
     ''';
   }
 }

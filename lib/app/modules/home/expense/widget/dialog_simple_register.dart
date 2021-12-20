@@ -1,7 +1,7 @@
 import 'package:dentro_do_bolso/app/core/ui/extensions/theme_extension.dart';
 import 'package:dentro_do_bolso/app/core/ui/widgets/dentrodobolso_text_form_field.dart';
 import 'package:dentro_do_bolso/app/modules/home/expense/expense_entry_controller.dart';
-import 'package:dentro_do_bolso/app/modules/home/expense/widget/text_icon_button.dart';
+import 'package:dentro_do_bolso/app/core/ui/widgets/text_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:validatorless/validatorless.dart';
@@ -10,12 +10,14 @@ class DialogSimpleRegister extends StatefulWidget {
   final String title;
   final String nameForm;
   final Function ontap;
+  final String message;
 
   const DialogSimpleRegister({
     Key? key,
     required this.title,
     required this.nameForm,
     required this.ontap,
+    required this.message,
   }) : super(key: key);
 
   @override
@@ -46,6 +48,10 @@ class _DialogSimpleRegisterState
           key: _formKey,
           child: Column(
             children: [
+              Text(widget.message),
+              SizedBox(
+                height: 16,
+              ),
               DentrodobolsoTextFormField(
                 label: widget.nameForm,
                 controller: _simplesTextEC,
@@ -57,6 +63,7 @@ class _DialogSimpleRegisterState
           ),
         ),
       ),
+      actionsPadding: const EdgeInsets.only(bottom: 12),
       actions: [
         TextIconButton(
           icon: Icons.check_circle_outline,

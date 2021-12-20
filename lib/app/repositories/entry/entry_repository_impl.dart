@@ -155,22 +155,26 @@ class EntryRepositoryImpl implements EntryRepository {
   }
 
   @override
-  Future<void> loadExpenseMonth(DateTime start, DateTime end) async {
+  Future<List<ExpenseModel>> getExpenseByPeriod(
+      DateTime start, DateTime end) async {
     final startFilter = DateTime(start.year, start.month, start.day, 0, 0, 0);
     final endFilter = DateTime(end.year, end.month, end.day, 23, 59, 59);
 
     final conn = await _sqliteConnectionFactory.openConnection();
-    await conn.rawQuery(
+    final result = await conn.rawQuery(
       ''' 
-      select * from lancamento
-      where tpagamento = 0
-      and where datahora between ? and ?
+      select E.*, L.local, B.instituicao from lancamento E   
+      inner join LOCAL L on L.id = E.localid
+      inner join CONTA C on C.id = E.idconta
+      inner join BANCO B on B.id = C.idbanco
+      where datahora between ? and ?
       ''',
       [
         startFilter.toIso8601String(),
         endFilter.toIso8601String(),
       ],
     );
+    return result.map((e) => ExpenseModel.fromMap(e)).toList();
   }
   // final result = await conn.rawQuery('''
   //   select *

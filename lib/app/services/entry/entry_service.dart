@@ -17,4 +17,5 @@ abstract class EntryService {
   Future<List<AccountModel>> loadAccountsList();
   Future<List<LocalModel>> loadLocal();
   Future<List<ReasonsModel>> loadReasons();
+  Future<List<ExpenseModel>> getMonth();
 }

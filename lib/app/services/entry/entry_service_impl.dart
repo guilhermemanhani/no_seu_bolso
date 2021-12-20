@@ -77,4 +77,12 @@ class EntryServiceImpl implements EntryService {
 
   @override
   Future<List<ReasonsModel>> loadReasons() => _entryRepository.loadReasons();
+
+  @override
+  Future<List<ExpenseModel>> getMonth() {
+    final today = DateTime.now();
+    var start = DateTime(today.year, today.month, 1, 0, 0, 0);
+    var end = DateTime(today.year, today.month + 1, 0, 0, 0, 0);
+    return _entryRepository.getExpenseByPeriod(start, end);
+  }
 }

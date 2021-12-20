@@ -16,4 +16,5 @@ abstract class EntryRepository {
   Future<AccountModel> loadAccount(int idconta);
   Future<List<LocalModel>> loadLocal();
   Future<List<ReasonsModel>> loadReasons();
+  Future<List<ExpenseModel>> getExpenseByPeriod(DateTime start, DateTime end);
 }

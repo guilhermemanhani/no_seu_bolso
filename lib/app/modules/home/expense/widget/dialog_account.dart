@@ -1,5 +1,5 @@
 import 'package:dentro_do_bolso/app/core/ui/extensions/theme_extension.dart';
-import 'package:dentro_do_bolso/app/modules/home/expense/widget/text_icon_button.dart';
+import 'package:dentro_do_bolso/app/core/ui/widgets/text_icon_button.dart';
 import 'package:flutter/material.dart';
 
 class DialogAccount extends StatelessWidget {
@@ -36,6 +36,7 @@ class DialogAccount extends StatelessWidget {
           ],
         ),
       ),
+      actionsPadding: const EdgeInsets.only(bottom: 12),
       actions: [
         TextIconButton(
           icon: Icons.account_balance_outlined,

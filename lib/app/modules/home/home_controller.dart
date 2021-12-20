@@ -1,4 +1,5 @@
 import 'package:dentro_do_bolso/app/models/account_model.dart';
+import 'package:dentro_do_bolso/app/models/expense_model.dart';
 import 'package:dentro_do_bolso/app/services/entry/entry_service.dart';
 import 'package:mobx/mobx.dart';
 import 'package:dentro_do_bolso/app/models/account_info_model.dart';
@@ -18,6 +19,15 @@ abstract class _HomeControllerBase with Store {
 
   @observable
   List<AccountModel>? model;
+
+  @observable
+  List<ExpenseModel>? expenseObs;
+
+  @observable
+  double entry = 0.0;
+
+  @observable
+  double exit = 0.0;
 
   @action
   Future<void> loadBanks() async {
@@ -60,14 +70,17 @@ abstract class _HomeControllerBase with Store {
     // print(result2);
   }
 
-  @action
-  Future<void> saveAccont() async {
-    AccountModel accountModel = AccountModel(
-      conta: 16521,
-      idbanco: 1,
-      saldo: 2500.45,
-      id: 0,
-    );
-    await _entryService.saveAccont(accountModel);
+  Future<void> findPeriod() async {
+    expenseObs = await _entryService.getMonth().asObservable();
+    print(expenseObs);
+    if (expenseObs != null) {
+      expenseObs!.forEach((element) {
+        if (element.tpagamento == 1) {
+          entry += element.valor;
+        } else {
+          exit += element.valor;
+        }
+      });
+    }
   }
 }
