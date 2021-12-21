@@ -1,4 +1,5 @@
 import 'package:decimal/decimal.dart';
+import 'package:decimal/intl.dart';
 import 'package:dentro_do_bolso/app/core/ui/extensions/size_screen_extension.dart';
 import 'package:dentro_do_bolso/app/core/ui/extensions/theme_extension.dart';
 import 'package:dentro_do_bolso/app/models/account_model.dart';
@@ -9,6 +10,7 @@ import 'package:dentro_do_bolso/app/modules/home/widget/row_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
 
 class HomePage extends StatefulWidget {
@@ -20,13 +22,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends ModularState<HomePage, HomeController> {
   final reactionDisposer = <ReactionDisposer>[];
+  var formatter = NumberFormat.decimalPattern('pt-BR');
   @override
   void initState() {
     super.initState();
     final autoRunDisposer = autorun(
       (_) {
         controller.loadAccounts();
-        controller.loadExpense();
         controller.findPeriod();
       },
     );
@@ -53,8 +55,9 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
               Observer(
                 builder: (_) {
                   return HeadHome(
-                    value: controller.accountInfoModel?.balance.toString() ??
-                        'Sem valor',
+                    value: formatter.format(DecimalIntl(
+                        controller.accountInfoModel?.balance ??
+                            Decimal.parse('0.0'))),
                   );
                 },
               ),
@@ -66,79 +69,101 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                   );
                 },
               ),
-              Observer(
-                builder: (_) {
-                  return Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 1,
-                            blurRadius: 3,
-                            offset: const Offset(
-                              0,
-                              3,
-                            ),
-                          ),
-                        ],
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 1,
+                        blurRadius: 3,
+                        offset: const Offset(
+                          0,
+                          3,
+                        ),
                       ),
-                      child: Column(
-                        children: [
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          const Text(
-                            'Orçamento mensal',
-                            style: TextStyle(fontWeight: FontWeight.w600),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 4.0),
-                            child: Divider(
-                              color: context.grey,
-                              thickness: 1,
-                            ),
-                          ),
-                          RowInfo(
-                            title: 'Entrada',
-                            value: controller.entry.toString(),
-                          ),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          RowInfo(
-                            title: 'Saída',
-                            value: controller.exit.toString(),
-                          ),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          RowInfo(
-                            title: 'Orçamento usado do mês',
-                            value:
-                                '${((Decimal.parse(controller.exit.toString()) / Decimal.parse(controller.entry.toString())))}',
-                          ),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          RowInfo(
+                    ],
+                  ),
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      const Text(
+                        'Orçamento mensal',
+                        style: TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4.0),
+                        child: Divider(
+                          color: context.grey,
+                          thickness: 1,
+                        ),
+                      ),
+                      Observer(
+                        builder: (_) {
+                          return RowInfo(
                             colorText: Colors.green,
-                            title: 'Balanço entra/saída',
+                            title: 'Entrada',
                             value:
-                                '${Decimal.parse(controller.entry.toString()) - Decimal.parse(controller.exit.toString())}',
-                          ),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                        ],
+                                'R\$: ${formatter.format(DecimalIntl(Decimal.parse(controller.entry.toString())))}',
+                          );
+                        },
                       ),
-                    ),
-                  );
-                },
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Observer(
+                        builder: (_) {
+                          return RowInfo(
+                            colorText: Colors.red,
+                            title: 'Saída',
+                            value:
+                                'R\$: ${formatter.format(DecimalIntl(Decimal.parse(controller.exit.toString())))}',
+                          );
+                        },
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Observer(
+                        builder: (_) {
+                          return RowInfo(
+                              colorText: controller.exit < controller.entry
+                                  ? Colors.green
+                                  : Colors.red,
+                              title: 'Orçamento usado do mês',
+                              value:
+                                  '% ${formatter.format(DecimalIntl(Decimal.parse(((controller.exit / controller.entry) * 100).toString())))}'
+                              // '${((controller.exit / controller.entry))}',
+                              );
+                        },
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Observer(
+                        builder: (_) {
+                          return RowInfo(
+                              colorText: Colors.green,
+                              title: 'Balanço entra/saída',
+                              value: 'R\$: ${formatter.format(
+                                DecimalIntl(Decimal.parse(
+                                        controller.entry.toString()) -
+                                    Decimal.parse(controller.exit.toString())),
+                              )}');
+                        },
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),
@@ -149,9 +174,8 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
           await Navigator.pushNamed(context, '/home/cadastar/');
           controller.loadAccounts();
           controller.loadExpense();
+          controller.findPeriod();
         },
-        // controller.saveExpense(),
-
         child: const Icon(Icons.payment),
       ),
     );

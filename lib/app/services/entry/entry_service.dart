@@ -1,6 +1,7 @@
 import 'package:dentro_do_bolso/app/models/account_info_model.dart';
 import 'package:dentro_do_bolso/app/models/bank_model.dart';
 import 'package:dentro_do_bolso/app/models/account_model.dart';
+import 'package:dentro_do_bolso/app/models/expense_by_local_model.dart';
 import 'package:dentro_do_bolso/app/models/expense_model.dart';
 import 'package:dentro_do_bolso/app/models/local_model.dart';
 import 'package:dentro_do_bolso/app/models/reasons_model.dart';
@@ -18,4 +19,5 @@ abstract class EntryService {
   Future<List<LocalModel>> loadLocal();
   Future<List<ReasonsModel>> loadReasons();
   Future<List<ExpenseModel>> getMonth();
+  Future<List<ExpenseByLocalModel>> getExpenseByLocal();
 }

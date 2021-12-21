@@ -2,6 +2,7 @@ import 'package:decimal/decimal.dart';
 import 'package:dentro_do_bolso/app/models/account_info_model.dart';
 import 'package:dentro_do_bolso/app/models/bank_model.dart';
 import 'package:dentro_do_bolso/app/models/account_model.dart';
+import 'package:dentro_do_bolso/app/models/expense_by_local_model.dart';
 import 'package:dentro_do_bolso/app/models/expense_model.dart';
 import 'package:dentro_do_bolso/app/models/reasons_model.dart';
 import 'package:dentro_do_bolso/app/models/local_model.dart';
@@ -84,5 +85,13 @@ class EntryServiceImpl implements EntryService {
     var start = DateTime(today.year, today.month, 1, 0, 0, 0);
     var end = DateTime(today.year, today.month + 1, 0, 0, 0, 0);
     return _entryRepository.getExpenseByPeriod(start, end);
+  }
+
+  @override
+  Future<List<ExpenseByLocalModel>> getExpenseByLocal() {
+    final today = DateTime.now();
+    var start = DateTime(today.year, today.month, 1, 0, 0, 0);
+    var end = DateTime(today.year, today.month + 1, 0, 0, 0, 0);
+    return _entryRepository.getExpenseByLocal(start, end);
   }
 }

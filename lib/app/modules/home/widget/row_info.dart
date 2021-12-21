@@ -1,7 +1,4 @@
-import 'package:dentro_do_bolso/app/core/ui/extensions/theme_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:path/path.dart';
 
 class RowInfo extends StatelessWidget {
   final String title;
@@ -24,15 +21,11 @@ class RowInfo extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(title),
-          Observer(
-            builder: (_) {
-              return Text(
-                value,
-                style: TextStyle(
-                  color: value.contains('-') ? Colors.red : colorText,
-                ),
-              );
-            },
+          Text(
+            value,
+            style: TextStyle(
+              color: value.contains('-') ? Colors.red : colorText,
+            ),
           ),
         ],
       ),

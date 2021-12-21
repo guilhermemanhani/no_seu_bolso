@@ -1,5 +1,6 @@
 import 'package:dentro_do_bolso/app/models/bank_model.dart';
 import 'package:dentro_do_bolso/app/models/account_model.dart';
+import 'package:dentro_do_bolso/app/models/expense_by_local_model.dart';
 import 'package:dentro_do_bolso/app/models/expense_model.dart';
 import 'package:dentro_do_bolso/app/models/local_model.dart';
 import 'package:dentro_do_bolso/app/models/reasons_model.dart';
@@ -17,4 +18,6 @@ abstract class EntryRepository {
   Future<List<LocalModel>> loadLocal();
   Future<List<ReasonsModel>> loadReasons();
   Future<List<ExpenseModel>> getExpenseByPeriod(DateTime start, DateTime end);
+  Future<List<ExpenseByLocalModel>> getExpenseByLocal(
+      DateTime start, DateTime end);
 }

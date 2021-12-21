@@ -55,6 +55,22 @@ mixin _$HomeController on _HomeControllerBase, Store {
     });
   }
 
+  final _$expenseLocalObsAtom =
+      Atom(name: '_HomeControllerBase.expenseLocalObs');
+
+  @override
+  List<ExpenseByLocalModel>? get expenseLocalObs {
+    _$expenseLocalObsAtom.reportRead();
+    return super.expenseLocalObs;
+  }
+
+  @override
+  set expenseLocalObs(List<ExpenseByLocalModel>? value) {
+    _$expenseLocalObsAtom.reportWrite(value, super.expenseLocalObs, () {
+      super.expenseLocalObs = value;
+    });
+  }
+
   final _$entryAtom = Atom(name: '_HomeControllerBase.entry');
 
   @override
@@ -114,6 +130,7 @@ mixin _$HomeController on _HomeControllerBase, Store {
 accountInfoModel: ${accountInfoModel},
 model: ${model},
 expenseObs: ${expenseObs},
+expenseLocalObs: ${expenseLocalObs},
 entry: ${entry},
 exit: ${exit}
     ''';

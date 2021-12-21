@@ -1,8 +1,11 @@
+import 'package:decimal/decimal.dart';
+import 'package:decimal/intl.dart';
 import 'package:dentro_do_bolso/app/models/account_model.dart';
 import 'package:flutter/material.dart';
 import 'package:dentro_do_bolso/app/core/ui/extensions/size_screen_extension.dart';
+import 'package:intl/intl.dart';
 
-class LineAccount extends StatelessWidget {
+class LineAccount extends StatefulWidget {
   final List<AccountModel> accountList;
   const LineAccount({
     Key? key,
@@ -10,14 +13,21 @@ class LineAccount extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<LineAccount> createState() => _LineAccountState();
+}
+
+class _LineAccountState extends State<LineAccount> {
+  var formatter = NumberFormat.decimalPattern('pt-BR');
+
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 80.h,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: accountList.length,
+        itemCount: widget.accountList.length,
         itemBuilder: (context, index) {
-          final account = accountList[index];
+          final account = widget.accountList[index];
 
           return Padding(
             padding: const EdgeInsets.only(bottom: 12),
@@ -46,7 +56,12 @@ class LineAccount extends StatelessWidget {
                     account.instituicao!,
                   ),
                   Text(
-                    account.saldo.toString(),
+                    formatter.format(
+                      DecimalIntl(
+                        Decimal.parse(account.saldo.toString()),
+                      ),
+                    ),
+                    // account.saldo.toString(),
                     style: TextStyle(
                       color: account.saldo.toString().contains('-')
                           ? Colors.red

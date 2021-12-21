@@ -1,4 +1,5 @@
 import 'package:dentro_do_bolso/app/models/account_model.dart';
+import 'package:dentro_do_bolso/app/models/expense_by_local_model.dart';
 import 'package:dentro_do_bolso/app/models/expense_model.dart';
 import 'package:dentro_do_bolso/app/services/entry/entry_service.dart';
 import 'package:mobx/mobx.dart';
@@ -24,16 +25,20 @@ abstract class _HomeControllerBase with Store {
   List<ExpenseModel>? expenseObs;
 
   @observable
-  double entry = 0.0;
+  List<ExpenseByLocalModel>? expenseLocalObs;
 
   @observable
-  double exit = 0.0;
+  double entry = 0.1;
+
+  @observable
+  double exit = 0.1;
 
   @action
   Future<void> loadBanks() async {
     try {
       // Loader.show();
       model = await _entryService.loadAccountsList().asObservable();
+
       var result = await _entryService.loadBanks();
     } on Exception catch (e) {
       // TODO
@@ -72,7 +77,6 @@ abstract class _HomeControllerBase with Store {
 
   Future<void> findPeriod() async {
     expenseObs = await _entryService.getMonth().asObservable();
-    print(expenseObs);
     if (expenseObs != null) {
       expenseObs!.forEach((element) {
         if (element.tpagamento == 1) {
@@ -82,5 +86,9 @@ abstract class _HomeControllerBase with Store {
         }
       });
     }
+  }
+
+  Future<void> getExpenseByLocal() async {
+    expenseLocalObs = await _entryService.getExpenseByLocal();
   }
 }

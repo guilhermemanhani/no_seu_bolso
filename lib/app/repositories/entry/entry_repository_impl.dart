@@ -1,6 +1,7 @@
 import 'package:dentro_do_bolso/app/core/database/sqlite_connection_factory.dart';
 import 'package:dentro_do_bolso/app/models/bank_model.dart';
 import 'package:dentro_do_bolso/app/models/account_model.dart';
+import 'package:dentro_do_bolso/app/models/expense_by_local_model.dart';
 import 'package:dentro_do_bolso/app/models/expense_model.dart';
 import 'package:dentro_do_bolso/app/models/local_model.dart';
 import 'package:dentro_do_bolso/app/models/reasons_model.dart';
@@ -176,6 +177,29 @@ class EntryRepositoryImpl implements EntryRepository {
     );
     return result.map((e) => ExpenseModel.fromMap(e)).toList();
   }
+
+  @override
+  Future<List<ExpenseByLocalModel>> getExpenseByLocal(
+      DateTime start, DateTime end) async {
+    final startFilter = DateTime(start.year, start.month, start.day, 0, 0, 0);
+    final endFilter = DateTime(end.year, end.month, end.day, 23, 59, 59);
+
+    final conn = await _sqliteConnectionFactory.openConnection();
+    final result = await conn.rawQuery(
+      ''' 
+      SELECT COUNT(*) as contador, SUM(la.valor) as soma, lo.local as local FROM lancamento la
+      inner join  local lo on la.localid = lo.id
+      where la.tpagamento = 0
+      and datahora between ? and ?
+      group by lo.local
+      ''',
+      [
+        startFilter.toIso8601String(),
+        endFilter.toIso8601String(),
+      ],
+    );
+    return result.map((e) => ExpenseByLocalModel.fromMap(e)).toList();
+  }
   // final result = await conn.rawQuery('''
   //   select *
   //   from todo
@@ -185,4 +209,17 @@ class EntryRepositoryImpl implements EntryRepository {
   //     startFilter.toIso8601String(),
   //     endFilter.toIso8601String(),
   //   ]);
+
+// SELECT SUM(la.valor), lo.local FROM lancamento la
+// inner join  local lo on la.localid = lo.id
+// where la.tpagamento = 0
+// group by lo.local
+
+//   select count(*), sum(vl_lancamento), upper(tl.ds_lancamento )
+// from lancamento_diario l
+// inner join tipo_lancamento tl on tl.cd_tp_lancamento = l.cd_tp_lancamento
+// where l.cd_coop = 1040
+// 	and l.dt_lancamento = '20211221'
+// 	and cd_posto = 0
+// 	group by tl.ds_lancamento
 }
