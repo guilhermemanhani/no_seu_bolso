@@ -1,3 +1,4 @@
+import 'package:decimal/decimal.dart';
 import 'package:dentro_do_bolso/app/core/ui/extensions/size_screen_extension.dart';
 import 'package:dentro_do_bolso/app/core/ui/extensions/theme_extension.dart';
 import 'package:dentro_do_bolso/app/models/account_model.dart';
@@ -72,6 +73,7 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                     child: Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
                         color: Colors.white,
                         boxShadow: [
                           BoxShadow(
@@ -116,9 +118,18 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                             height: 16,
                           ),
                           RowInfo(
-                            title: 'Porcentagem comprometida',
+                            title: 'Orçamento usado do mês',
                             value:
-                                '${((controller.exit / controller.entry) * 100).toString()} %',
+                                '${((Decimal.parse(controller.exit.toString()) / Decimal.parse(controller.entry.toString())))}',
+                          ),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          RowInfo(
+                            colorText: Colors.green,
+                            title: 'Balanço entra/saída',
+                            value:
+                                '${Decimal.parse(controller.entry.toString()) - Decimal.parse(controller.exit.toString())}',
                           ),
                           const SizedBox(
                             height: 16,
