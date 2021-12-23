@@ -4,6 +4,7 @@ import 'package:dentro_do_bolso/app/core/ui/extensions/size_screen_extension.dar
 import 'package:dentro_do_bolso/app/core/ui/extensions/theme_extension.dart';
 import 'package:dentro_do_bolso/app/models/account_model.dart';
 import 'package:dentro_do_bolso/app/modules/home/home_controller.dart';
+import 'package:dentro_do_bolso/app/modules/home/widget/container_budget.dart';
 import 'package:dentro_do_bolso/app/modules/home/widget/head_home.dart';
 import 'package:dentro_do_bolso/app/modules/home/widget/line_account.dart';
 import 'package:dentro_do_bolso/app/modules/home/widget/row_info.dart';
@@ -69,102 +70,123 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                   );
                 },
               ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 1,
-                        blurRadius: 3,
-                        offset: const Offset(
-                          0,
-                          3,
-                        ),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      const Text(
-                        'Orçamento mensal',
-                        style: TextStyle(fontWeight: FontWeight.w600),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 4.0),
-                        child: Divider(
-                          color: context.grey,
-                          thickness: 1,
-                        ),
-                      ),
-                      Observer(
-                        builder: (_) {
-                          return RowInfo(
-                            colorText: Colors.green,
-                            title: 'Entrada',
-                            value:
-                                'R\$: ${formatter.format(DecimalIntl(Decimal.parse(controller.entry.toString())))}',
-                          );
-                        },
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      Observer(
-                        builder: (_) {
-                          return RowInfo(
-                            colorText: Colors.red,
-                            title: 'Saída',
-                            value:
-                                'R\$: ${formatter.format(DecimalIntl(Decimal.parse(controller.exit.toString())))}',
-                          );
-                        },
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      Observer(
-                        builder: (_) {
-                          return RowInfo(
-                              colorText: controller.exit < controller.entry
-                                  ? Colors.green
-                                  : Colors.red,
-                              title: 'Orçamento usado do mês',
-                              value:
-                                  '% ${formatter.format(DecimalIntl(Decimal.parse(((controller.exit / controller.entry) * 100).toString())))}'
-                              // '${((controller.exit / controller.entry))}',
-                              );
-                        },
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      Observer(
-                        builder: (_) {
-                          return RowInfo(
-                              colorText: Colors.green,
-                              title: 'Balanço entra/saída',
-                              value: 'R\$: ${formatter.format(
-                                DecimalIntl(Decimal.parse(
-                                        controller.entry.toString()) -
-                                    Decimal.parse(controller.exit.toString())),
-                              )}');
-                        },
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                    ],
-                  ),
-                ),
+              Observer(
+                builder: (_) {
+                  return ContainerBudget(
+                    entryD: controller.entry,
+                    exitD: controller.exit,
+                    entry: formatter.format(DecimalIntl(
+                        Decimal.parse(controller.entry.toString()))),
+                    exit: formatter.format(
+                        DecimalIntl(Decimal.parse(controller.exit.toString()))),
+                    budgetUse: formatter.format(DecimalIntl(Decimal.parse(
+                        ((controller.exit / controller.entry) * 100)
+                            .toString()))),
+                    entryxsaida: formatter.format(DecimalIntl(
+                        Decimal.parse(controller.entry.toString()) -
+                            Decimal.parse(controller.exit.toString()))),
+                  );
+                },
               ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(
+              //     horizontal: 16.0,
+              //     vertical: 4.0,
+              //   ),
+              //   child: Container(
+              //     padding: const EdgeInsets.all(8),
+              //     decoration: BoxDecoration(
+              //       borderRadius: BorderRadius.circular(15),
+              //       color: Colors.white,
+              //       boxShadow: [
+              //         BoxShadow(
+              //           color: Colors.grey.withOpacity(0.5),
+              //           spreadRadius: 1,
+              //           blurRadius: 3,
+              //           offset: const Offset(
+              //             0,
+              //             3,
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //     child: Column(
+              //       children: [
+              //         const SizedBox(
+              //           height: 8,
+              //         ),
+              //         const Text(
+              //           'Orçamento mensal',
+              //           style: TextStyle(fontWeight: FontWeight.w600),
+              //         ),
+              //         Padding(
+              //           padding: const EdgeInsets.symmetric(vertical: 4.0),
+              //           child: Divider(
+              //             color: context.grey,
+              //             thickness: 1,
+              //           ),
+              //         ),
+              //         Observer(
+              //           builder: (_) {
+              //             return RowInfo(
+              //               colorText: Colors.green,
+              //               title: 'Entrada',
+              //               value:
+              //                   'R\$: ${formatter.format(DecimalIntl(Decimal.parse(controller.entry.toString())))}',
+              //             );
+              //           },
+              //         ),
+              //         const SizedBox(
+              //           height: 16,
+              //         ),
+              //         Observer(
+              //           builder: (_) {
+              //             return RowInfo(
+              //               colorText: Colors.red,
+              //               title: 'Saída',
+              //               value:
+              //                   'R\$: ${formatter.format(DecimalIntl(Decimal.parse(controller.exit.toString())))}',
+              //             );
+              //           },
+              //         ),
+              //         const SizedBox(
+              //           height: 16,
+              //         ),
+              //         Observer(
+              //           builder: (_) {
+              //             return RowInfo(
+              //                 colorText: controller.exit < controller.entry
+              //                     ? Colors.green
+              //                     : Colors.red,
+              //                 title: 'Orçamento usado do mês',
+              //                 value:
+              //                     '% ${formatter.format(DecimalIntl(Decimal.parse(((controller.exit / controller.entry) * 100).toString())))}'
+              //                 // '${((controller.exit / controller.entry))}',
+              //                 );
+              //           },
+              //         ),
+              //         const SizedBox(
+              //           height: 16,
+              //         ),
+              //         Observer(
+              //           builder: (_) {
+              //             return RowInfo(
+              //                 colorText: Colors.green,
+              //                 title: 'Balanço entra/saída',
+              //                 value: 'R\$: ${formatter.format(
+              //                   DecimalIntl(Decimal.parse(
+              //                           controller.entry.toString()) -
+              //                       Decimal.parse(controller.exit.toString())),
+              //                 )}');
+              //           },
+              //         ),
+              //         const SizedBox(
+              //           height: 16,
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),
