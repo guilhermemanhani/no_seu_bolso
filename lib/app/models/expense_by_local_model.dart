@@ -3,22 +3,26 @@ import 'dart:convert';
 class ExpenseByLocalModel {
   final int contador;
   final double soma;
+  final double media;
   final String local;
 
   ExpenseByLocalModel({
     required this.contador,
     required this.soma,
+    required this.media,
     required this.local,
   });
 
   ExpenseByLocalModel copyWith({
     int? contador,
     double? soma,
+    double? media,
     String? local,
   }) {
     return ExpenseByLocalModel(
       contador: contador ?? this.contador,
       soma: soma ?? this.soma,
+      media: media ?? this.media,
       local: local ?? this.local,
     );
   }
@@ -27,6 +31,7 @@ class ExpenseByLocalModel {
     return {
       'contador': contador,
       'soma': soma,
+      'media': media,
       'local': local,
     };
   }
@@ -35,6 +40,7 @@ class ExpenseByLocalModel {
     return ExpenseByLocalModel(
       contador: map['contador']?.toInt() ?? 0,
       soma: map['soma']?.toDouble() ?? 0.0,
+      media: map['media']?.toDouble() ?? 0.0,
       local: map['local'] ?? '',
     );
   }
@@ -45,8 +51,9 @@ class ExpenseByLocalModel {
       ExpenseByLocalModel.fromMap(json.decode(source));
 
   @override
-  String toString() =>
-      'ExpenseByLocalModel(contador: $contador, soma: $soma, local: $local)';
+  String toString() {
+    return 'ExpenseByLocalModel(contador: $contador, soma: $soma, media: $media, local: $local)';
+  }
 
   @override
   bool operator ==(Object other) {
@@ -55,9 +62,12 @@ class ExpenseByLocalModel {
     return other is ExpenseByLocalModel &&
         other.contador == contador &&
         other.soma == soma &&
+        other.media == media &&
         other.local == local;
   }
 
   @override
-  int get hashCode => contador.hashCode ^ soma.hashCode ^ local.hashCode;
+  int get hashCode {
+    return contador.hashCode ^ soma.hashCode ^ media.hashCode ^ local.hashCode;
+  }
 }

@@ -22,7 +22,7 @@ class RowInfo extends StatelessWidget {
         children: [
           Text(title),
           Text(
-            value,
+            value[value.length - 2] == ',' ? '${value}0' : value,
             style: TextStyle(
               color: value.contains('-') ? Colors.red : colorText,
             ),

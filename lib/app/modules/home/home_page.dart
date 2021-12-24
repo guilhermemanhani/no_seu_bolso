@@ -31,6 +31,7 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
       (_) {
         controller.loadAccounts();
         controller.findPeriod();
+        controller.getExpenseByLocal();
       },
     );
     reactionDisposer.add(autoRunDisposer);

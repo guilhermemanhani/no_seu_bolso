@@ -90,5 +90,6 @@ abstract class _HomeControllerBase with Store {
 
   Future<void> getExpenseByLocal() async {
     expenseLocalObs = await _entryService.getExpenseByLocal();
+    print(expenseLocalObs);
   }
 }

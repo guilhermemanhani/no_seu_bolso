@@ -187,7 +187,7 @@ class EntryRepositoryImpl implements EntryRepository {
     final conn = await _sqliteConnectionFactory.openConnection();
     final result = await conn.rawQuery(
       ''' 
-      SELECT COUNT(*) as contador, SUM(la.valor) as soma, lo.local as local FROM lancamento la
+      SELECT COUNT(*) as contador, SUM(la.valor) as soma, AVG(la.valor) as media, lo.local as local FROM lancamento la
       inner join  local lo on la.localid = lo.id
       where la.tpagamento = 0
       and datahora between ? and ?
