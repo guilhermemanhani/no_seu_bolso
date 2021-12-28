@@ -9,6 +9,7 @@ class HeadHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 160.h,
       width: double.infinity,
       decoration: const BoxDecoration(
         gradient: LinearGradient(

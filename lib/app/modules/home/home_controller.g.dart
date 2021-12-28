@@ -101,6 +101,21 @@ mixin _$HomeController on _HomeControllerBase, Store {
     });
   }
 
+  final _$dataMapAtom = Atom(name: '_HomeControllerBase.dataMap');
+
+  @override
+  Map<String, double> get dataMap {
+    _$dataMapAtom.reportRead();
+    return super.dataMap;
+  }
+
+  @override
+  set dataMap(Map<String, double> value) {
+    _$dataMapAtom.reportWrite(value, super.dataMap, () {
+      super.dataMap = value;
+    });
+  }
+
   final _$loadBanksAsyncAction = AsyncAction('_HomeControllerBase.loadBanks');
 
   @override
@@ -132,7 +147,8 @@ model: ${model},
 expenseObs: ${expenseObs},
 expenseLocalObs: ${expenseLocalObs},
 entry: ${entry},
-exit: ${exit}
+exit: ${exit},
+dataMap: ${dataMap}
     ''';
   }
 }

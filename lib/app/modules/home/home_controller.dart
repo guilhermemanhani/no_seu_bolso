@@ -33,6 +33,9 @@ abstract class _HomeControllerBase with Store {
   @observable
   double exit = 0.1;
 
+  @observable
+  var dataMap = <String, double>{};
+
   @action
   Future<void> loadBanks() async {
     try {
@@ -78,6 +81,11 @@ abstract class _HomeControllerBase with Store {
   Future<void> findPeriod() async {
     expenseObs = await _entryService.getMonth().asObservable();
     if (expenseObs != null) {
+      exit = 0.0;
+      entry = 0.0;
+    }
+
+    if (expenseObs != null) {
       expenseObs!.forEach((element) {
         if (element.tpagamento == 1) {
           entry += element.valor;
@@ -90,6 +98,12 @@ abstract class _HomeControllerBase with Store {
 
   Future<void> getExpenseByLocal() async {
     expenseLocalObs = await _entryService.getExpenseByLocal();
+    if (expenseLocalObs != null) {
+      for (var local in expenseLocalObs!) {
+        dataMap[local.local] = local.soma;
+      }
+    }
+
     print(expenseLocalObs);
   }
 }

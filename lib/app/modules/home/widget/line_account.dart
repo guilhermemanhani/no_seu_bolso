@@ -28,47 +28,49 @@ class _LineAccountState extends State<LineAccount> {
         itemCount: widget.accountList.length,
         itemBuilder: (context, index) {
           final account = widget.accountList[index];
-
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 12),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 1,
-                    blurRadius: 3,
-                    offset: const Offset(
-                      0,
-                      3,
-                    ),
-                  ),
-                ],
-              ),
-              constraints: BoxConstraints(
-                minWidth: 160.w,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    account.instituicao!,
-                  ),
-                  Text(
-                    formatter.format(
-                      DecimalIntl(
-                        Decimal.parse(account.saldo.toString()),
+          return InkWell(
+            onDoubleTap: () => print('nova tela'),
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.blueGrey[50],
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 1,
+                      blurRadius: 3,
+                      offset: const Offset(
+                        0,
+                        3,
                       ),
                     ),
-                    // account.saldo.toString(),
-                    style: TextStyle(
-                      color: account.saldo.toString().contains('-')
-                          ? Colors.red
-                          : Colors.green,
+                  ],
+                ),
+                constraints: BoxConstraints(
+                  minWidth: 160.w,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      account.instituicao!,
                     ),
-                  ),
-                ],
+                    Text(
+                      formatter.format(
+                        DecimalIntl(
+                          Decimal.parse(account.saldo.toString()),
+                        ),
+                      ),
+                      // account.saldo.toString(),
+                      style: TextStyle(
+                        color: account.saldo.toString().contains('-')
+                            ? Colors.red
+                            : Colors.green,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           );
