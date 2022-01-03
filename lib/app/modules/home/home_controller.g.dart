@@ -101,18 +101,33 @@ mixin _$HomeController on _HomeControllerBase, Store {
     });
   }
 
-  final _$dataMapAtom = Atom(name: '_HomeControllerBase.dataMap');
+  final _$dataMapExitAtom = Atom(name: '_HomeControllerBase.dataMapExit');
 
   @override
-  Map<String, double> get dataMap {
-    _$dataMapAtom.reportRead();
-    return super.dataMap;
+  Map<String, double> get dataMapExit {
+    _$dataMapExitAtom.reportRead();
+    return super.dataMapExit;
   }
 
   @override
-  set dataMap(Map<String, double> value) {
-    _$dataMapAtom.reportWrite(value, super.dataMap, () {
-      super.dataMap = value;
+  set dataMapExit(Map<String, double> value) {
+    _$dataMapExitAtom.reportWrite(value, super.dataMapExit, () {
+      super.dataMapExit = value;
+    });
+  }
+
+  final _$dataMapEntryAtom = Atom(name: '_HomeControllerBase.dataMapEntry');
+
+  @override
+  Map<String, double> get dataMapEntry {
+    _$dataMapEntryAtom.reportRead();
+    return super.dataMapEntry;
+  }
+
+  @override
+  set dataMapEntry(Map<String, double> value) {
+    _$dataMapEntryAtom.reportWrite(value, super.dataMapEntry, () {
+      super.dataMapEntry = value;
     });
   }
 
@@ -195,7 +210,8 @@ expenseObs: ${expenseObs},
 expenseLocalObs: ${expenseLocalObs},
 entry: ${entry},
 exit: ${exit},
-dataMap: ${dataMap}
+dataMapExit: ${dataMapExit},
+dataMapEntry: ${dataMapEntry}
     ''';
   }
 }

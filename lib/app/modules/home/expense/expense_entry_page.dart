@@ -15,6 +15,7 @@ import 'package:dentro_do_bolso/app/core/ui/widgets/text_icon_button.dart';
 import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
@@ -334,6 +335,9 @@ class _ExpenseEntryPageState
                         textInputType: TextInputType.number,
                         textInputAction: TextInputAction.next,
                         controller: _numAccountEC,
+                        textInputFormatter: [
+                          FilteringTextInputFormatter.digitsOnly,
+                        ],
                         validator:
                             Validatorless.required('Valor é obrigatório'),
                       ),
@@ -398,7 +402,7 @@ class _ExpenseEntryPageState
                       _formKeyPopup.currentState?.validate() ?? false;
                   if (formValid) {
                     Navigator.pop(context);
-                    controller.saveAccont(int.parse(_numAccountEC.text),
+                    controller.saveAccont(_numAccountEC.text,
                         _controllerMoneyAccount.numberValue);
                   }
 

@@ -4,6 +4,7 @@ import 'package:dentro_do_bolso/app/models/expense_model.dart';
 import 'package:dentro_do_bolso/app/models/local_model.dart';
 import 'package:dentro_do_bolso/app/models/reasons_model.dart';
 import 'package:dentro_do_bolso/app/services/entry/entry_service.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 part 'expense_entry_controller.g.dart';
 
@@ -196,12 +197,16 @@ abstract class _ExpenseEntryControllerBase with Store {
   }
 
   @action
-  Future<void> saveAccont(int account, double value) async {
-    if (_idBank != null) {
-      AccountModel accountModel =
-          AccountModel(conta: account, idbanco: _idBank!, saldo: value, id: 0);
-      await _entryService.saveAccont(accountModel);
-      loadAccounts();
+  Future<void> saveAccont(String account, double value) async {
+    try {
+      if (_idBank != null) {
+        AccountModel accountModel = AccountModel(
+            conta: int.parse(account), idbanco: _idBank!, saldo: value, id: 0);
+        await _entryService.saveAccont(accountModel);
+        loadAccounts();
+      }
+    } on Exception catch (e) {
+      print(e);
     }
   }
 

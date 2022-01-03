@@ -344,7 +344,7 @@ mixin _$ExpenseEntryController on _ExpenseEntryControllerBase, Store {
       AsyncAction('_ExpenseEntryControllerBase.saveAccont');
 
   @override
-  Future<void> saveAccont(int account, double value) {
+  Future<void> saveAccont(String account, double value) {
     return _$saveAccontAsyncAction.run(() => super.saveAccont(account, value));
   }
 

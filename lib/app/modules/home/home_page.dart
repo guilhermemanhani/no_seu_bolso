@@ -93,13 +93,40 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                 ),
                 Observer(
                   builder: (_) {
-                    if (controller.dataMap.isNotEmpty) {
-                      return PieChart(
-                        dataMap: controller.dataMap,
-                        // chartType: ChartType.ring,
-                        // ringStrokeWidth: 10,
-
-                        // centerText: 'oi',
+                    if (controller.dataMapExit.isNotEmpty) {
+                      return Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: PieChart(
+                          dataMap: controller.dataMapExit,
+                          chartType: ChartType.ring,
+                          centerText: 'Saídas',
+                        ),
+                      );
+                    } else if (controller.expenseLocalObs == null ||
+                        controller.expenseLocalObs!.isEmpty) {
+                      return Container(
+                        color: Colors.grey,
+                      );
+                    } else {
+                      return Container(
+                        color: Colors.red,
+                      );
+                    }
+                  },
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                Observer(
+                  builder: (_) {
+                    if (controller.dataMapEntry.isNotEmpty) {
+                      return Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: PieChart(
+                          dataMap: controller.dataMapEntry,
+                          chartType: ChartType.ring,
+                          centerText: 'Entradas',
+                        ),
                       );
                     } else if (controller.expenseLocalObs == null ||
                         controller.expenseLocalObs!.isEmpty) {

@@ -1,5 +1,6 @@
 import 'package:dentro_do_bolso/app/core/ui/extensions/theme_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class DentrodobolsoTextFormField extends StatelessWidget {
   final String label;
@@ -10,6 +11,7 @@ class DentrodobolsoTextFormField extends StatelessWidget {
   final ValueNotifier<bool> _obscureTextVN;
   final TextInputType? textInputType;
   final TextInputAction textInputAction;
+  final List<TextInputFormatter>? textInputFormatter;
 
   DentrodobolsoTextFormField({
     Key? key,
@@ -20,6 +22,7 @@ class DentrodobolsoTextFormField extends StatelessWidget {
     this.textInputAction = TextInputAction.done,
     this.obscureText = false,
     this.suffixIcon,
+    this.textInputFormatter,
   })  : _obscureTextVN = ValueNotifier<bool>(obscureText),
         assert(obscureText == true ? suffixIcon == null : true,
             'obscureText não pode ser adicionado junto com o suffixicon'),
@@ -31,6 +34,7 @@ class DentrodobolsoTextFormField extends StatelessWidget {
       valueListenable: _obscureTextVN,
       builder: (_, obscureTextValue, child) {
         return TextFormField(
+          inputFormatters: textInputFormatter,
           controller: controller,
           validator: validator,
           keyboardType: textInputType,

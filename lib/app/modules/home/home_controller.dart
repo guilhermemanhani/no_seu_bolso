@@ -38,7 +38,10 @@ abstract class _HomeControllerBase with Store {
   double exit = 0.1;
 
   @observable
-  var dataMap = <String, double>{};
+  var dataMapExit = <String, double>{};
+
+  @observable
+  var dataMapEntry = <String, double>{};
 
   // @observable
   // bool _loading = false;
@@ -122,7 +125,11 @@ abstract class _HomeControllerBase with Store {
     expenseLocalObs = await _entryService.getExpenseByLocal();
     if (expenseLocalObs != null) {
       for (var local in expenseLocalObs!) {
-        dataMap[local.local] = local.soma;
+        if (local.tpagamento == 0) {
+          dataMapExit[local.local] = local.soma;
+        } else {
+          dataMapEntry[local.local] = local.soma;
+        }
       }
     }
 
@@ -134,8 +141,8 @@ abstract class _HomeControllerBase with Store {
     if (exit == 0.0 || exit == 0.0) {
       return "0";
     } else {
-      return formatter.format(
-          DecimalIntl(Decimal.parse(((exit / entry) * 100).toString())));
+      return formatter.format(DecimalIntl(
+          Decimal.parse(((exit / entry) * 100).toStringAsFixed(2))));
     }
   }
 

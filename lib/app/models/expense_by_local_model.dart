@@ -3,26 +3,25 @@ import 'dart:convert';
 class ExpenseByLocalModel {
   final int contador;
   final double soma;
-  final double media;
+  final int tpagamento;
   final String local;
-
   ExpenseByLocalModel({
     required this.contador,
     required this.soma,
-    required this.media,
+    required this.tpagamento,
     required this.local,
   });
 
   ExpenseByLocalModel copyWith({
     int? contador,
     double? soma,
-    double? media,
+    int? tpagamento,
     String? local,
   }) {
     return ExpenseByLocalModel(
       contador: contador ?? this.contador,
       soma: soma ?? this.soma,
-      media: media ?? this.media,
+      tpagamento: tpagamento ?? this.tpagamento,
       local: local ?? this.local,
     );
   }
@@ -31,7 +30,7 @@ class ExpenseByLocalModel {
     return {
       'contador': contador,
       'soma': soma,
-      'media': media,
+      'tpagamento': tpagamento,
       'local': local,
     };
   }
@@ -40,7 +39,7 @@ class ExpenseByLocalModel {
     return ExpenseByLocalModel(
       contador: map['contador']?.toInt() ?? 0,
       soma: map['soma']?.toDouble() ?? 0.0,
-      media: map['media']?.toDouble() ?? 0.0,
+      tpagamento: map['tpagamento']?.toInt() ?? 0,
       local: map['local'] ?? '',
     );
   }
@@ -52,7 +51,7 @@ class ExpenseByLocalModel {
 
   @override
   String toString() {
-    return 'ExpenseByLocalModel(contador: $contador, soma: $soma, media: $media, local: $local)';
+    return 'ExpenseByLocalModel(contador: $contador, soma: $soma, tpagamento: $tpagamento, local: $local)';
   }
 
   @override
@@ -62,12 +61,15 @@ class ExpenseByLocalModel {
     return other is ExpenseByLocalModel &&
         other.contador == contador &&
         other.soma == soma &&
-        other.media == media &&
+        other.tpagamento == tpagamento &&
         other.local == local;
   }
 
   @override
   int get hashCode {
-    return contador.hashCode ^ soma.hashCode ^ media.hashCode ^ local.hashCode;
+    return contador.hashCode ^
+        soma.hashCode ^
+        tpagamento.hashCode ^
+        local.hashCode;
   }
 }
