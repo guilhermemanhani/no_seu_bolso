@@ -12,6 +12,10 @@ class HeadHome extends StatelessWidget {
       height: 160.h,
       width: double.infinity,
       decoration: const BoxDecoration(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(24),
+          bottomRight: Radius.circular(24),
+        ),
         gradient: LinearGradient(
           begin: Alignment.topRight,
           end: Alignment.bottomLeft,
@@ -35,13 +39,25 @@ class HeadHome extends StatelessWidget {
             height: 80.h,
             child: Observer(
               builder: (_) {
-                return Text(
-                  value,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 26,
-                    fontWeight: FontWeight.w600,
-                  ),
+                return Column(
+                  children: [
+                    const Text(
+                      "Total em caixa",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Text(
+                      value,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 26,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
                 );
               },
             ),

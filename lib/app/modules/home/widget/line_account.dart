@@ -1,8 +1,11 @@
 import 'package:decimal/decimal.dart';
 import 'package:decimal/intl.dart';
+import 'package:dentro_do_bolso/app/core/ui/extensions/theme_extension.dart';
 import 'package:dentro_do_bolso/app/models/account_model.dart';
+import 'package:dentro_do_bolso/app/modules/home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:dentro_do_bolso/app/core/ui/extensions/size_screen_extension.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
 
 class LineAccount extends StatefulWidget {
@@ -16,7 +19,7 @@ class LineAccount extends StatefulWidget {
   State<LineAccount> createState() => _LineAccountState();
 }
 
-class _LineAccountState extends State<LineAccount> {
+class _LineAccountState extends ModularState<LineAccount, HomeController> {
   var formatter = NumberFormat.decimalPattern('pt-BR');
 
   @override
@@ -28,13 +31,19 @@ class _LineAccountState extends State<LineAccount> {
         itemCount: widget.accountList.length,
         itemBuilder: (context, index) {
           final account = widget.accountList[index];
-          return InkWell(
-            onDoubleTap: () => print('nova tela'),
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 12),
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, '/home/detail/',
+                    arguments: account.id);
+              },
               child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 8),
+                height: 60.h,
                 decoration: BoxDecoration(
                   color: Colors.blueGrey[50],
+                  borderRadius: BorderRadius.circular(40),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey.withOpacity(0.5),
@@ -54,14 +63,23 @@ class _LineAccountState extends State<LineAccount> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      account.instituicao!,
+                      "${account.instituicao!}  ${account.conta.toString()}",
+                      style: TextStyle(
+                        color: context.darkBlue,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 4,
                     ),
                     Text(
-                      formatter.format(
-                        DecimalIntl(
-                          Decimal.parse(account.saldo.toString()),
+                      controller.dealMoneyValue(
+                        formatter.format(
+                          DecimalIntl(
+                            Decimal.parse(account.saldo.toString()),
+                          ),
                         ),
                       ),
+
                       // account.saldo.toString(),
                       style: TextStyle(
                         color: account.saldo.toString().contains('-')

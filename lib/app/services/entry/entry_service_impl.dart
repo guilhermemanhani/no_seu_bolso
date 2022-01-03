@@ -82,7 +82,7 @@ class EntryServiceImpl implements EntryService {
   @override
   Future<List<ExpenseModel>> getMonth() {
     final today = DateTime.now();
-    var start = DateTime(today.year, today.month, 1, 0, 0, 0);
+    var start = DateTime(today.year, today.month - 1, 1, 0, 0, 0);
     var end = DateTime(today.year, today.month + 1, 0, 0, 0, 0);
     return _entryRepository.getExpenseByPeriod(start, end);
   }
@@ -90,8 +90,17 @@ class EntryServiceImpl implements EntryService {
   @override
   Future<List<ExpenseByLocalModel>> getExpenseByLocal() {
     final today = DateTime.now();
-    var start = DateTime(today.year, today.month, 1, 0, 0, 0);
+    var start = DateTime(today.year, today.month - 1, 1, 0, 0, 0);
     var end = DateTime(today.year, today.month + 1, 0, 0, 0, 0);
     return _entryRepository.getExpenseByLocal(start, end);
+  }
+
+  @override
+  Future<List<ExpenseModel>> getExpenseByPeriodByAccount(
+      int idAccount, DateTime? start, DateTime? end) {
+    final today = DateTime.now();
+    start = start ?? DateTime(today.year, today.month - 1, 1, 0, 0, 0);
+    end = end ?? DateTime(today.year, today.month + 1, 0, 0, 0, 0);
+    return _entryRepository.getExpenseByPeriodByAccount(idAccount, start, end);
   }
 }

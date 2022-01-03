@@ -27,9 +27,10 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
     super.initState();
     final autoRunDisposer = autorun(
       (_) {
-        controller.loadAccounts();
-        controller.findPeriod();
-        controller.getExpenseByLocal();
+        controller.loadHome();
+        // controller.loadAccounts();
+        // controller.findPeriod();
+        // controller.getExpenseByLocal();
       },
     );
     reactionDisposer.add(autoRunDisposer);
@@ -47,77 +48,83 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Observer(
-              builder: (_) {
-                return HeadHome(
-                  value: formatter.format(DecimalIntl(
-                      controller.accountInfoModel?.balance ??
-                          Decimal.parse('0.0'))),
-                );
-              },
-            ),
-            Observer(
-              builder: (_) {
-                return LineAccount(
-                  accountList: controller.accountInfoModel?.listAccount ??
-                      <AccountModel>[],
-                );
-              },
-            ),
-            Observer(
-              builder: (_) {
-                return ContainerBudget(
-                  entryD: controller.entry,
-                  exitD: controller.exit,
-                  entry: formatter.format(
-                      DecimalIntl(Decimal.parse(controller.entry.toString()))),
-                  exit: formatter.format(
-                      DecimalIntl(Decimal.parse(controller.exit.toString()))),
-                  budgetUse: formatter.format(DecimalIntl(Decimal.parse(
-                      ((controller.exit / controller.entry) * 100)
-                          .toString()))),
-                  entryxsaida: formatter.format(DecimalIntl(
-                      Decimal.parse(controller.entry.toString()) -
-                          Decimal.parse(controller.exit.toString()))),
-                );
-              },
-            ),
-            Observer(
-              builder: (_) {
-                if (controller.dataMap.isNotEmpty) {
-                  return PieChart(
-                    dataMap: controller.dataMap,
-                    // chartType: ChartType.ring,
-                    // ringStrokeWidth: 10,
+        child: Observer(
+          builder: (_) {
+            return Column(
+              children: [
+                Observer(
+                  builder: (_) {
+                    return HeadHome(
+                      value: controller.dealMoneyValue(formatter.format(
+                          DecimalIntl(controller.accountInfoModel?.balance ??
+                              Decimal.parse('0.0')))),
+                    );
+                  },
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                Observer(
+                  builder: (_) {
+                    return LineAccount(
+                      accountList: controller.accountInfoModel?.listAccount ??
+                          <AccountModel>[],
+                    );
+                  },
+                ),
+                Observer(
+                  builder: (_) {
+                    return ContainerBudget(
+                      entryD: controller.entry,
+                      exitD: controller.exit,
+                      entry: controller.dealMoneyValue(formatter.format(
+                          DecimalIntl(
+                              Decimal.parse(controller.entry.toString())))),
+                      exit: controller.dealMoneyValue(formatter.format(
+                          DecimalIntl(
+                              Decimal.parse(controller.exit.toString())))),
+                      budgetUse: controller.mathValueBudget(),
+                      entryxsaida: controller.dealMoneyValue(formatter.format(
+                          DecimalIntl(
+                              Decimal.parse(controller.entry.toString()) -
+                                  Decimal.parse(controller.exit.toString())))),
+                    );
+                  },
+                ),
+                Observer(
+                  builder: (_) {
+                    if (controller.dataMap.isNotEmpty) {
+                      return PieChart(
+                        dataMap: controller.dataMap,
+                        // chartType: ChartType.ring,
+                        // ringStrokeWidth: 10,
 
-                    // centerText: 'oi',
-                  );
-                } else if (controller.expenseLocalObs == null ||
-                    controller.expenseLocalObs!.isEmpty) {
-                  return Container(
-                    color: Colors.grey,
-                  );
-                } else {
-                  return Container(
-                    color: Colors.red,
-                  );
-                }
-              },
-            ),
-            SizedBox(
-              height: 40,
-            ),
-          ],
+                        // centerText: 'oi',
+                      );
+                    } else if (controller.expenseLocalObs == null ||
+                        controller.expenseLocalObs!.isEmpty) {
+                      return Container(
+                        color: Colors.grey,
+                      );
+                    } else {
+                      return Container(
+                        color: Colors.red,
+                      );
+                    }
+                  },
+                ),
+                const SizedBox(
+                  height: 40,
+                ),
+              ],
+            );
+          },
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           await Navigator.pushNamed(context, '/home/cadastar/');
-          controller.loadAccounts();
-          controller.loadExpense();
-          controller.findPeriod();
+          controller.loadHome();
         },
         child: const Icon(Icons.payment),
       ),

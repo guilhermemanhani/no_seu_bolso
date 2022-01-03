@@ -1,7 +1,10 @@
+import 'package:decimal/decimal.dart';
+import 'package:decimal/intl.dart';
 import 'package:dentro_do_bolso/app/models/account_model.dart';
 import 'package:dentro_do_bolso/app/models/expense_by_local_model.dart';
 import 'package:dentro_do_bolso/app/models/expense_model.dart';
 import 'package:dentro_do_bolso/app/services/entry/entry_service.dart';
+import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
 import 'package:dentro_do_bolso/app/models/account_info_model.dart';
 part 'home_controller.g.dart';
@@ -10,6 +13,7 @@ class HomeController = _HomeControllerBase with _$HomeController;
 
 abstract class _HomeControllerBase with Store {
   final EntryService _entryService;
+  var formatter = NumberFormat.decimalPattern('pt-BR');
 
   _HomeControllerBase({
     required EntryService entryService,
@@ -35,6 +39,15 @@ abstract class _HomeControllerBase with Store {
 
   @observable
   var dataMap = <String, double>{};
+
+  // @observable
+  // bool _loading = false;
+
+  // @computed
+  // bool get getLoading => _loading;
+
+  // @action
+  // setLoading(bool loading) => _loading = loading;
 
   @action
   Future<void> loadBanks() async {
@@ -78,6 +91,14 @@ abstract class _HomeControllerBase with Store {
     // print(result2);
   }
 
+  @action
+  Future<void> loadHome() async {
+    loadAccounts();
+    findPeriod();
+    getExpenseByLocal();
+  }
+
+  @action
   Future<void> findPeriod() async {
     expenseObs = await _entryService.getMonth().asObservable();
     if (expenseObs != null) {
@@ -96,6 +117,7 @@ abstract class _HomeControllerBase with Store {
     }
   }
 
+  @action
   Future<void> getExpenseByLocal() async {
     expenseLocalObs = await _entryService.getExpenseByLocal();
     if (expenseLocalObs != null) {
@@ -105,5 +127,24 @@ abstract class _HomeControllerBase with Store {
     }
 
     print(expenseLocalObs);
+  }
+
+  @action
+  String mathValueBudget() {
+    if (exit == 0.0 || exit == 0.0) {
+      return "0";
+    } else {
+      return formatter.format(
+          DecimalIntl(Decimal.parse(((exit / entry) * 100).toString())));
+    }
+  }
+
+  @action
+  String dealMoneyValue(String value) {
+    return value.contains(",")
+        ? value[value.length - 2] == ','
+            ? "R\$ ${value}0"
+            : "R\$ $value"
+        : "R\$ $value,00";
   }
 }

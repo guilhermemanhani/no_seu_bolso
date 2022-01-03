@@ -49,14 +49,18 @@ class ContainerBudget extends StatelessWidget {
             const SizedBox(
               height: 8,
             ),
-            const Text(
+            Text(
               'Orçamento mensal',
-              style: TextStyle(fontWeight: FontWeight.w600),
+              style: TextStyle(
+                color: context.darkBlue,
+                fontWeight: FontWeight.w700,
+                fontSize: 16,
+              ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 4.0),
               child: Divider(
-                color: context.grey,
+                color: context.darkBlue,
                 thickness: 1,
               ),
             ),
@@ -65,7 +69,7 @@ class ContainerBudget extends StatelessWidget {
                 return RowInfo(
                   colorText: Colors.green,
                   title: 'Entrada',
-                  value: 'R\$: $entry',
+                  value: entry,
                 );
               },
             ),
@@ -77,7 +81,7 @@ class ContainerBudget extends StatelessWidget {
                 return RowInfo(
                   colorText: Colors.red,
                   title: 'Saída',
-                  value: 'R\$: $exit',
+                  value: exit,
                 );
               },
             ),
@@ -89,7 +93,7 @@ class ContainerBudget extends StatelessWidget {
                 return RowInfo(
                     colorText: exitD < entryD ? Colors.green : Colors.red,
                     title: 'Orçamento usado do mês',
-                    value: '% $budgetUse'
+                    value: "% $budgetUse"
                     // '${((controller.exit / controller.entry))}',
                     );
               },
@@ -100,9 +104,10 @@ class ContainerBudget extends StatelessWidget {
             Observer(
               builder: (_) {
                 return RowInfo(
-                    colorText: Colors.green,
-                    title: 'Balanço entra/saída',
-                    value: 'R\$: $entryxsaida');
+                  colorText: Colors.green,
+                  title: 'Balanço entra/saída',
+                  value: entryxsaida,
+                );
               },
             ),
             const SizedBox(

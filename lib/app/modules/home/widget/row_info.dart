@@ -1,3 +1,4 @@
+import 'package:dentro_do_bolso/app/core/ui/extensions/theme_extension.dart';
 import 'package:flutter/material.dart';
 
 class RowInfo extends StatelessWidget {
@@ -20,9 +21,15 @@ class RowInfo extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title),
           Text(
-            value[value.length - 2] == ',' ? '${value}0' : value,
+            title,
+            style: TextStyle(
+              color: context.darkBlue,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          Text(
+            value,
             style: TextStyle(
               color: value.contains('-') ? Colors.red : colorText,
             ),

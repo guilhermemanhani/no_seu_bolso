@@ -139,6 +139,53 @@ mixin _$HomeController on _HomeControllerBase, Store {
     return _$loadExpenseAsyncAction.run(() => super.loadExpense());
   }
 
+  final _$loadHomeAsyncAction = AsyncAction('_HomeControllerBase.loadHome');
+
+  @override
+  Future<void> loadHome() {
+    return _$loadHomeAsyncAction.run(() => super.loadHome());
+  }
+
+  final _$findPeriodAsyncAction = AsyncAction('_HomeControllerBase.findPeriod');
+
+  @override
+  Future<void> findPeriod() {
+    return _$findPeriodAsyncAction.run(() => super.findPeriod());
+  }
+
+  final _$getExpenseByLocalAsyncAction =
+      AsyncAction('_HomeControllerBase.getExpenseByLocal');
+
+  @override
+  Future<void> getExpenseByLocal() {
+    return _$getExpenseByLocalAsyncAction.run(() => super.getExpenseByLocal());
+  }
+
+  final _$_HomeControllerBaseActionController =
+      ActionController(name: '_HomeControllerBase');
+
+  @override
+  String mathValueBudget() {
+    final _$actionInfo = _$_HomeControllerBaseActionController.startAction(
+        name: '_HomeControllerBase.mathValueBudget');
+    try {
+      return super.mathValueBudget();
+    } finally {
+      _$_HomeControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  String dealMoneyValue(String value) {
+    final _$actionInfo = _$_HomeControllerBaseActionController.startAction(
+        name: '_HomeControllerBase.dealMoneyValue');
+    try {
+      return super.dealMoneyValue(value);
+    } finally {
+      _$_HomeControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''

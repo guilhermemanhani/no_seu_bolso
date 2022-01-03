@@ -20,4 +20,6 @@ abstract class EntryService {
   Future<List<ReasonsModel>> loadReasons();
   Future<List<ExpenseModel>> getMonth();
   Future<List<ExpenseByLocalModel>> getExpenseByLocal();
+  Future<List<ExpenseModel>> getExpenseByPeriodByAccount(
+      int idAccount, DateTime? start, DateTime? end);
 }
