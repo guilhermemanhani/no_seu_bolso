@@ -93,7 +93,7 @@ class ContainerBudget extends StatelessWidget {
                 return RowInfo(
                     colorText: exitD < entryD ? Colors.green : Colors.red,
                     title: 'Orçamento usado do mês',
-                    value: "% $budgetUse"
+                    value: "$budgetUse%"
                     // '${((controller.exit / controller.entry))}',
                     );
               },

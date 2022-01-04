@@ -1,5 +1,6 @@
 import 'package:dentro_do_bolso/app/core/ui/extensions/theme_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:dentro_do_bolso/app/core/ui/extensions/size_screen_extension.dart';
 
 class RowInfo extends StatelessWidget {
   final String title;
@@ -28,10 +29,15 @@ class RowInfo extends StatelessWidget {
               fontWeight: FontWeight.w400,
             ),
           ),
-          Text(
-            value,
-            style: TextStyle(
-              color: value.contains('-') ? Colors.red : colorText,
+          Container(
+            constraints: BoxConstraints(
+              maxWidth: 80,
+            ),
+            child: Text(
+              value,
+              style: TextStyle(
+                color: value.contains('-') ? Colors.red : colorText,
+              ),
             ),
           ),
         ],

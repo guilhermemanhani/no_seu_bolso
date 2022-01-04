@@ -110,35 +110,39 @@ abstract class _HomeControllerBase with Store {
     }
 
     if (expenseObs != null) {
-      expenseObs!.forEach((element) {
-        if (element.tpagamento == 1) {
-          entry += element.valor;
-        } else {
-          exit += element.valor;
-        }
-      });
+      expenseObs!.forEach(
+        (element) {
+          if (element.tpagamento == 1) {
+            entry += element.valor;
+          } else {
+            exit += element.valor;
+          }
+        },
+      );
     }
   }
 
   @action
   Future<void> getExpenseByLocal() async {
-    expenseLocalObs = await _entryService.getExpenseByLocal();
+    expenseLocalObs = await _entryService.getExpenseByLocal().asObservable();
+    dataMapExit = <String, double>{};
+    dataMapEntry = <String, double>{};
     if (expenseLocalObs != null) {
       for (var local in expenseLocalObs!) {
         if (local.tpagamento == 0) {
           dataMapExit[local.local] = local.soma;
-        } else {
+        } else if (local.tpagamento == 1) {
           dataMapEntry[local.local] = local.soma;
         }
       }
     }
-
-    print(expenseLocalObs);
+    dataMapExit.asObservable();
+    dataMapEntry.asObservable();
   }
 
   @action
   String mathValueBudget() {
-    if (exit == 0.0 || exit == 0.0) {
+    if (exit == 0.0 || entry == 0.0) {
       return "0";
     } else {
       return formatter.format(DecimalIntl(

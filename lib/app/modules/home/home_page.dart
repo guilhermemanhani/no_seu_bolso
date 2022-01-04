@@ -83,7 +83,8 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                       exit: controller.dealMoneyValue(formatter.format(
                           DecimalIntl(
                               Decimal.parse(controller.exit.toString())))),
-                      budgetUse: controller.mathValueBudget(),
+                      budgetUse: controller
+                          .dealMoneyValue(controller.mathValueBudget()),
                       entryxsaida: controller.dealMoneyValue(formatter.format(
                           DecimalIntl(
                               Decimal.parse(controller.entry.toString()) -
@@ -100,6 +101,14 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                           dataMap: controller.dataMapExit,
                           chartType: ChartType.ring,
                           centerText: 'Saídas',
+                          chartValuesOptions: const ChartValuesOptions(
+                            showChartValueBackground: true,
+                            showChartValues: true,
+                            chartValueBackgroundColor: Colors.transparent,
+                            decimalPlaces: 0,
+                            showChartValuesInPercentage: true,
+                            showChartValuesOutside: false,
+                          ),
                         ),
                       );
                     } else if (controller.expenseLocalObs == null ||
@@ -123,6 +132,14 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                       return Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: PieChart(
+                          chartValuesOptions: const ChartValuesOptions(
+                            showChartValueBackground: true,
+                            showChartValues: true,
+                            chartValueBackgroundColor: Colors.transparent,
+                            decimalPlaces: 0,
+                            showChartValuesInPercentage: true,
+                            showChartValuesOutside: false,
+                          ),
                           dataMap: controller.dataMapEntry,
                           chartType: ChartType.ring,
                           centerText: 'Entradas',

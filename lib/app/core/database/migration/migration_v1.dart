@@ -51,7 +51,7 @@ class MigrationV1 implements Migration {
       'banco',
       {
         'id': null,
-        'instituicao': 'Itau',
+        'instituicao': 'Itaú',
       },
     );
     batch.insert(

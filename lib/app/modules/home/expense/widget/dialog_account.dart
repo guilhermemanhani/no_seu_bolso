@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 class DialogAccount extends StatelessWidget {
   final String message;
+  final String messageHighlighted;
   final String title;
   final Function onTapBanco;
   final Function onTapConta;
@@ -14,6 +15,7 @@ class DialogAccount extends StatelessWidget {
     required this.title,
     required this.onTapBanco,
     required this.onTapConta,
+    required this.messageHighlighted,
   }) : super(key: key);
 
   @override
@@ -27,10 +29,17 @@ class DialogAccount extends StatelessWidget {
       content: SingleChildScrollView(
         child: Column(
           children: [
-            Text(
-              message,
-              style: TextStyle(
-                color: context.grey,
+            Text.rich(
+              TextSpan(
+                children: [
+                  TextSpan(text: message),
+                  TextSpan(
+                    text: " $messageHighlighted.",
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

@@ -212,13 +212,19 @@ class _ExpenseEntryPageState
                     const SizedBox(
                       width: 16,
                     ),
-                    DialogReasonsAdd(
-                      message:
-                          'Local já cadastrados: ${controller.listLocal.map((local) => local.local).join(', ')}.',
-                      nameForm: 'Local',
-                      title: 'Adicione um novo local',
-                      saveController: (val) {
-                        controller.saveLocal(val);
+                    Observer(
+                      builder: (_) {
+                        return DialogReasonsAdd(
+                          message: 'Local já cadastrados:',
+                          messageHighlighted: controller.listLocal
+                              .map((local) => local.local)
+                              .join(', '),
+                          nameForm: 'Local',
+                          title: 'Adicione um novo local',
+                          saveController: (val) {
+                            controller.saveLocal(val);
+                          },
+                        );
                       },
                     ),
                   ],
@@ -262,13 +268,19 @@ class _ExpenseEntryPageState
                     const SizedBox(
                       width: 16,
                     ),
-                    DialogReasonsAdd(
-                      message:
-                          'Motivo já cadastrados: ${controller.listReasons.map((reasons) => reasons.motivo).join(', ')}.',
-                      nameForm: 'Motivo',
-                      title: 'Adicione um novo motivo',
-                      saveController: (val) {
-                        controller.saveReasons(val);
+                    Observer(
+                      builder: (_) {
+                        return DialogReasonsAdd(
+                          message: 'Motivo já cadastrados:',
+                          messageHighlighted: controller.listReasons
+                              .map((reasons) => reasons.motivo)
+                              .join(', '),
+                          nameForm: 'Motivo',
+                          title: 'Adicione um novo motivo',
+                          saveController: (val) {
+                            controller.saveReasons(val);
+                          },
+                        );
                       },
                     ),
                   ],
@@ -298,8 +310,9 @@ class _ExpenseEntryPageState
       context: context,
       builder: (BuildContext context) {
         return DialogAccount(
-          message:
-              'Bancos já cadastrados: ${controller.listBank.map((bank) => bank.instituicao).join(', ')}.',
+          message: 'Bancos já cadastrados:',
+          messageHighlighted:
+              controller.listBank.map((bank) => bank.instituicao).join(', '),
           title: 'Deseja adicionar uma conta ou um banco?',
           onTapBanco: () => _dialogSimpleRegisterBank(),
           onTapConta: () => _showDialogRegisterAccount(),
@@ -435,7 +448,9 @@ class _ExpenseEntryPageState
       context: context,
       builder: (BuildContext context) {
         return DialogSimpleRegister(
-          message: '',
+          message: 'Bancos já cadastrados:',
+          messageHighlighted:
+              controller.listBank.map((bank) => bank.instituicao).join(', '),
           ontap: (val) {
             controller.saveBank(val);
           },

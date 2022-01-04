@@ -11,6 +11,7 @@ class DialogSimpleRegister extends StatefulWidget {
   final String nameForm;
   final Function ontap;
   final String message;
+  final String messageHighlighted;
 
   const DialogSimpleRegister({
     Key? key,
@@ -18,6 +19,7 @@ class DialogSimpleRegister extends StatefulWidget {
     required this.nameForm,
     required this.ontap,
     required this.message,
+    required this.messageHighlighted,
   }) : super(key: key);
 
   @override
@@ -48,8 +50,20 @@ class _DialogSimpleRegisterState
           key: _formKey,
           child: Column(
             children: [
-              Text(widget.message),
-              SizedBox(
+              Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(text: widget.message),
+                    TextSpan(
+                      text: " ${widget.messageHighlighted}.",
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
                 height: 16,
               ),
               DentrodobolsoTextFormField(

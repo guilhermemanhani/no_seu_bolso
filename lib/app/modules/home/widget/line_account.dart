@@ -41,6 +41,7 @@ class _LineAccountState extends ModularState<LineAccount, HomeController> {
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 8),
                 height: 60.h,
+                padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   color: Colors.blueGrey[50],
                   borderRadius: BorderRadius.circular(40),

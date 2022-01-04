@@ -22,7 +22,7 @@ class CalendarButton extends StatelessWidget {
         lastDate.add(
           const Duration(days: 10 * 365),
         );
-        final DateTime? selectedDate = await showDatePicker(
+        await showDatePicker(
           context: context,
           initialDate: DateTime.now(),
           firstDate: DateTime(2000),

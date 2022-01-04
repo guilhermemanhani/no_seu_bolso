@@ -6,6 +6,7 @@ class DialogReasonsAdd extends StatelessWidget {
   final String nameForm;
   final String title;
   final String message;
+  final String messageHighlighted;
 
   const DialogReasonsAdd({
     Key? key,
@@ -13,6 +14,7 @@ class DialogReasonsAdd extends StatelessWidget {
     required this.nameForm,
     required this.title,
     required this.message,
+    required this.messageHighlighted,
   }) : super(key: key);
 
   @override
@@ -24,6 +26,7 @@ class DialogReasonsAdd extends StatelessWidget {
           builder: (BuildContext context) {
             return DialogSimpleRegister(
               message: message,
+              messageHighlighted: messageHighlighted,
               ontap: (val) {
                 saveController(val);
               },
