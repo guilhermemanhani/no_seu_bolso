@@ -119,6 +119,8 @@ class _ExpenseEntryPageState
                     return CalendarButton(
                       onChanged: (val) => controller.setSelectedDate(val),
                       selectdDate: controller.selectedDate,
+                      width: double.infinity,
+                      buttonLabel: 'Selecione uma data',
                     );
                   },
                 ),

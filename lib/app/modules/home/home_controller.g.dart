@@ -104,13 +104,13 @@ mixin _$HomeController on _HomeControllerBase, Store {
   final _$dataMapExitAtom = Atom(name: '_HomeControllerBase.dataMapExit');
 
   @override
-  Map<String, double> get dataMapExit {
+  ObservableMap<String, double> get dataMapExit {
     _$dataMapExitAtom.reportRead();
     return super.dataMapExit;
   }
 
   @override
-  set dataMapExit(Map<String, double> value) {
+  set dataMapExit(ObservableMap<String, double> value) {
     _$dataMapExitAtom.reportWrite(value, super.dataMapExit, () {
       super.dataMapExit = value;
     });
@@ -119,13 +119,13 @@ mixin _$HomeController on _HomeControllerBase, Store {
   final _$dataMapEntryAtom = Atom(name: '_HomeControllerBase.dataMapEntry');
 
   @override
-  Map<String, double> get dataMapEntry {
+  ObservableMap<String, double> get dataMapEntry {
     _$dataMapEntryAtom.reportRead();
     return super.dataMapEntry;
   }
 
   @override
-  set dataMapEntry(Map<String, double> value) {
+  set dataMapEntry(ObservableMap<String, double> value) {
     _$dataMapEntryAtom.reportWrite(value, super.dataMapEntry, () {
       super.dataMapEntry = value;
     });

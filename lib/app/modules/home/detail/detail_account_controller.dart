@@ -42,20 +42,6 @@ abstract class _DetailAccountControllerBase with Store {
     expenseObs = await _entryService
         .getExpenseByPeriodByAccount(id, _initialDate, _finalDate)
         .asObservable();
-    // if (expenseObs != null) {
-    //   exit = 0.0;
-    //   entry = 0.0;
-    // }
-
-    // if (expenseObs != null) {
-    //   expenseObs!.forEach((element) {
-    //     if (element.tpagamento == 1) {
-    //       entry += element.valor;
-    //     } else {
-    //       exit += element.valor;
-    //     }
-    //   });
-    // }
   }
 
   @action

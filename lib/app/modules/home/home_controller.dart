@@ -38,10 +38,10 @@ abstract class _HomeControllerBase with Store {
   double exit = 0.1;
 
   @observable
-  var dataMapExit = <String, double>{};
+  var dataMapExit = <String, double>{}.asObservable();
 
   @observable
-  var dataMapEntry = <String, double>{};
+  var dataMapEntry = <String, double>{}.asObservable();
 
   // @observable
   // bool _loading = false;
@@ -125,8 +125,8 @@ abstract class _HomeControllerBase with Store {
   @action
   Future<void> getExpenseByLocal() async {
     expenseLocalObs = await _entryService.getExpenseByLocal().asObservable();
-    dataMapExit = <String, double>{};
-    dataMapEntry = <String, double>{};
+    dataMapExit = <String, double>{}.asObservable();
+    dataMapEntry = <String, double>{}.asObservable();
     if (expenseLocalObs != null) {
       for (var local in expenseLocalObs!) {
         if (local.tpagamento == 0) {
@@ -136,8 +136,6 @@ abstract class _HomeControllerBase with Store {
         }
       }
     }
-    dataMapExit.asObservable();
-    dataMapEntry.asObservable();
   }
 
   @action

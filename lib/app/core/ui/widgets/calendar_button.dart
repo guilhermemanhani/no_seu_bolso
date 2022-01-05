@@ -5,6 +5,8 @@ import 'package:intl/intl.dart';
 
 class CalendarButton extends StatelessWidget {
   final DateTime? selectdDate;
+  final double width;
+  final String buttonLabel;
   final dateFormat = DateFormat('dd/MM/y');
   final void Function(DateTime) onChanged;
 
@@ -12,6 +14,8 @@ class CalendarButton extends StatelessWidget {
     Key? key,
     this.selectdDate,
     required this.onChanged,
+    required this.width,
+    required this.buttonLabel,
   }) : super(key: key);
 
   @override
@@ -35,7 +39,7 @@ class CalendarButton extends StatelessWidget {
       },
       borderRadius: BorderRadius.circular(15),
       child: Container(
-        width: double.infinity,
+        width: width,
         height: 64.h,
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
@@ -53,10 +57,13 @@ class CalendarButton extends StatelessWidget {
               width: 10,
             ),
             Observer(builder: (_) {
-              return Text(
-                selectdDate != null
-                    ? dateFormat.format(selectdDate!)
-                    : 'SELECIONE UMA DATA',
+              return Expanded(
+                child: Text(
+                  selectdDate != null
+                      ? dateFormat.format(selectdDate!)
+                      : buttonLabel,
+                  overflow: TextOverflow.ellipsis,
+                ),
               );
             }),
           ],
