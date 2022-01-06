@@ -88,11 +88,19 @@ class EntryServiceImpl implements EntryService {
   }
 
   @override
-  Future<List<ExpenseByLocalModel>> getExpenseByLocal() {
+  Future<List<ExpenseByLocalModel>> getExpenseByLocalExit() {
     final today = DateTime.now();
     var start = DateTime(today.year, today.month - 1, 1, 0, 0, 0);
     var end = DateTime(today.year, today.month + 1, 0, 0, 0, 0);
-    return _entryRepository.getExpenseByLocal(start, end);
+    return _entryRepository.getExpenseByLocal(start, end, 0);
+  }
+
+  @override
+  Future<List<ExpenseByLocalModel>> getExpenseByLocalEntry() {
+    final today = DateTime.now();
+    var start = DateTime(today.year, today.month - 1, 1, 0, 0, 0);
+    var end = DateTime(today.year, today.month + 1, 0, 0, 0, 0);
+    return _entryRepository.getExpenseByLocal(start, end, 1);
   }
 
   @override
@@ -102,5 +110,25 @@ class EntryServiceImpl implements EntryService {
     start = start ?? DateTime(today.year, today.month - 1, 1, 0, 0, 0);
     end = end ?? DateTime(today.year, today.month + 1, 0, 0, 0, 0);
     return _entryRepository.getExpenseByPeriodByAccount(idAccount, start, end);
+  }
+
+  @override
+  Future<void> deleteExpense(ExpenseModel expenseModel) async {
+    AccountModel account =
+        await _entryRepository.loadAccount(expenseModel.idconta);
+    // print(account);
+    Decimal balanceAtt;
+    if (expenseModel.tpagamento == 1) {
+      balanceAtt = Decimal.parse(account.saldo.toString()) -
+          Decimal.parse(expenseModel.valor.toString());
+    } else {
+      balanceAtt = Decimal.parse(account.saldo.toString()) +
+          Decimal.parse(expenseModel.valor.toString());
+    }
+    await _entryRepository.deleteExpense(
+      expenseModel.idlancamento,
+      expenseModel.idconta,
+      double.parse(balanceAtt.toString()),
+    );
   }
 }

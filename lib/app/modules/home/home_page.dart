@@ -111,8 +111,8 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                           ),
                         ),
                       );
-                    } else if (controller.expenseLocalObs == null ||
-                        controller.expenseLocalObs!.isEmpty) {
+                    } else if (controller.expenseLocalExitObs == null ||
+                        controller.expenseLocalExitObs!.isEmpty) {
                       return Container(
                         color: Colors.grey,
                       );
@@ -145,8 +145,8 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                           centerText: 'Entradas',
                         ),
                       );
-                    } else if (controller.expenseLocalObs == null ||
-                        controller.expenseLocalObs!.isEmpty) {
+                    } else if (controller.expenseLocalEntryObs == null ||
+                        controller.expenseLocalEntryObs!.isEmpty) {
                       return Container(
                         color: Colors.grey,
                       );

@@ -55,19 +55,36 @@ mixin _$HomeController on _HomeControllerBase, Store {
     });
   }
 
-  final _$expenseLocalObsAtom =
-      Atom(name: '_HomeControllerBase.expenseLocalObs');
+  final _$expenseLocalExitObsAtom =
+      Atom(name: '_HomeControllerBase.expenseLocalExitObs');
 
   @override
-  List<ExpenseByLocalModel>? get expenseLocalObs {
-    _$expenseLocalObsAtom.reportRead();
-    return super.expenseLocalObs;
+  List<ExpenseByLocalModel>? get expenseLocalExitObs {
+    _$expenseLocalExitObsAtom.reportRead();
+    return super.expenseLocalExitObs;
   }
 
   @override
-  set expenseLocalObs(List<ExpenseByLocalModel>? value) {
-    _$expenseLocalObsAtom.reportWrite(value, super.expenseLocalObs, () {
-      super.expenseLocalObs = value;
+  set expenseLocalExitObs(List<ExpenseByLocalModel>? value) {
+    _$expenseLocalExitObsAtom.reportWrite(value, super.expenseLocalExitObs, () {
+      super.expenseLocalExitObs = value;
+    });
+  }
+
+  final _$expenseLocalEntryObsAtom =
+      Atom(name: '_HomeControllerBase.expenseLocalEntryObs');
+
+  @override
+  List<ExpenseByLocalModel>? get expenseLocalEntryObs {
+    _$expenseLocalEntryObsAtom.reportRead();
+    return super.expenseLocalEntryObs;
+  }
+
+  @override
+  set expenseLocalEntryObs(List<ExpenseByLocalModel>? value) {
+    _$expenseLocalEntryObsAtom.reportWrite(value, super.expenseLocalEntryObs,
+        () {
+      super.expenseLocalEntryObs = value;
     });
   }
 
@@ -207,7 +224,8 @@ mixin _$HomeController on _HomeControllerBase, Store {
 accountInfoModel: ${accountInfoModel},
 model: ${model},
 expenseObs: ${expenseObs},
-expenseLocalObs: ${expenseLocalObs},
+expenseLocalExitObs: ${expenseLocalExitObs},
+expenseLocalEntryObs: ${expenseLocalEntryObs},
 entry: ${entry},
 exit: ${exit},
 dataMapExit: ${dataMapExit},

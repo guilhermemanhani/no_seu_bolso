@@ -325,124 +325,123 @@ class _ExpenseEntryPageState
 
   _showDialogRegisterAccount() {
     return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(
-                16,
-              ),
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          scrollable: true,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(
+              16,
             ),
-            content: SingleChildScrollView(
-              child: Form(
-                key: _formKeyPopup,
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  constraints: const BoxConstraints(minHeight: 200),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      DentrodobolsoTextFormField(
-                        label: 'conta',
-                        textInputType: TextInputType.number,
-                        textInputAction: TextInputAction.next,
-                        controller: _numAccountEC,
-                        textInputFormatter: [
-                          FilteringTextInputFormatter.digitsOnly,
-                        ],
-                        validator:
-                            Validatorless.required('Valor é obrigatório'),
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      DentrodobolsoDropDownButton(
-                        widget: Observer(
-                          builder: (_) {
-                            return DropdownButton<String>(
-                              underline: Container(
-                                width: double.infinity,
-                              ),
-                              isExpanded: true,
-                              icon: const Icon(
-                                Icons.keyboard_arrow_down_sharp,
-                              ),
-                              hint: const Text('Banco'),
-                              value: controller.selectedBank,
-                              // isDense: true,
-                              onChanged: (value) =>
-                                  controller.setSelectedBank(value),
-                              items: controller.listBank.map(
-                                (BankModel map) {
-                                  return DropdownMenuItem<String>(
-                                    onTap: () => controller.setIdBank(map.id),
-                                    value: map.id.toString(),
-                                    child: Text(
-                                      map.instituicao,
-                                    ),
-                                  );
-                                },
-                              ).toList(),
-                            );
-                          },
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 16,
-                      ),
-                      DentrodobolsoTextFormField(
-                        label: 'Valor',
-                        controller: _controllerMoneyAccount,
-                        textInputType: TextInputType.number,
-                        textInputAction: TextInputAction.done,
-                        validator:
-                            Validatorless.required('Valor é obrigatório'),
-                      ),
-                    ],
+          ),
+          content: Form(
+            key: _formKeyPopup,
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              constraints: const BoxConstraints(minHeight: 200),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 16,
                   ),
-                ),
+                  DentrodobolsoTextFormField(
+                    label: 'conta',
+                    textInputType: TextInputType.number,
+                    textInputAction: TextInputAction.next,
+                    controller: _numAccountEC,
+                    textInputFormatter: [
+                      FilteringTextInputFormatter.digitsOnly,
+                    ],
+                    validator: Validatorless.required('Valor é obrigatório'),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  DentrodobolsoDropDownButton(
+                    widget: Observer(
+                      builder: (_) {
+                        return DropdownButton<String>(
+                          underline: Container(
+                            width: double.infinity,
+                          ),
+                          isExpanded: true,
+                          icon: const Icon(
+                            Icons.keyboard_arrow_down_sharp,
+                          ),
+                          hint: const Text('Banco'),
+                          value: controller.selectedBank,
+                          // isDense: true,
+                          onChanged: (value) =>
+                              controller.setSelectedBank(value),
+                          items: controller.listBank.map(
+                            (BankModel map) {
+                              return DropdownMenuItem<String>(
+                                onTap: () => controller.setIdBank(map.id),
+                                value: map.id.toString(),
+                                child: Text(
+                                  map.instituicao,
+                                ),
+                              );
+                            },
+                          ).toList(),
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  DentrodobolsoTextFormField(
+                    label: 'Valor',
+                    controller: _controllerMoneyAccount,
+                    textInputType: TextInputType.number,
+                    textInputAction: TextInputAction.done,
+                    validator: Validatorless.required('Valor é obrigatório'),
+                  ),
+                ],
               ),
             ),
-            actions: [
-              TextIconButton(
-                icon: Icons.check_circle_outline,
-                title: 'Salvar',
-                color: context.green,
-                width: 100,
-                onTap: () {
-                  final formValid =
-                      _formKeyPopup.currentState?.validate() ?? false;
-                  if (formValid) {
-                    Navigator.pop(context);
-                    controller.saveAccont(_numAccountEC.text,
-                        _controllerMoneyAccount.numberValue);
-                  }
-
-                  // widget.onTapSave();
-                },
-              ),
-              TextIconButton(
-                icon: Icons.cancel_outlined,
-                title: 'Cancelar',
-                color: context.red,
-                width: 100,
-                onTap: () {
+          ),
+          actions: [
+            TextIconButton(
+              icon: Icons.check_circle_outline,
+              title: 'Salvar',
+              color: context.green,
+              width: 100,
+              onTap: () {
+                final formValid =
+                    _formKeyPopup.currentState?.validate() ?? false;
+                if (formValid) {
                   Navigator.pop(context);
-                },
-              ),
-            ],
-            actionsAlignment: MainAxisAlignment.center,
-            title: Text(
-              'Adicionar um nova conta:',
-              style: TextStyle(
-                color: context.darkBlue,
-              ),
+                  controller.saveAccont(
+                      _numAccountEC.text, _controllerMoneyAccount.numberValue);
+                }
+
+                // widget.onTapSave();
+              },
             ),
-          );
-        });
+            TextIconButton(
+              icon: Icons.cancel_outlined,
+              title: 'Cancelar',
+              color: context.red,
+              width: 100,
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+          actionsPadding: const EdgeInsets.only(bottom: 12),
+          actionsAlignment: MainAxisAlignment.center,
+          title: Text(
+            'Adicionar um nova conta:',
+            style: TextStyle(
+              color: context.darkBlue,
+            ),
+          ),
+        );
+      },
+    );
   }
 
   _dialogSimpleRegisterBank() {

@@ -40,41 +40,40 @@ class _DialogSimpleRegisterState
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      scrollable: true,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(
           16,
         ),
       ),
-      content: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(text: widget.message),
-                    TextSpan(
-                      text: " ${widget.messageHighlighted}.",
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
+      content: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            Text.rich(
+              TextSpan(
+                children: [
+                  TextSpan(text: widget.message),
+                  TextSpan(
+                    text: " ${widget.messageHighlighted}.",
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              const SizedBox(
-                height: 16,
-              ),
-              DentrodobolsoTextFormField(
-                label: widget.nameForm,
-                controller: _simplesTextEC,
-                textInputType: TextInputType.text,
-                textInputAction: TextInputAction.done,
-                validator: Validatorless.required('Valor é obrigatório'),
-              ),
-            ],
-          ),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            DentrodobolsoTextFormField(
+              label: widget.nameForm,
+              controller: _simplesTextEC,
+              textInputType: TextInputType.text,
+              textInputAction: TextInputAction.done,
+              validator: Validatorless.required('Valor é obrigatório'),
+            ),
+          ],
         ),
       ),
       actionsPadding: const EdgeInsets.only(bottom: 12),

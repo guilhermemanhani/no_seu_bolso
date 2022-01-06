@@ -180,7 +180,7 @@ class EntryRepositoryImpl implements EntryRepository {
 
   @override
   Future<List<ExpenseByLocalModel>> getExpenseByLocal(
-      DateTime start, DateTime end) async {
+      DateTime start, DateTime end, int tpagamento) async {
     final startFilter = DateTime(start.year, start.month, start.day, 0, 0, 0);
     final endFilter = DateTime(end.year, end.month, end.day, 23, 59, 59);
 
@@ -190,11 +190,13 @@ class EntryRepositoryImpl implements EntryRepository {
       SELECT COUNT(*) as contador, SUM(la.valor) as soma, la.tpagamento, lo.local as local FROM lancamento la
       inner join  local lo on la.localid = lo.id
       where datahora between ? and ?
+      and la.tpagamento = ?
       group by lo.local
       ''',
       [
         startFilter.toIso8601String(),
         endFilter.toIso8601String(),
+        tpagamento,
       ],
     );
     return result.map((e) => ExpenseByLocalModel.fromMap(e)).toList();
@@ -224,6 +226,18 @@ class EntryRepositoryImpl implements EntryRepository {
       ],
     );
     return result.map((e) => ExpenseModel.fromMap(e)).toList();
+  }
+
+  @override
+  Future<void> deleteExpense(
+      int idlancamento, int idAccount, double balanceAtt) async {
+    final conn = await _sqliteConnectionFactory.openConnection();
+    await conn.rawDelete(
+        'DELETE FROM lancamento WHERE idlancamento = ?', [idlancamento]);
+    await conn.rawUpdate(
+      'update conta set saldo = ? where id = ?',
+      [balanceAtt, idAccount],
+    );
   }
   // final result = await conn.rawQuery('''
   //   select *

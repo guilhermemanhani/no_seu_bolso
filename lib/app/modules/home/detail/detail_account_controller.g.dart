@@ -80,6 +80,14 @@ mixin _$DetailAccountController on _DetailAccountControllerBase, Store {
     return _$findPeriodAsyncAction.run(() => super.findPeriod());
   }
 
+  final _$deleteAsyncAction =
+      AsyncAction('_DetailAccountControllerBase.delete');
+
+  @override
+  Future<void> delete(ExpenseModel expenseModel) {
+    return _$deleteAsyncAction.run(() => super.delete(expenseModel));
+  }
+
   final _$_DetailAccountControllerBaseActionController =
       ActionController(name: '_DetailAccountControllerBase');
 

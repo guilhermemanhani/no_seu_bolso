@@ -29,7 +29,10 @@ abstract class _HomeControllerBase with Store {
   List<ExpenseModel>? expenseObs;
 
   @observable
-  List<ExpenseByLocalModel>? expenseLocalObs;
+  List<ExpenseByLocalModel>? expenseLocalExitObs;
+
+  @observable
+  List<ExpenseByLocalModel>? expenseLocalEntryObs;
 
   @observable
   double entry = 0.1;
@@ -124,16 +127,21 @@ abstract class _HomeControllerBase with Store {
 
   @action
   Future<void> getExpenseByLocal() async {
-    expenseLocalObs = await _entryService.getExpenseByLocal().asObservable();
+    expenseLocalExitObs =
+        await _entryService.getExpenseByLocalExit().asObservable();
+    expenseLocalEntryObs =
+        await _entryService.getExpenseByLocalEntry().asObservable();
     dataMapExit = <String, double>{}.asObservable();
     dataMapEntry = <String, double>{}.asObservable();
-    if (expenseLocalObs != null) {
-      for (var local in expenseLocalObs!) {
-        if (local.tpagamento == 0) {
-          dataMapExit[local.local] = local.soma;
-        } else if (local.tpagamento == 1) {
-          dataMapEntry[local.local] = local.soma;
-        }
+    if (expenseLocalExitObs != null) {
+      for (var local in expenseLocalExitObs!) {
+        dataMapExit[local.local] = local.soma;
+      }
+    }
+
+    if (expenseLocalEntryObs != null) {
+      for (var local in expenseLocalEntryObs!) {
+        dataMapEntry[local.local] = local.soma;
       }
     }
   }

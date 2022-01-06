@@ -45,6 +45,11 @@ abstract class _DetailAccountControllerBase with Store {
   }
 
   @action
+  Future<void> delete(ExpenseModel expenseModel) async {
+    await _entryService.deleteExpense(expenseModel);
+  }
+
+  @action
   String dealMoneyValue(String value) {
     return value.contains(",")
         ? value[value.length - 2] == ','

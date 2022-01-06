@@ -26,9 +26,9 @@ class TextIconButton extends StatelessWidget {
         height: 40.h,
         padding: const EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(8),
-        ),
+            color: color,
+            borderRadius: BorderRadius.circular(8),
+            boxShadow: const [BoxShadow(blurRadius: 4)]),
         child: Row(
           children: [
             Padding(
@@ -43,7 +43,7 @@ class TextIconButton extends StatelessWidget {
               ),
             ),
             const Padding(
-              padding: EdgeInsets.symmetric(vertical: 8.0),
+              padding: EdgeInsets.symmetric(vertical: 4.0),
               child: VerticalDivider(
                 color: Colors.white,
                 thickness: 2,
