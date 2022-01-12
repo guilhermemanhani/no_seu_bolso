@@ -55,6 +55,7 @@ class ContainerBudget extends StatelessWidget {
                 color: context.darkBlue,
                 fontWeight: FontWeight.w700,
                 fontSize: 16,
+                fontFamily: 'Allura',
               ),
             ),
             Padding(

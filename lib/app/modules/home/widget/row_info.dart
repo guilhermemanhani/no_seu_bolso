@@ -31,7 +31,7 @@ class RowInfo extends StatelessWidget {
           ),
           Container(
             constraints: BoxConstraints(
-              maxWidth: 80,
+              maxWidth: 100.w,
             ),
             child: Text(
               value,

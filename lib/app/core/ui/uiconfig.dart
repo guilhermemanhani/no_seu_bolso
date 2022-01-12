@@ -13,5 +13,6 @@ class UiConfig {
         appBarTheme: const AppBarTheme(
           backgroundColor: Color(0xFF435373),
         ),
+        fontFamily: 'Allura',
       );
 }
