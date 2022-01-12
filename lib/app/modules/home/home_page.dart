@@ -64,6 +64,7 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                 const SizedBox(
                   height: 12,
                 ),
+                Text('testando commit'),
                 Observer(
                   builder: (_) {
                     return LineAccount(
